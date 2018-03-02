@@ -1,10 +1,24 @@
+import {canvas, context} from './index.mjs';
 import * as gui from '../gui/index.mjs';
 
 export function render() {
-	
+	renderElement(gui.root);
 }
 
-export function renderFrame(frame) {
+function renderElement(element) {
+	//console.log(element.options);
+	if (element.options.draw) {
+		if (element.type == 'frame') renderFrame(element);
+		if (element.type == 'image') renderImage(element);
+	}
+	element.children.forEach(renderElement);
+}
+
+function renderFrame(element) {
 	context.fillStyle = '#eb9';
-	context.fillRect(frame.x, frame.y, frame.w, frame.h);
+	context.fillRect(...element.shape);
+}
+
+function renderImage(element) {
+	context.drawImage(element.image, ...element.shape);
 }

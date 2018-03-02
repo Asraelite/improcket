@@ -7,7 +7,15 @@ export let root;
 export function init() {
 	elements.clear();
 	root = modules.root();
-	console.log(root);
+	changeView('title');
+}
+
+export function changeView(view) {
+	root.clear();
+
+	if (view == 'title') {
+		root.append(modules.title());
+	}
 }
 
 export function measureText(msg, font) {
