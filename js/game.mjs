@@ -1,16 +1,21 @@
+import * as graphics from './graphics/index.mjs';
 
-
-const game = {
-	state: {
-		room: 'menu',
-		paused: false
-	}
-};
+export let game;
 
 export function init() {
-	game.state.room = 'menu';
+	game = {
+		state: {
+			room: 'menu',
+			paused: false
+		}
+	};
+
+	graphics.init();
+
+	tick();
 }
 
 function tick() {
+	graphics.render();
 	requestAnimationFrame(tick);
 }
