@@ -1,3 +1,3 @@
 import * as sector from './sector.mjs';
 
-export {sectorFromPoint, getContainedSectors} from './sector.mjs';
+export {getSectorFromWorld, getContainedSectors} from './sector.mjs';

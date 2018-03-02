@@ -1,6 +1,7 @@
 import {game} from '../game.mjs';
 import {getContainedSectors} from '../world/index.mjs';
 import * as background from './background.mjs';
+import * as gui from './gui.mjs';
 
 export let canvas, context, tempCanvas, tempContext;
 export let view;
@@ -32,6 +33,8 @@ export function render() {
 	background.render();
 
 	context.restore();
+
+	gui.render();
 }
 
 export function getVisibleSectors() {

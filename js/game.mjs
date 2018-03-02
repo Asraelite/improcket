@@ -1,8 +1,9 @@
 import * as graphics from './graphics/index.mjs';
+import * as gui from './gui/index.mjs';
 
 export let game;
 
-export function init() {
+export async function init() {
 	game = {
 		state: {
 			room: 'menu',
@@ -11,11 +12,15 @@ export function init() {
 	};
 
 	graphics.init();
+	gui.init();
 
-	tick();
+	// Recursive `requestAnimationFrame` can cause problems with Parcel.
+	while(true) {
+		await tick();
+		await new Promise(res => requestAnimationFrame(res));
+	}
 }
 
-function tick() {
+async function tick() {
 	graphics.render();
-	requestAnimationFrame(tick);
 }
