@@ -10,6 +10,10 @@ export function init() {
 	changeView('title');
 }
 
+export function tick() {
+	root.tick();
+}
+
 export function changeView(view) {
 	root.clear();
 

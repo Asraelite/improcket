@@ -1,6 +1,7 @@
 export const images = {
 	title: {
-		logo: 'logo.png'
+		logo: 'logo.png',
+		logoSvg: 'logo2.svg'
 	}
 };
 

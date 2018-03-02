@@ -1,19 +1,23 @@
+import {Rect} from './misc.mjs';
+
 const defaultOptions = {
 	draw: true // Whether the element itself will be rendered.
 }
 
-export default class GuiElement {
+export default class GuiElement extends Rect {
 	constructor(x, y, w, h, options = {}) {
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
+		super(x, y, w, h);
 		this.children = new Set();
 		this.parent = null;
 
 		this.type = 'element';
 
 		this.options = Object.assign({}, defaultOptions, options);
+	}
+
+	tick() {
+		this.tickMouse();
+		this.children.forEach(c => c.tick());
 	}
 
 	append(element) {
@@ -24,14 +28,8 @@ export default class GuiElement {
 	clear() {
 		this.children.clear();
 	}
-
-	get shape() {
-		return [this.x, this.y, this.w, this.h];
-	}
-
-	get center() {
-		return [this.x + this.w / 2, this.y + this.h / 2];
-	}
+	// Code should be self-describing, comments are for fucking about.
+	//   - Albert Einstein
 
 	posRelative({x = null, xc = 0, y = null, yc = 0, w = null, h = null}) {
 		if (x !== null) {

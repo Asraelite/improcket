@@ -26,7 +26,12 @@ function renderImage(element) {
 }
 
 function renderButton(element) {
-	context.fillStyle = '#983';
+	if (element.mouseHeld) {
+		context.fillStyle = '#706244';
+	} else {
+		context.fillStyle = element.mouseOver ? '#ad9869' : '#917f58';
+	}
+	
 	context.fillRect(...element.shape);
 	context.strokeStyle = '#541';
 	context.strokeWidth = 4;

@@ -4,6 +4,7 @@ import {canvas} from '../graphics/index.mjs';
 import GuiFrame from './frame.mjs';
 import GuiImage from './image.mjs';
 import GuiButton from './button.mjs';
+import * as events from '../game/events.mjs';
 
 export function root() {
 	return new GuiFrame(0, 0, canvas.width, canvas.height, {
@@ -19,8 +20,8 @@ export function title() {
 	logo.posRelative({ x: 0.5, xc: 0.5, y: 0.2 });
 
 	// TODO: Implement call to change view to game.
-	let startFunction = () => {};
-	let start = new GuiButton('Start game', startFunction, 0, 0, 200);
+	let startFunction = events.startGame;
+	let start = new GuiButton('Start game', events.startGame, 0, 0, 200);
 	shadow.append(start);
 	start.posRelative({ x: 0.5, xc: 0.5, y: 0.7 });
 

@@ -1,3 +1,3 @@
-import { init } from './game.mjs';
+import { init } from './game/index.mjs';
 
 window.addEventListener('load', init);

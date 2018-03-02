@@ -1,4 +1,4 @@
-import {game} from '../game.mjs';
+import {game} from '../game/index.mjs';
 import {getContainedSectors} from '../world/index.mjs';
 import * as background from './background.mjs';
 import * as gui from './gui.mjs';
