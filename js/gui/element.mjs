@@ -29,6 +29,10 @@ export default class GuiElement {
 		return [this.x, this.y, this.w, this.h];
 	}
 
+	get center() {
+		return [this.x + this.w / 2, this.y + this.h / 2];
+	}
+
 	posRelative({x = null, xc = 0, y = null, yc = 0, w = null, h = null}) {
 		if (x !== null) {
 			this.x = (this.parent.w * x) - (this.w * xc);
