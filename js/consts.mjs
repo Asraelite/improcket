@@ -13,6 +13,6 @@ export const STAR_DENSITY = (SECTOR_SIZE ** 2) / 10000;
 export const GRAVITATIONAL_CONSTANT = 0.01;
 // Perspective constraints. Higher zoom value = closer.
 export const MIN_ZOOM = 1;
-export const MAX_ZOOM = 30;
+export const MAX_ZOOM = 100;
 export const DEFAULT_ZOOM = 10;
 export const ZOOM_SPEED = 0.01;

@@ -5,7 +5,7 @@ import {modules} from '../data.mjs';
 import * as world from './index.mjs';
 
 export function player() {
-	let ship = new Ship(0, 0);
+	let ship = new Ship(0, -45);
 	ship.addModule(0, 0, modules.capsule.small);
 	ship.addModule(0, 1, modules.fuel.small, { filled: true });
 	ship.addModule(0, 2, modules.thruster.light);
@@ -15,7 +15,7 @@ export function player() {
 }
 
 export function startPlanet() {
-	return celestial(-40, 10, 40, {
+	return celestial(0, 0, 40, {
 		density: 1,
 		type: 'green'
 	});

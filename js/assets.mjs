@@ -11,7 +11,10 @@ export const images = {
 			small: 'modules/small_fuel_tank.svg'
 		},
 		thruster: {
-			light: 'modules/light_thruster.svg'
+			light: {
+				off: 'modules/light_thruster.svg',
+				on: 'modules/light_thruster_on.svg',
+			}
 		}
 	},
 	celestials: {

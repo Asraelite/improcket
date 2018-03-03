@@ -8,12 +8,15 @@ export default class Body {
 		this.xvel = 0;
 		this.yvel = 0;
 		this.rvel = 0;
+		this.rfriction = 0.9;
 		this.mass = mass;
 	}
 
 	tickMotion() {
 		this.x += this.xvel;
 		this.y += this.yvel;
+		this.r += this.rvel;
+		this.rvel *= this.rfriction;
 	}
 
 	tickGravity(bodies) {
@@ -39,5 +42,11 @@ export default class Body {
 	halt() {
 		this.xvel = 0;
 		this.yvel = 0;
+	}
+
+	applyDirectionalForce(x, y, r) {
+		this.xvel += (x * Math.cos(this.r) - y * Math.sin(this.r)) / this.mass;
+		this.yvel += (y * Math.cos(this.r) - x * Math.sin(this.r)) / this.mass;
+		this.rvel += r / this.mass;
 	}
 }

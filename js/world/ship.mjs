@@ -14,6 +14,7 @@ export default class Ship extends Body {
 		this.tickMotion();
 		this.tickGravity(world.celestials);
 		this.resolveCollisions();
+		this.modules.forEach(m => m.reset());
 	}
 
 	addModule(x, y, properties, options) {
@@ -29,11 +30,12 @@ export default class Ship extends Body {
 
 	refreshShape() {
 		let points = [];
-		this.modules.forEach(m => points.push([m.x, m.y, m.mass]));
+		this.modules.forEach(m => points.push([...m.com, m.mass]));
 		this.mass = points.reduce((a, [,,b]) => a + b, 0);
-		this.com = points.reduce(([ax, ay], b) =>
-			[ax + b.x * b.mass, ay + b.y * b.mass], [0, 0])
+		this.com = points.reduce(([ax, ay], [bx, by, bm]) =>
+			[ax + bx * bm, ay + by * bm], [0, 0])
 			.map(x => x / this.mass);
+		window.q = points;
 	}
 
 	resolveCollisions() {
@@ -44,5 +46,17 @@ export default class Ship extends Body {
 				this.halt();
 			}
 		})
+	}
+
+	applyThrust({ forward = 0, left = 0, right = 0, back = 0,
+		turnLeft = 0, turnRight = 0}) {
+		let turnForce = (turnRight - turnLeft) / 20;
+		this.applyDirectionalForce(0, -forward / 30, turnForce);
+
+		this.modules.forEach(m => {
+			if (m.type !== 'thruster') return;
+			m.power = forward;
+		});
+
 	}
 }

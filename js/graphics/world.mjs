@@ -8,15 +8,14 @@ export function render() {
 }
 
 function renderShip(ship) {
-	context.fillStyle = 'red';
-	//context.fillRect(ship.x, ship.y, 10, 10);
-	let size = 1;
-		context.drawImage(assets.modules.capsule.small, ship.x, ship.y,
-			size, size);
-	context.drawImage(assets.modules.fuel.small, ship.x, ship.y + size,
-		size, size);
-	context.drawImage(assets.modules.thruster.light, ship.x,
-		ship.y + size * 2, size, size);
+	context.save();
+	context.translate(ship.x, ship.y);
+	context.rotate(ship.r);
+	let [cx, cy] = ship.com;
+	ship.modules.forEach(m => {
+		context.drawImage(m.currentImage, m.x - cx, m.y - cy, 1, 1);
+	});
+	context.restore();
 }
 
 const celestialImages = {
