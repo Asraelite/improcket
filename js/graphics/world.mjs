@@ -3,8 +3,8 @@ import {images as assets} from '../assets.mjs';
 import * as world from '../world/index.mjs';
 
 export function render() {
-	world.ships.forEach(renderShip);
 	world.celestials.forEach(renderCelestial);
+	world.ships.forEach(renderShip);
 }
 
 function renderShip(ship) {
@@ -24,5 +24,6 @@ const celestialImages = {
 }
 
 function renderCelestial(cel) {
-	context.drawImage(cel.image, cel.x, cel.y, cel.diameter, cel.diameter);
+	context.drawImage(cel.image, cel.x - cel.radius, cel.y - cel.radius,
+		cel.diameter, cel.diameter);
 }

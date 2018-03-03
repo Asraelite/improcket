@@ -102,10 +102,10 @@ class Perspective {
 	}
 
 	transformCanvas() {
-		let [bx, by, bw, bh] = this.bounds;
-		let tx = -this.x + bw / 2;
-		let ty = -this.y + bh / 2;
-		context.translate(tx, ty);
+		let [,,bw, bh] = this.bounds;
+		let tx = -this.x * this.zoom;
+		let ty = -this.y * this.zoom;
+		context.translate(tx + bw / 2, ty + bh / 2);
 		context.scale(this.zoom, this.zoom);
 	}
 }

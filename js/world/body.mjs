@@ -11,9 +11,14 @@ export default class Body {
 		this.mass = mass;
 	}
 
+	tickMotion() {
+		this.x += this.xvel;
+		this.y += this.yvel;
+	}
+
 	tickGravity(bodies) {
 		bodies.forEach(b => {
-			let force = b.mass / this.mass / (distanceTo(b) ** 2) * G;
+			let force = b.mass / this.mass / (this.distanceTo(b) ** 2) * G;
 			let angle = Math.atan2(b.y - this.y, b.x - this.x);
 			this.xvel += Math.cos(angle) * force;
 			this.yvel += Math.sin(angle) * force;
@@ -21,6 +26,18 @@ export default class Body {
 	}
 
 	distanceTo(body) {
-		return Math.sqrt(((body.x - this.x) ** 2) + ((body.y - this.y) ** 2));
+		return Math.max(Math.sqrt(((body.x - this.x) ** 2) +
+			((body.y - this.y) ** 2)), 1);
+	}
+
+	approach(body, distance) {
+		let angle = Math.atan2(body.y - this.y, body.x - this.x);
+		this.x += Math.cos(angle) * distance;
+		this.y += Math.sin(angle) * distance;
+	}
+
+	halt() {
+		this.xvel = 0;
+		this.yvel = 0;
 	}
 }

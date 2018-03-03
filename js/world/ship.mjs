@@ -1,5 +1,6 @@
 import Module from './module.mjs';
 import Body from './body.mjs';
+import * as world from './index.mjs';
 
 export default class Ship extends Body {
 	constructor(x, y) {
@@ -10,7 +11,9 @@ export default class Ship extends Body {
 	}
 
 	tick() {
-
+		this.tickMotion();
+		this.tickGravity(world.celestials);
+		this.resolveCollisions();
 	}
 
 	addModule(x, y, properties, options) {
@@ -31,5 +34,15 @@ export default class Ship extends Body {
 		this.com = points.reduce(([ax, ay], b) =>
 			[ax + b.x * b.mass, ay + b.y * b.mass], [0, 0])
 			.map(x => x / this.mass);
+	}
+
+	resolveCollisions() {
+		world.celestials.forEach(c => {
+			let dis = this.distanceTo(c);
+			if (dis < c.radius) {
+				this.approach(c, dis - c.radius);
+				this.halt();
+			}
+		})
 	}
 }
