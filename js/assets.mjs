@@ -2,6 +2,17 @@ export const images = {
 	title: {
 		logo: 'logo.png',
 		logoSvg: 'logo2.svg'
+	},
+	modules: {
+		capsule: {
+			small: 'modules/small_capsule.svg'
+		},
+		fuel: {
+			small: 'modules/small_fuel_tank.svg'
+		},
+		thruster: {
+			light: 'modules/light_thruster.svg'
+		}
 	}
 };
 
