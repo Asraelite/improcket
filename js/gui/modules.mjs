@@ -33,3 +33,9 @@ export function title() {
 
 	return shadow;
 }
+
+export function game() {
+	let shadow = root();
+	
+	return shadow;
+}

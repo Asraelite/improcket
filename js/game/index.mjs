@@ -2,21 +2,23 @@ import * as graphics from '../graphics/index.mjs';
 import * as gui from '../gui/index.mjs';
 import * as assets from '../assets.mjs';
 import * as input from '../input.mjs';
+import * as world from '../world/index.mjs';
+import * as events from './events.mjs';
 
-export let game;
+export let state;
 
 export async function init() {
-	game = {
-		state: {
-			room: 'menu',
-			paused: false
-		}
+	state = {
+		view: 'menu',
+		paused: false
 	};
 
 	graphics.init();
 	await assets.init();
 	gui.init();
 	input.init();
+
+	//events.startGame();
 
 	// Recursive `requestAnimationFrame` can cause problems with Parcel.
 	while(true) {
@@ -25,7 +27,17 @@ export async function init() {
 	}
 }
 
+export function changeView(view) {
+	state.view = view;
+	gui.changeView(view);
+
+	if (view == 'game') {
+		world.init();
+	}
+}
+
 async function tick() {
+	if (state.view == 'game') world.tick();
 	gui.tick();
 	graphics.render();
 	input.tick();

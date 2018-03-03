@@ -20,6 +20,10 @@ export function changeView(view) {
 	if (view == 'title') {
 		root.append(modules.title());
 	}
+
+	if (view == 'game') {
+		root.append(modules.game());
+	}
 }
 
 export function measureText(msg, font) {

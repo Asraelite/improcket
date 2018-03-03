@@ -3,6 +3,7 @@ import {getContainedSectors} from '../world/index.mjs';
 import * as background from './background.mjs';
 import * as gui from './gui.mjs';
 import * as draw from './draw.mjs';
+import * as ship from './ship.mjs';
 
 export let canvas, context, tempCanvas, tempContext;
 export let view;
@@ -36,6 +37,7 @@ export function render() {
 	// TODO: Translate canvas.
 
 	background.render();
+	ship.render();
 
 	context.restore();
 
