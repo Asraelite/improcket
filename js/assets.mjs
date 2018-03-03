@@ -13,6 +13,11 @@ export const images = {
 		thruster: {
 			light: 'modules/light_thruster.svg'
 		}
+	},
+	celestials: {
+		green: {
+			"0": 'celestials/green_0.svg'
+		}
 	}
 };
 

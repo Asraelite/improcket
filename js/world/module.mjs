@@ -3,6 +3,9 @@ export default class Module {
 		name = 'Unnamed Module',
 		type = 'block',
 		mass = 1,
+		// Fuel
+		filled = false,
+		fuelCapacity = 0,
 		...properties
 	}) {
 		this.x = x;
@@ -10,6 +13,7 @@ export default class Module {
 		this.name = name;
 		this.type = type;
 		this.mass = mass;
-
+		// Fuel
+		this.fuel = filled ? fuelCapacity : 0;
 	}
 }

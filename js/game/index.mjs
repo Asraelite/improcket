@@ -18,7 +18,9 @@ export async function init() {
 	gui.init();
 	input.init();
 
-	//events.startGame();
+	events.startGame();
+
+	//tick(); return;
 
 	// Recursive `requestAnimationFrame` can cause problems with Parcel.
 	while(true) {

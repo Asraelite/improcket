@@ -10,7 +10,7 @@ export default class Body {
 		this.rvel = 0;
 		this.mass = mass;
 	}
-	
+
 	tickGravity(bodies) {
 		bodies.forEach(b => {
 			let force = b.mass / this.mass / (distanceTo(b) ** 2) * G;

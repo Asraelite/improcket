@@ -1,6 +1,6 @@
 import {canvas} from './graphics/index.mjs';
 
-export const mouse = { pressed: {}, held: {}, x: 0, y: 0 };
+export const mouse = { pressed: {}, held: {}, x: 0, y: 0, scroll: 0 };
 export const keyCode = { pressed: {}, held: {} };
 export const key = { pressed: {}, held: {} };
 export const action = {};
@@ -11,6 +11,7 @@ export function tick() {
 	mouse.pressed = {};
 	keyCode.pressed = {};
 	key.pressed = {};
+	mouse.scroll = 0;
 }
 
 export function init() {
@@ -42,5 +43,9 @@ export function init() {
 		let rect = canvas.getBoundingClientRect();
 		mouse.x = event.clientX - rect.left;
 		mouse.y = event.clientY - rect.top;
+	});
+
+	window.addEventListener('wheel', event => {
+		mouse.scroll = event.deltaY;
 	});
 }

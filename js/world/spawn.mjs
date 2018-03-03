@@ -1,6 +1,6 @@
 import Ship from './ship.mjs';
 import Module from './module.mjs';
-import Celestial from './ship.mjs';
+import Celestial from './celestial.mjs';
 import {modules} from '../data.mjs';
 import * as world from './index.mjs';
 
@@ -11,9 +11,18 @@ export function player() {
 	ship.addModule(0, 2, modules.thruster.light);
 	world.ships.add(ship);
 	world.setPlayerShip(ship);
+	return ship;
 }
 
-// Make module length = 1, define all other length off that.
-export function celestial() {
-	let celestial = new Celestial(0, 50, 45)
+export function startPlanet() {
+	return celestial(-40, 10, 40, {
+		density: 1,
+		type: 'green'
+	});
+}
+
+export function celestial(x, y, radius, params) {
+	let celestial = new Celestial(x, y, radius, params);
+	world.celestials.add(celestial);
+	return celestial;
 }

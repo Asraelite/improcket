@@ -4,16 +4,25 @@ import * as world from '../world/index.mjs';
 
 export function render() {
 	world.ships.forEach(renderShip);
+	world.celestials.forEach(renderCelestial);
 }
 
 function renderShip(ship) {
 	context.fillStyle = 'red';
 	//context.fillRect(ship.x, ship.y, 10, 10);
-	let size = 100;
+	let size = 1;
 		context.drawImage(assets.modules.capsule.small, ship.x, ship.y,
 			size, size);
 	context.drawImage(assets.modules.fuel.small, ship.x, ship.y + size,
 		size, size);
 	context.drawImage(assets.modules.thruster.light, ship.x,
 		ship.y + size * 2, size, size);
+}
+
+const celestialImages = {
+	green: Object.values(assets.celestials.green)
+}
+
+function renderCelestial(cel) {
+	context.drawImage(cel.image, cel.x, cel.y, cel.diameter, cel.diameter);
 }

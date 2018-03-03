@@ -17,6 +17,8 @@ export function init() {
 	entities.clear();
 	celestials.clear();
 	spawn.player();
+	spawn.startPlanet();
+
 }
 
 export function tick() {
