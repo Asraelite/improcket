@@ -16,13 +16,13 @@ export function player() {
 
 export function startPlanet() {
 	return celestial(0, 0, 40, {
-		density: 1,
+		density: 10,
 		type: 'green'
 	});
 }
 
 export function celestial(x, y, radius, params) {
-	let celestial = new Celestial(x, y, radius, params);
+	let celestial = new Celestial(x - radius, y - radius, radius, params);
 	world.celestials.add(celestial);
 	return celestial;
 }

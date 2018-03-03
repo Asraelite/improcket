@@ -15,12 +15,12 @@ export default class Celestial extends Body {
 		this.image = imageArr[Math.random() * imageArr.length | 0];
 	}
 
-	tick() {
-
+	get com() {
+		return [this.x + this.radius, this.y + this.radius];
 	}
 
-	get center() {
-		return [this.x + this.radius / 2, this.y + this.radius / 2];
+	tick() {
+
 	}
 
 	get diameter() {

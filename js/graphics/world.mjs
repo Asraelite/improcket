@@ -5,15 +5,19 @@ import * as world from '../world/index.mjs';
 export function render() {
 	world.celestials.forEach(renderCelestial);
 	world.ships.forEach(renderShip);
+	if (typeof window.q !== 'undefined') {
+		context.fillStyle = 'red';
+	}
 }
 
 function renderShip(ship) {
 	context.save();
-	context.translate(ship.x, ship.y);
+	context.translate(...ship.com);
 	context.rotate(ship.r);
-	let [cx, cy] = ship.com;
+	let [cx, cy] = ship.localCom;
+	context.translate(-cx, -cy);
 	ship.modules.forEach(m => {
-		context.drawImage(m.currentImage, m.x - cx, m.y - cy, 1, 1);
+		context.drawImage(m.currentImage, m.x, m.y, 1, 1);
 	});
 	context.restore();
 }
@@ -23,6 +27,6 @@ const celestialImages = {
 }
 
 function renderCelestial(cel) {
-	context.drawImage(cel.image, cel.x - cel.radius, cel.y - cel.radius,
+	context.drawImage(cel.image, cel.x, cel.y,
 		cel.diameter, cel.diameter);
 }

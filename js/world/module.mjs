@@ -1,7 +1,7 @@
 import {images as assets} from '../assets.mjs';
 
 export default class Module {
-	constructor(x, y, {
+	constructor(x, y, ship, {
 		name = 'Unnamed Module',
 		type = 'block',
 		id = 'unknown',
@@ -16,6 +16,7 @@ export default class Module {
 		this.name = name;
 		this.type = type;
 		this.mass = mass;
+		this.ship = ship;
 		this.id = id;
 		this.images = assets.modules[this.type][this.id];
 		// Fuel
@@ -32,6 +33,10 @@ export default class Module {
 		}
 	}
 
+	get com() {
+		return this.ship.getWorldPoint(...this.localCom);
+	}
+
 	get currentImage() {
 		if (this.type == 'thruster') {
 			return this.power > 0 ? this.images.on : this.images.off;
@@ -40,7 +45,7 @@ export default class Module {
 		}
 	}
 
-	get com() {
+	get localCom() {
 		return [this.x + 0.5, this.y + 0.5];
 	}
 }

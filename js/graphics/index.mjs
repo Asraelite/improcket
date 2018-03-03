@@ -58,8 +58,7 @@ class Perspective {
 		}
 
 		if (this.focus !== null) {
-			this.x = this.focus.x;
-			this.y = this.focus.y;
+			[this.x, this.y] = this.focus.com;
 		}
 
 		if (this.rotationFocus !== null) {

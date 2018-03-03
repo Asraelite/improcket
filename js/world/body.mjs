@@ -12,6 +12,32 @@ export default class Body {
 		this.mass = mass;
 	}
 
+	get com() {
+		return [this.x, this.y];
+	}
+
+	get pos() {
+		return [this.x, this.y];
+	}
+
+	getWorldPoint(lx, ly) {
+		let [cx, cy] = this.localCom;
+		let [nx, ny] = this.rotateVector(lx - cx, ly - cy, this.r);
+		return [nx + this.x + cx, ny + this.y + cy];
+	}
+
+	getLocalPoint(wx, wy) {
+		let [lx, ly] = [wx - this.x, wy - this.y];
+		let [cx, cy] = this.localCom;
+		let [nx, ny] = this.rotateVector(lx, ly, -this.r);
+		return [nx - cx, ny - cy];
+	}
+
+	rotateVector(x, y, r) {
+		return [(x * Math.cos(this.r) - y * Math.sin(this.r)),
+			(y * Math.cos(this.r) - x * Math.sin(this.r))];
+	}
+
 	tickMotion() {
 		this.x += this.xvel;
 		this.y += this.yvel;
@@ -22,19 +48,23 @@ export default class Body {
 	tickGravity(bodies) {
 		bodies.forEach(b => {
 			let force = b.mass / this.mass / (this.distanceTo(b) ** 2) * G;
-			let angle = Math.atan2(b.y - this.y, b.x - this.x);
+			let [[ax, ay], [bx, by]] = [this.com, b.com];
+			let angle = Math.atan2(by - ay, bx - ax);
 			this.xvel += Math.cos(angle) * force;
 			this.yvel += Math.sin(angle) * force;
 		});
 	}
 
 	distanceTo(body) {
-		return Math.max(Math.sqrt(((body.x - this.x) ** 2) +
-			((body.y - this.y) ** 2)), 1);
+		let [[ax, ay], [bx, by]] = [this.com, body.com];
+		let result =  Math.max(Math.sqrt(((bx - ax) ** 2) +
+			((by - ay) ** 2)), 1);
+		return result;
 	}
 
 	approach(body, distance) {
-		let angle = Math.atan2(body.y - this.y, body.x - this.x);
+		let [[ax, ay], [bx, by]] = [this.com, body.com];
+		let angle = Math.atan2(by - ay, bx - ax);
 		this.x += Math.cos(angle) * distance;
 		this.y += Math.sin(angle) * distance;
 	}
@@ -45,8 +75,9 @@ export default class Body {
 	}
 
 	applyDirectionalForce(x, y, r) {
-		this.xvel += (x * Math.cos(this.r) - y * Math.sin(this.r)) / this.mass;
-		this.yvel += (y * Math.cos(this.r) - x * Math.sin(this.r)) / this.mass;
+		let [vx, vy] = this.rotateVector(x, y, r);
+		this.xvel += vx;
+		this.yvel += vy;
 		this.rvel += r / this.mass;
 	}
 }
