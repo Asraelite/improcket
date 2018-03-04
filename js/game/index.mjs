@@ -6,12 +6,15 @@ import * as world from '../world/index.mjs';
 import * as events from './events.mjs';
 import * as control from './control.mjs';
 import * as player from './player.mjs';
+import * as edit from './edit.mjs';
 
 export let state;
 
 export async function init() {
 	state = {
 		view: 'menu',
+		playing: false,
+		editing: false,
 		paused: false
 	};
 
@@ -36,6 +39,9 @@ export function changeView(view) {
 	gui.changeView(view);
 
 	if (view == 'game') {
+		state.playing = true;
+		state.editing = false;
+		state.paused = false;
 		world.init();
 		player.init();
 	}

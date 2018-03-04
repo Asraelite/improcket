@@ -8,4 +8,9 @@ export default class GuiButton extends GuiElement {
 		this.text = text;
 		this.onclick = onclick;
 	}
+
+	click() {
+		if (this.options.draw)
+			this.onclick();
+	}
 }

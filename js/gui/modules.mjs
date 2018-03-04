@@ -5,6 +5,7 @@ import GuiFrame from './frame.mjs';
 import GuiImage from './image.mjs';
 import GuiButton from './button.mjs';
 import * as events from '../game/events.mjs';
+import {state} from '../game/index.mjs';
 
 export function root() {
 	return new GuiFrame(0, 0, canvas.width, canvas.height, {
@@ -36,6 +37,14 @@ export function title() {
 
 export function game() {
 	let shadow = root();
-	
+
+	let edit = new GuiButton('Edit rocket', events.editShip, 0, 0, 200);
+	shadow.append(edit);
+	edit.posRelative({ x: 0.5, xc: 0.5, y: 1 });
+	edit.y -= 45;
+	edit.tick = () => {
+		edit.options.draw = state.landed && !state.editing;
+	}
+
 	return shadow;
 }

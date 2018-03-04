@@ -11,10 +11,11 @@ export class Rect {
 		this.mouseHeld = false;
 	}
 
+	click() {}
+
 	tickMouse() {
 		if (this.mouseHeld == true && !input.mouse.held[0] && this.mouseOver)
-			if (this.onclick !== null)
-				this.onclick();
+			this.click();
 		if (!this.mouseHeld && input.mouse.pressed[0] && this.mouseOver)
 			this.mouseHeld = true;
 		if (!input.mouse.held[0])

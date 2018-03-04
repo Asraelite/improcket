@@ -1,7 +1,8 @@
 import {Rect} from './misc.mjs';
 
 const defaultOptions = {
-	draw: true // Whether the element itself will be rendered.
+	draw: true, // Whether the element itself will be rendered.
+	drawChildren: true // Whether children will be rendered.
 }
 
 export default class GuiElement extends Rect {
@@ -15,9 +16,14 @@ export default class GuiElement extends Rect {
 		this.options = Object.assign({}, defaultOptions, options);
 	}
 
-	tick() {
+	tickElement() {
 		this.tickMouse();
-		this.children.forEach(c => c.tick());
+		this.tick();
+		this.children.forEach(c => c.tickElement());
+	}
+
+	tick() {
+
 	}
 
 	append(element) {

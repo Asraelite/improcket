@@ -19,6 +19,10 @@ export default class Celestial extends Body {
 		return [this.x + this.radius, this.y + this.radius];
 	}
 
+	get escapeVelocity() {
+		
+	}
+
 	tick() {
 
 	}

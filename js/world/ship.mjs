@@ -1,7 +1,10 @@
 import Module from './module.mjs';
 import Body from './body.mjs';
 import * as world from './index.mjs';
+import * as consts from '../consts.mjs';
 import * as particle from './particle.mjs';
+import * as events from '../game/events.mjs';
+import {state} from '../game/index.mjs';
 
 export default class Ship extends Body {
 	constructor(x, y) {
@@ -10,6 +13,7 @@ export default class Ship extends Body {
 		this.localCom = [0, 0];
 		this.modules = new Set();
 		this.maxRadius = 0;
+		this.landed = false;
 	}
 
 	get com() {
@@ -17,9 +21,27 @@ export default class Ship extends Body {
 		return [this.x + lx, this.y + ly];
 	}
 
+	get parentCelestial() {
+		let closest = null;
+		let closestDistance = 0;
+
+		world.celestials.forEach(c => {
+			let dis = this.distanceTo(c);
+			if (closest === null || dis < closestDistance) {
+				closest = c;
+				closestDistance = dis;
+			}
+		});
+
+		if (closestDistance > consts.MAX_PARENT_CELESTIAL_DISTANCE)
+			return null;
+			
+		return closest;
+	}
+
 	tick() {
 		this.tickMotion();
-		this.tickGravity(world.celestials);
+		if (!this.landed) this.tickGravity(world.celestials);
 		this.resolveCollisions();
 
 		this.modules.forEach(m => {
@@ -29,6 +51,9 @@ export default class Ship extends Body {
 		});
 
 		this.modules.forEach(m => m.reset());
+
+		if (events.shipLanded != this.landed)
+			this.landed ? events.landShip() : events.launchShip();
 	}
 
 	addModule(x, y, properties, options) {
@@ -55,6 +80,8 @@ export default class Ship extends Body {
 	}
 
 	resolveCollisions() {
+		this.landed = false;
+
 		world.celestials.forEach(c => {
 			let dis = this.distanceTo(c);
 
@@ -72,16 +99,22 @@ export default class Ship extends Body {
 		let angleToCom = this.angleTo(...this.com, ...pos);
 		let angle = angleToCom - theta;
 		let [force] = this.rotateVector(0, 1, angle);
-		if (Math.abs(angle) < 0.3) {
+		if (Math.abs(angle) < consts.TIP_ANGLE) {
 			force *= -1;
 		}
-		this.rvel -= force * 0.015;
+		if (Math.abs(angle) < 0.003
+			&& Math.abs(this.rvel) < 0.001) {
+			this.landed = true;
+			this.rvel = 0;
+			this.r = theta - Math.PI / 2;
+		}
+		this.rvel -= force * consts.TIP_SPEED;
 	}
 
 	checkModuleCollision(module, body) {
 		let p = this.getWorldPoint(...module.localCom);
 		let dis = body.distanceTo({ com: p });
-		if (dis < body.radius + 0.5) {
+		if (dis < body.radius + 0.5 + consts.EPSILON) {
 			this.approach(body, dis - (body.radius + 0.5));
 			this.halt();
 			this.resolveCelestialCollision(p, body);

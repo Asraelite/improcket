@@ -11,7 +11,7 @@ export function init() {
 }
 
 export function tick() {
-	root.tick();
+	root.tickElement();
 }
 
 export function changeView(view) {
