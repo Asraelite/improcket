@@ -37,9 +37,9 @@ export default class Body {
 		return [nx - cx, ny - cy];
 	}
 
-	rotateVector(x, y, r) {
-		return [(x * Math.cos(this.r) - y * Math.sin(this.r)),
-			(y * Math.cos(this.r) - x * Math.sin(this.r))];
+	rotateVector(x, y, r = this.r) {
+		return [(x * Math.cos(r) - y * Math.sin(r)),
+			(y * Math.cos(r) - x * Math.sin(r))];
 	}
 
 	relativeVector(x, y) {
@@ -65,9 +65,12 @@ export default class Body {
 
 	distanceTo(body) {
 		let [[ax, ay], [bx, by]] = [this.com, body.com];
-		let result =  Math.max(Math.sqrt(((bx - ax) ** 2) +
+		return Math.max(Math.sqrt(((bx - ax) ** 2) +
 			((by - ay) ** 2)), 1);
-		return result;
+	}
+
+	angleTo(ax, ay, bx, by) {
+		return Math.atan2(by - ay, bx - ax);
 	}
 
 	approach(body, distance) {
@@ -83,7 +86,7 @@ export default class Body {
 	}
 
 	applyDirectionalForce(x, y, r) {
-		let [vx, vy] = this.rotateVector(x, y, r);
+		let [vx, vy] = this.rotateVector(x, y);
 		this.xvel += vx;
 		this.yvel += vy;
 		this.rvel += r / this.mass;

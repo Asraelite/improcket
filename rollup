@@ -1,2 +1,2 @@
 #!/bin/bash
-rollup js/index.mjs --o dist/improcket.min.js --f es --watch
+rollup js/index.mjs --o dist/improcket.min.js -m --silent --f es --watch

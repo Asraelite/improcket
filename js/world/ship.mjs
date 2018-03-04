@@ -66,12 +66,25 @@ export default class Ship extends Body {
 		})
 	}
 
+	resolveCelestialCollision(pos, cel) {
+		//debugger;
+		let theta = this.angleTo(...this.com, ...cel.com);
+		let angleToCom = this.angleTo(...this.com, ...pos);
+		let angle = angleToCom - theta;
+		let [force] = this.rotateVector(0, 1, angle);
+		if (Math.abs(angle) < 0.3) {
+			force *= -1;
+		}
+		this.rvel -= force * 0.015;
+	}
+
 	checkModuleCollision(module, body) {
-		let p = this.getWorldPoint(...module.localCom)
+		let p = this.getWorldPoint(...module.localCom);
 		let dis = body.distanceTo({ com: p });
 		if (dis < body.radius + 0.5) {
 			this.approach(body, dis - (body.radius + 0.5));
 			this.halt();
+			this.resolveCelestialCollision(p, body);
 		}
 	}
 

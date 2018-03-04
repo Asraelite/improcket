@@ -10,7 +10,7 @@ export function createThrustExhaust(thruster) {
 		xvel: ship.xvel + fx,
 		yvel: ship.yvel + fy,
 		color: '#f4c542',
-		lifetime: 10,
+		lifetime: 5,
 		size: 0.07
 	}));
 }
