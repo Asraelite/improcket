@@ -6,6 +6,7 @@ export {getSectorFromWorld, getContainedSectors} from './sector.mjs';
 export const entities = new Set();
 export const celestials = new Set();
 export const ships = new Set();
+export const particles = new Set();
 
 export let playerShip = null;
 
@@ -16,12 +17,14 @@ export function setPlayerShip(ship) {
 export function init() {
 	entities.clear();
 	celestials.clear();
+	ships.clear();
+	particles.clear();
 	spawn.player();
 	spawn.startPlanet();
-
 }
 
 export function tick() {
+	particles.forEach(p => p.tick());
 	celestials.forEach(c => c.tick());
 	entities.forEach(e => e.tick());
 	ships.forEach(s => s.tick());

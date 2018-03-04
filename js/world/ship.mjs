@@ -1,6 +1,7 @@
 import Module from './module.mjs';
 import Body from './body.mjs';
 import * as world from './index.mjs';
+import * as particle from './particle.mjs';
 
 export default class Ship extends Body {
 	constructor(x, y) {
@@ -20,6 +21,13 @@ export default class Ship extends Body {
 		this.tickMotion();
 		this.tickGravity(world.celestials);
 		this.resolveCollisions();
+
+		this.modules.forEach(m => {
+			if (m.type == 'thruster' && m.power !== 0) {
+				for (let i = 0; i < 2; i++) particle.createThrustExhaust(m);
+			}
+		});
+
 		this.modules.forEach(m => m.reset());
 	}
 

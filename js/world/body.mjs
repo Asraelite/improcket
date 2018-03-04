@@ -20,6 +20,10 @@ export default class Body {
 		return [this.x, this.y];
 	}
 
+	get speed() {
+		return Math.sqrt(this.xvel ** 2 + this.yvel ** 2);
+	}
+
 	getWorldPoint(lx, ly) {
 		let [cx, cy] = this.localCom;
 		let [nx, ny] = this.rotateVector(lx - cx, ly - cy, this.r);
@@ -36,6 +40,10 @@ export default class Body {
 	rotateVector(x, y, r) {
 		return [(x * Math.cos(this.r) - y * Math.sin(this.r)),
 			(y * Math.cos(this.r) - x * Math.sin(this.r))];
+	}
+
+	relativeVector(x, y) {
+		return this.rotateVector(x, y, this.r);
 	}
 
 	tickMotion() {

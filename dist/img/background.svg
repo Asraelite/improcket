@@ -15,7 +15,10 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.2 5c3e80d, 2017-08-06"
-   sodipodi:docname="background.svg">
+   sodipodi:docname="background.svg"
+   inkscape:export-filename="/home/asraelite/code/js/improcket/dist/img/background.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -25,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.079999996"
-     inkscape:cx="1460.2236"
-     inkscape:cy="3294.9439"
+     inkscape:zoom="0.05656854"
+     inkscape:cx="3137.2136"
+     inkscape:cy="3051.1973"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"

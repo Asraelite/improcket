@@ -16,7 +16,7 @@ export function render() {
 
 	renderLayer(patterns.back, 0.3, 1);
 	renderLayer(patterns.middle, 0.5, 0.3);
-	renderLayer(patterns.front, 0.7, 0.3);
+	//renderLayer(patterns.front, 0.7, 0.3);
 }
 
 function renderLayer(pattern, speed = 1, scale = 1) {

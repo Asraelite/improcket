@@ -3,11 +3,14 @@ import {images as assets} from '../assets.mjs';
 import * as world from '../world/index.mjs';
 
 export function render() {
+	world.particles.forEach(renderParticle);
 	world.celestials.forEach(renderCelestial);
 	world.ships.forEach(renderShip);
-	if (typeof window.q !== 'undefined') {
-		context.fillStyle = 'red';
-	}
+}
+
+function renderParticle(particle) {
+	context.fillStyle = particle.color;
+	context.fillRect(...particle.com, particle.size, particle.size);
 }
 
 function renderShip(ship) {
