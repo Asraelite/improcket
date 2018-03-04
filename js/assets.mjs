@@ -3,6 +3,11 @@ export const images = {
 		logo: 'logo.png',
 		logoSvg: 'logo2.svg'
 	},
+	background: {
+		back: 'background.png',
+		middle: 'stars_back.png',
+		front: 'stars_front.png'
+	},
 	modules: {
 		capsule: {
 			small: 'modules/small_capsule.svg'
