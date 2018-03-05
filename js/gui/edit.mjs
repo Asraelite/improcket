@@ -38,8 +38,8 @@ export default class GuiEdit extends GuiElement {
 		for (let x = 0; x < this.tileWidth; x++)
 		for (let y = 0; y < this.tileHeight; y++) {
 			let tile = edit.getTile(x, y);
-			let ex = x * tileSize + spacing / 2 + ox + this.x;
-			let ey = y * tileSize + spacing / 2 + oy + this.y;
+			let ex = x * tileSize + spacing / 2 + ox;
+			let ey = y * tileSize + spacing / 2 + oy;
 			let [ew, eh] = [tileSize - spacing, tileSize - spacing];
 
 			let onclick = (button) => {
@@ -54,8 +54,10 @@ export default class GuiEdit extends GuiElement {
 	tick() {
 		if (state.editing && !this.active) this.updateTiles();
 		this.active = state.editing;
-		this.options.draw = this.options.drawChildren = this.active;
+		this.parent.options.drawChildren = this.active;
 		if (!this.active) return;
+
+		this.textElements.info.text = edit.message;
 
 		[this.tileWidth, this.tileHeight] = [edit.width, edit.height];
 	}

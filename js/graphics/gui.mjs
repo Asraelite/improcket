@@ -9,12 +9,13 @@ export function render() {
 function renderElement(element) {
 	//console.log(element.options);
 	if (element.options.draw) {
-		if (element.type == 'frame') renderFrame(element);
-		if (element.type == 'image') renderImage(element);
-		if (element.type == 'button') renderButton(element);
-		if (element.type == 'edit') renderEdit(element);
-		if (element.type == 'itemButton') renderItemButton(element);
-		if (element.type == 'inventory') renderInventory(element);
+		if (element.type === 'frame') renderFrame(element);
+		if (element.type === 'image') renderImage(element);
+		if (element.type === 'button') renderButton(element);
+		if (element.type === 'edit') renderEdit(element);
+		if (element.type === 'itemButton') renderItemButton(element);
+		if (element.type === 'inventory') renderInventory(element);
+		if (element.type === 'text') renderText(element);
 	}
 
 	if (element.options.drawChildren)
@@ -30,11 +31,25 @@ function renderImage(element) {
 	context.drawImage(element.image, ...element.shape);
 }
 
+function renderText(element) {
+	context.font = element.font;
+	context.textAlign = element.align;
+	context.textBaseline = element.valign;
+	context.fillStyle = element.color;
+	context.fillText(element.text, element.x, element.y);
+}
+
 function renderButton(element) {
-	if (element.mouseHeld) {
+	if (element.mouseHeld && !element.options.disabled) {
 		context.fillStyle = '#706244';
+	} else if (element.mouseOver && !element.options.disabled) {
+		context.fillStyle = '#ad9869';
 	} else {
-		context.fillStyle = element.mouseOver ? '#ad9869' : '#917f58';
+		context.fillStyle = '#917f58';
+	}
+
+	if (element.options.disabled) {
+		context.globalAlpha = 0.5;
 	}
 
 	context.fillRect(...element.shape);
@@ -46,6 +61,7 @@ function renderButton(element) {
 	context.fillStyle = '#fff';
 	context.font = '12pt Consolas';
 	context.fillText(element.text, ...element.center);
+	context.globalAlpha = 1;
 }
 
 function renderItemButton(element) {

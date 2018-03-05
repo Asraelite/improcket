@@ -56,6 +56,10 @@ export default class Ship extends Body {
 			this.landed ? events.landShip() : events.launchShip();
 	}
 
+	clearModules() {
+		this.modules.clear();
+	}
+
 	addModule(x, y, properties, options) {
 		let module = new Module(x, y, this, {...properties, ...options});
 		this.modules.add(module);
@@ -128,7 +132,7 @@ export default class Ship extends Body {
 
 		this.modules.forEach(m => {
 			if (m.type !== 'thruster') return;
-			m.power = forward;
+			m.power += forward;
 		});
 
 	}

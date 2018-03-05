@@ -29,6 +29,8 @@ export default class GuiElement extends Rect {
 	append(element) {
 		this.children.add(element);
 		element.parent = this;
+		element.x += this.x;
+		element.y += this.y;
 	}
 
 	clear() {
@@ -39,10 +41,10 @@ export default class GuiElement extends Rect {
 
 	posRelative({x = null, xc = 0, y = null, yc = 0, w = null, h = null}) {
 		if (x !== null) {
-			this.x = (this.parent.w * x) - (this.w * xc);
+			this.x = (this.parent.w * x) - (this.w * xc) + this.parent.x;
 		}
 		if (y !== null)
-			this.y = (this.parent.h * y) - (this.h * yc);
+			this.y = (this.parent.h * y) - (this.h * yc) + this.parent.y;
 		if (w !== null)
 			this.w = this.parent.w * w;
 		if (h !== null)

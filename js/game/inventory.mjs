@@ -6,8 +6,6 @@ export let currentItem = null;
 
 export function init() {
 	items.clear();
-	addItem('capsule', 'small');
-	addItem('thruster', 'light');
 }
 
 export function getTiles() {

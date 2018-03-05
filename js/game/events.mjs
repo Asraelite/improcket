@@ -21,7 +21,11 @@ export function launchShip() {
 	game.state.landed = false;
 }
 
-export function editShip() {
+export function toggleEdit() {
+	if (game.state.editing) {
+		endEditing();
+		return;
+	}
 	game.state.editing = true;
 	game.state.inventory = true;
 	edit.init();
@@ -34,8 +38,6 @@ export function endEditing() {
 		graphics.changePerspective('universe');
 		game.state.editing = false;
 		game.state.inventory = false;
-	} else {
-		console.log(reason);
 	}
 }
 

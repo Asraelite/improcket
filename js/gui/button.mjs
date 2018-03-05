@@ -10,7 +10,7 @@ export default class GuiButton extends GuiElement {
 	}
 
 	click() {
-		if (this.options.draw)
+		if (this.options.draw && !this.options.disabled)
 			this.onclick();
 	}
 }
