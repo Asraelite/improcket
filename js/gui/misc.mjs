@@ -9,9 +9,14 @@ export class Rect {
 
 		this.onclick = null;
 		this.mouseHeld = false;
+
+		this.rightMouseHeld = false;
+		this.onRightClick = null;
 	}
 
 	click() {}
+
+	rightClick() {}
 
 	tickMouse() {
 		if (this.mouseHeld == true && !input.mouse.held[0] && this.mouseOver)
@@ -20,6 +25,14 @@ export class Rect {
 			this.mouseHeld = true;
 		if (!input.mouse.held[0])
 			this.mouseHeld = false;
+
+		if (this.rightMouseHeld == true && !input.mouse.held[2]
+			&&this.mouseOver)
+			this.rightClick();
+		if (!this.rightMouseHeld && input.mouse.pressed[2] && this.mouseOver)
+			this.rightMouseHeld = true;
+		if (!input.mouse.held[2])
+			this.rightMouseHeld = false;
 	}
 
 	get shape() {

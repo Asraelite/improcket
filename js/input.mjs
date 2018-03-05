@@ -48,4 +48,8 @@ export function init() {
 	window.addEventListener('wheel', event => {
 		mouse.scroll = event.deltaY;
 	});
+
+	window.addEventListener('contextmenu', event => {
+		event.preventDefault();
+	});
 }

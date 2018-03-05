@@ -18,9 +18,11 @@ export const MAX_ZOOM = 100;
 export const DEFAULT_ZOOM = 10;
 export const ZOOM_SPEED = 0.01;
 // Ship landing. Angle in radians.
-export const TIP_ANGLE = 30.3;
+export const TIP_ANGLE = 0.3;
 export const TIP_SPEED = 0.015;
 // Ship flight mechanics. Speed measured in units per tick.
 export const FUEL_BURN_RATE = 0.01;
 // Distance at which an orbited planet will not be considered a parent body.
 export const MAX_PARENT_CELESTIAL_DISTANCE = 120;
+// Ship editing.
+export const EDIT_MARGIN = 2;

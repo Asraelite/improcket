@@ -3,6 +3,7 @@ import * as draw from './draw.mjs';
 import * as input from '../input.mjs';
 import {render as renderWorld} from './world.mjs';
 import {render as renderBackground} from './background.mjs';
+import {render as renderEdit} from './edit.mjs';
 import * as world from '../world/index.mjs';
 import * as consts from '../consts.mjs';
 
@@ -77,7 +78,7 @@ class Perspective {
 	}
 
 	changeRotationMode(mode) {
-		this.oldTarget = this.targetRotation;
+		this.oldTarget = this.currentRotation;
 		this.rotationMode = mode;
 	}
 
@@ -181,7 +182,7 @@ class Perspective {
 
 	transformCanvas() {
 		let [,,bw, bh] = this.bounds;
-		let [sx, sy] = this.rotateVector(...this.currentShift, -this.rotation);
+		let [sx, sy] = this.rotateVector(...this.currentShift, this.rotation);
 		let tx = -(this.x + sx) * this.zoom;
 		let ty = -(this.y + sy) * this.zoom;
 		context.translate(tx + bw / 2, ty + bh / 2);

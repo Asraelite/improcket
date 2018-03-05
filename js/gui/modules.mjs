@@ -4,6 +4,7 @@ import {canvas} from '../graphics/index.mjs';
 import GuiFrame from './frame.mjs';
 import GuiImage from './image.mjs';
 import GuiButton from './button.mjs';
+import GuiEdit from './edit.mjs';
 import * as events from '../game/events.mjs';
 import {state} from '../game/index.mjs';
 
@@ -38,13 +39,19 @@ export function title() {
 export function game() {
 	let shadow = root();
 
-	let edit = new GuiButton('Edit rocket', events.editShip, 0, 0, 200);
-	shadow.append(edit);
-	edit.posRelative({ x: 0.5, xc: 0.5, y: 1 });
-	edit.y -= 45;
-	edit.tick = () => {
-		edit.options.draw = state.landed && !state.editing;
+	let editButton = new GuiButton('Edit rocket', events.editShip, 0, 0, 200);
+	shadow.append(editButton);
+	editButton.posRelative({ x: 0.5, xc: 0.5, y: 1 });
+	editButton.y -= 45;
+	editButton.tick = () => {
+		editButton.options.draw = state.landed && !state.editing;
 	}
+
+	let edit = new GuiEdit(0, 0, 0, 0);
+	shadow.append(edit);
+	edit.posRelative({x: 0.45, y: 0, w: 0.55, h: 0.6});
+	edit.x -= 10;
+	edit.y += 10;
 
 	return shadow;
 }

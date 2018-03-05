@@ -35,14 +35,14 @@ export default class Ship extends Body {
 
 		if (closestDistance > consts.MAX_PARENT_CELESTIAL_DISTANCE)
 			return null;
-			
+
 		return closest;
 	}
 
 	tick() {
-		this.tickMotion();
+		if (!state.editing) this.tickMotion();
 		if (!this.landed) this.tickGravity(world.celestials);
-		this.resolveCollisions();
+		if (!state.editing) this.resolveCollisions();
 
 		this.modules.forEach(m => {
 			if (m.type == 'thruster' && m.power !== 0) {

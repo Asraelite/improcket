@@ -22,8 +22,6 @@ export function launchShip() {
 }
 
 export function editShip() {
-	console.log('a');
-	graphics.changePerspective('parent', -5, 0);
 	game.state.editing = true;
 	edit.init();
 }

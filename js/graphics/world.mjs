@@ -1,6 +1,8 @@
 import {canvas, context} from './index.mjs';
 import {images as assets} from '../assets.mjs';
 import * as world from '../world/index.mjs';
+import * as edit from './edit.mjs';
+import {state} from '../game/index.mjs';
 
 export function render() {
 	world.particles.forEach(renderParticle);
@@ -20,6 +22,10 @@ function renderShip(ship) {
 	let [cx, cy] = ship.localCom;
 	context.translate(-cx, -cy);
 	ship.modules.forEach(m => {
+		let [mx, my] = [m.x, m.y];
+		if (state.editing) {
+			
+		}
 		context.drawImage(m.currentImage, m.x, m.y, 1, 1);
 	});
 	context.restore();
