@@ -35,7 +35,7 @@ export default class GuiEdit extends GuiElement {
 
 		for (let x = 0; x < this.tileWidth; x++)
 		for (let y = 0; y < this.tileHeight; y++) {
-			let tile = this.getTile(x, y);
+			let tile = edit.getTile(x, y);
 			let ex = x * tileSize + spacing / 2 + ox + this.x;
 			let ey = y * tileSize + spacing / 2 + oy + this.y;
 			let [ew, eh] = [tileSize - spacing, tileSize - spacing];
@@ -44,7 +44,7 @@ export default class GuiEdit extends GuiElement {
 				this.tileClicked(x, y, button);
 			};
 
-			let el = new GuiItemButton(tile.module, onclick, ex, ey, ew, eh);
+			let el = new GuiItemButton(tile, onclick, ex, ey, ew, eh);
 			this.append(el);
 		}
 	}
@@ -64,6 +64,12 @@ export default class GuiEdit extends GuiElement {
 	}
 
 	tileClicked(x, y, button) {
-		console.log(x, y, button);
+		if (button == 'left') {
+			edit.clickTile(x, y);
+		} else if (button == 'right') {
+			edit.rightClickTile(x, y);
+		}
+
+		this.updateTiles();
 	}
 }

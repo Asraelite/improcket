@@ -1,3 +1,4 @@
+import {modules} from '../data.mjs';
 import {images as assets} from '../assets.mjs';
 
 export default class Module {
@@ -19,6 +20,7 @@ export default class Module {
 		this.ship = ship;
 		this.id = id;
 		this.images = assets.modules[this.type][this.id];
+		this.data = modules[this.type][this.id];
 		// Fuel
 		if (this.type == 'fuel') {
 			this.fuel = filled ? fuelCapacity : 0;

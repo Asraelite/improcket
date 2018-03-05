@@ -3,7 +3,6 @@ import * as draw from './draw.mjs';
 import * as input from '../input.mjs';
 import {render as renderWorld} from './world.mjs';
 import {render as renderBackground} from './background.mjs';
-import {render as renderEdit} from './edit.mjs';
 import * as world from '../world/index.mjs';
 import * as consts from '../consts.mjs';
 

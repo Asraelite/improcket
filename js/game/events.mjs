@@ -31,3 +31,7 @@ export function endEditing() {
 	game.state.editing = false;
 	edit.end();
 }
+
+export function invalidTilePlacement() {
+	// TODO: Play some audio.
+}

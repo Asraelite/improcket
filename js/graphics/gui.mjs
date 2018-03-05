@@ -49,7 +49,7 @@ function renderButton(element) {
 
 function renderItemButton(element) {
 	context.globalAlpha = 0.5;
-	if (element.mouseHeld) {
+	if (element.mouseHeld || element.rightMouseHeld) {
 		context.fillStyle = '#080808';
 	} else {
 		context.fillStyle = element.mouseOver ? '#222' : '#0e0e0e';

@@ -2,6 +2,9 @@ import * as game from './index.mjs';
 import * as graphics from '../graphics/index.mjs';
 import * as world from '../world/index.mjs';
 import * as consts from '../consts.mjs';
+import * as events from './events.mjs';
+import {modules} from '../data.mjs';
+import {images as assets} from '../assets.mjs';
 
 export let tiles = new Map();
 export let width = 0;
@@ -33,11 +36,39 @@ export function end() {
 
 }
 
-export function getTile(x, y) {
+function trueFromVisible(x, y) {
+	let [px, py] = position;
+	return [x - px, y - py];
+}
+
+export function clickTile(x, y) {
+	if (currentModule !== null) return;
+	let current = getTile(x, y).source;
+	if (current.type !== null) {
+		events.invalidTilePlacement();
+		return;
+	}
+
 	let id = posId(x, y);
+	tiles.set(id, new Tile(x, y, currentModule));
+}
+
+export function rightClickTile(x, y) {
+	let current = getTile(x, y).source;
+	if (current === null) return;
+	let { x: tx, y: ty } = current;
+	let id = posId(tx, ty);
+	tiles.set(id, new Tile(tx, ty, null));
+}
+
+export function getTile(x, y) {
+	let [px, py] = position;
+	let [tx, ty] = [px + x, py + y];
+	let id = posId(tx, ty);
 	if (!tiles.has(id))
-		tiles.set(id, new Tile(x, y, null));
+		tiles.set(id, new Tile(tx, ty, null));
 	return tiles.get(id);
+	// TODO: Get linked tiles.
 }
 
 function posId(x, y) {
@@ -50,13 +81,24 @@ function getBoundaries() {
 
 class Tile {
 	constructor(x, y, module) {
-		this.module = module;
+		if (module === null) {
+			this.module = null;
+			this.image = null;
+		} else {
+			this.module = modules[module.type][module.id];
+			this.image = assets.modules[module.type][module.id];
+			if (module.type === 'thruster') this.image = this.image.off;
+		}
 		this.x = x;
 		this.y = y;
 	}
 
 	get valid() {
 		return true;
+	}
+
+	get source() {
+		return this;
 	}
 
 	get drawPos() {
