@@ -7,11 +7,20 @@ export function render() {
 	world.particles.forEach(renderParticle);
 	world.celestials.forEach(renderCelestial);
 	world.ships.forEach(renderShip);
+	world.entities.forEach(renderEntity);
 }
 
 function renderParticle(particle) {
 	context.fillStyle = particle.color;
 	context.fillRect(...particle.com, particle.size, particle.size);
+}
+
+function renderEntity(entity) {
+	context.save();
+	context.translate(...entity.com);
+	context.rotate(entity.r);
+	context.drawImage(entity.image, -0.5, -0.5, 1, 1);
+	context.restore();
 }
 
 function renderShip(ship) {

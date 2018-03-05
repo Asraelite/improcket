@@ -21,6 +21,7 @@ export function init() {
 	particles.clear();
 	spawn.player();
 	spawn.startPlanet();
+	spawn.testEntity();
 }
 
 export function tick() {

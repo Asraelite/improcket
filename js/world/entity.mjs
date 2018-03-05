@@ -1,64 +1,59 @@
 import Body from './body.mjs';
 import {modules} from '../data.mjs';
-import {celestials, particles} from './index.mjs';
+import {playerShip} from './index.mjs';
+import {images as assets} from '../assets.mjs';
+import {celestials, particles, entities} from './index.mjs';
+import * as particle from './particle.mjs';
+import * as consts from '../consts.mjs';
+import * as events from '../game/events.mjs';
 
-export function createThrustExhaust(thruster) {
-	let ship = thruster.ship;
-	let [fx, fy] = ship.relativeVector(0, 0.2);
-	let [dx, dy] = ship.relativeVector((Math.random() - 0.5) * 0.5, 0.5);
-	let [cx, cy] = thruster.com;
-	particles.add(new Particle(cx + dx, cy + dy, {
-		xvel: ship.xvel + fx,
-		yvel: ship.yvel + fy,
-		color: '#f4c542',
-		lifetime: 5,
-		size: 0.07
-	}));
-}
-
-class Particle extends Body {
-	constructor(x, y, {
+export default class Entity extends Body {
+	constructor(x, y, type = 'fuel', id = 'small', {
 		xvel = 0,
 		yvel = 0,
-		spray = 0.1,
-		fizzle = 0,
-		maxFizzle = fizzle * 2,
-		color = '#fff',
-		gravity = false,
-		lifetime = 50,
-		size = 0.1,
-		friction = 0.99
-	}) {
-		super(x, y, 0.1);
+		gravity = false
+	} = {}) {
+		super(x, y, 100);
 
-		this.size = size;
-		this.xvel = xvel + (Math.random() - 0.5) * spray;
-		this.yvel = yvel + (Math.random() - 0.5) * spray;
-		this.friction = friction;
-		this.fizzle = fizzle;
-		this.maxFizzle = maxFizzle;
-		this.color = color;
+		this.xvel = xvel;
+		this.yvel = yvel;
+		this.width = 1;
+		this.height = 1;
+		this.radius = (this.width + this.height) / 2;
+		this.type = type;
+		this.id = id;
+		this.image = assets.modules[type][id];
 		this.gravity = gravity;
-		this.life = lifetime;
+		this.touched = false;
 	}
 
 	get com() {
-		return [this.x - this.size / 2, this.y - this.size / 2];
+		return [this.x + this.width / 2, this.y + this.height / 2];
+	}
+
+	orbit(celestial, radius) {
+		this.gravity = true;
+	}
+
+	remove() {
+		entities.delete(this);
 	}
 
 	tick() {
-		if (!this.life--) {
-			particles.delete(this);
-			return;
-		}
-
+		this.r += consts.ENTITY_ROTATION_RATE;
 		this.tickMotion();
 		if (this.gravity) this.tickGravity(celestials);
+		let col = this.getCelestialCollision(celestials);
 
-		this.xvel *= this.friction;
-		this.yvel *= this.friction;
-		this.x += (Math.random() - 0.5) * this.fizzle;
-		this.y += (Math.random() - 0.5) * this.fizzle;
-		if (this.fizzle < this.mazFizzle) this.fizzle *= 1.05;
+		if (col !== false) {
+			this.remove();
+		}
+
+		if (playerShip.colliding(this.com, this.radius)) {
+			let success = events.collectItem(this.type, this.id);
+			if (!success) return;
+			particle.createPickupBurst(playerShip, this.com);
+			this.remove();
+		}
 	}
 }

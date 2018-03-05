@@ -83,6 +83,19 @@ export default class Ship extends Body {
 			Math.max(Math.sqrt((bx - lx) ** 2 + (by - ly) ** 2), a), 0) + 1;
 	}
 
+	colliding(point, radius) {
+		let [px, py] = point;
+		let result = false;
+
+		this.modules.forEach(m => {
+			let [mx, my] = this.getWorldPoint(...m.localCom);
+			let dis = Math.sqrt((py - my) ** 2 + (px - mx) ** 2);
+			if (dis < radius) result = true;
+		});
+
+		return result;
+	}
+
 	resolveCollisions() {
 		this.landed = false;
 
@@ -127,8 +140,11 @@ export default class Ship extends Body {
 
 	applyThrust({ forward = 0, left = 0, right = 0, back = 0,
 		turnLeft = 0, turnRight = 0}) {
-		let turnForce = (turnRight - turnLeft) / 20;
-		this.applyDirectionalForce(0, -forward / 30, turnForce);
+
+		let thrustForce = -forward * consts.THRUST_POWER;
+		let turnForce = (turnRight - turnLeft) * consts.TURN_POWER;
+
+		this.applyDirectionalForce(0, thrustForce, turnForce);
 
 		this.modules.forEach(m => {
 			if (m.type !== 'thruster') return;

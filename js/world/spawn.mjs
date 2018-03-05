@@ -1,6 +1,7 @@
 import Ship from './ship.mjs';
 import Module from './module.mjs';
 import Celestial from './celestial.mjs';
+import Entity from './entity.mjs';
 import {modules} from '../data.mjs';
 import * as world from './index.mjs';
 
@@ -16,9 +17,15 @@ export function player() {
 
 export function startPlanet() {
 	return celestial(0, 0, 40, {
-		density: 10,
+		density: 3,
 		type: 'green'
 	});
+}
+
+export function testEntity() {
+	let entity = new Entity(0, -50);
+	world.entities.add(entity);
+	return entity;
 }
 
 export function celestial(x, y, radius, params) {

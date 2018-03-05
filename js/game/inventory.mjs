@@ -1,5 +1,6 @@
 import {modules} from '../data.mjs';
 import {images as assets} from '../assets.mjs';
+import * as events from './events.mjs';
 
 export const items = new Map();
 export let currentItem = null;
@@ -30,6 +31,7 @@ export function removeItem(type, id) {
 		items.delete(mapId);
 		currentItem = null;
 	}
+	events.tossItem();
 }
 
 export function selectItem(type, id) {

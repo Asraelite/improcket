@@ -15,6 +15,31 @@ export function createThrustExhaust(thruster) {
 	}));
 }
 
+export function createPickupBurst(ship, point) {
+	for (let i = 0; i < 20; i++) {
+		particles.add(new Particle(...point, {
+			xvel: ship.xvel,
+			yvel: ship.yvel,
+			color: '#eae55d',
+			lifetime: Math.random() * 20 + 15,
+			friction: 0.95,
+			size: Math.random() * 0.2 + 0.05,
+			spray: 0.3
+		}));
+	}
+}
+
+export function createItemToss(ship) {
+	particles.add(new Particle(...ship.com, {
+		xvel: ship.xvel,
+		yvel: ship.yvel,
+		color: '#a87234',
+		lifetime: 50,
+		size: 0.6,
+		spray: 0.4
+	}));
+}
+
 class Particle extends Body {
 	constructor(x, y, {
 		xvel = 0,
@@ -46,7 +71,7 @@ class Particle extends Body {
 	}
 
 	tick() {
-		if (!this.life--) {
+		if (this.life-- <= 0) {
 			particles.delete(this);
 			return;
 		}

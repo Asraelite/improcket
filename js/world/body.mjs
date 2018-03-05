@@ -24,6 +24,15 @@ export default class Body {
 		return Math.sqrt(this.xvel ** 2 + this.yvel ** 2);
 	}
 
+	getCelestialCollision(celestials) {
+		let result = false;
+		celestials.forEach(c => {
+			let dis = this.distanceTo(c);
+			if (dis < c.radius) result = c;
+		});
+		return result;
+	}
+
 	getWorldPoint(lx, ly) {
 		let [cx, cy] = this.localCom;
 		let [nx, ny] = this.rotateVector(lx - cx, ly - cy, this.r);
@@ -55,7 +64,7 @@ export default class Body {
 
 	tickGravity(bodies) {
 		bodies.forEach(b => {
-			let force = b.mass / this.mass / (this.distanceTo(b) ** 2) * G;
+			let force = b.mass / (this.distanceTo(b) ** 2) * G;
 			let [[ax, ay], [bx, by]] = [this.com, b.com];
 			let angle = Math.atan2(by - ay, bx - ax);
 			this.xvel += Math.cos(angle) * force;

@@ -2,6 +2,8 @@ import * as game from './index.mjs';
 import * as graphics from '../graphics/index.mjs';
 import * as world from '../world/index.mjs';
 import * as player from './player.mjs';
+import * as inventory from './inventory.mjs';
+import * as particle from '../world/particle.mjs';
 import * as edit from './edit.mjs';
 
 export let shipLanded = false;
@@ -47,4 +49,13 @@ export function invalidTilePlacement() {
 
 export function tilePlacement() {
 	// TODO: Play some audio.
+}
+
+export function tossItem() {
+	particle.createItemToss(world.playerShip);
+}
+
+export function collectItem(type, id) {
+	inventory.addItem(type, id);
+	return true;
 }
