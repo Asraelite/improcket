@@ -56,7 +56,8 @@ export default class GuiInventory extends GuiElement {
 
 			let el = new GuiItemButton(tile, onclick, ex, ey, ew, eh, {
 				padding: 0.1,
-				selected: selected
+				selected: selected,
+				quantity: tile.quantity
 			});
 
 			this.append(el);

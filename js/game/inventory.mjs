@@ -28,6 +28,10 @@ export function removeItem(type, id) {
 	if (!items.has(mapId)) return;
 	let tile = items.get(mapId);
 	tile.decrease();
+	if (tile.quantity == 0) {
+		items.delete(mapId);
+		currentItem = null;
+	}
 }
 
 export function selectItem(type, id) {

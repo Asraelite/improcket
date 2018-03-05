@@ -39,6 +39,10 @@ export class Rect {
 		return [this.x, this.y, this.w, this.h];
 	}
 
+	get end() {
+		return [this.x + this.w, this.y + this.h];
+	}
+
 	get center() {
 		return [this.x + this.w / 2, this.y + this.h / 2];
 	}

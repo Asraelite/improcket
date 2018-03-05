@@ -60,5 +60,7 @@ export function game() {
 	inventory.x += 10;
 	inventory.y += 10;
 
+	edit.guiInventory = inventory;
+
 	return shadow;
 }

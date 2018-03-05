@@ -74,6 +74,15 @@ function renderItemButton(element) {
 		let [dw, dh] = [element.w * (1 - p), element.h * (1 - p)];
 		context.drawImage(element.image, ox, oy, dw, dh);
 	}
+
+	if (element.quantity > 1) { // CHANGE TO 1
+		context.textAlign = 'right';
+		context.textBaseline = 'bottom';
+		context.fillStyle = '#fff';
+		context.font = 'bold 10pt Consolas';
+		let [ex, ey] = element.end;
+		context.fillText('x' + element.quantity, ex - 2, ey - 2);
+	}
 }
 
 function renderEdit(element) {

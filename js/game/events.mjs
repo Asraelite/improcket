@@ -37,3 +37,7 @@ export function endEditing() {
 export function invalidTilePlacement() {
 	// TODO: Play some audio.
 }
+
+export function tilePlacement() {
+	// TODO: Play some audio.
+}

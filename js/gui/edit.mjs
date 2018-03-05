@@ -3,6 +3,7 @@ import GuiElement from './element.mjs';
 import GuiItemButton from './item.mjs';
 import {state} from '../game/index.mjs';
 import * as edit from '../game/edit.mjs';
+import * as inventory from './inventory.mjs';
 
 export default class GuiEdit extends GuiElement {
 	constructor(x, y, w = 100, h = 30) {
@@ -11,6 +12,7 @@ export default class GuiEdit extends GuiElement {
 		this.tileWidth = 0;
 		this.tileHeight = 0;
 		this.active = false;
+		this.guiInventory = null;
 	}
 
 	updateTiles() {
@@ -71,5 +73,6 @@ export default class GuiEdit extends GuiElement {
 		}
 
 		this.updateTiles();
+		this.guiInventory.updateTiles();
 	}
 }
