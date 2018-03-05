@@ -1,3 +1,5 @@
+// Connectivity = [top, right, bottom, left] (same TRouBLe as CSS)
+
 export const modules = {
 	capsule: {
 		small: {
@@ -7,6 +9,8 @@ export const modules = {
 			type: 'capsule',
 			id: 'small',
 			mass: 2,
+			connectivity: [false, false, true, false],
+			capacity: 3,
 			rotation: 0.1
 		}
 	},
@@ -17,7 +21,8 @@ export const modules = {
 			type: 'fuel',
 			id: 'small',
 			mass: 1,
-			capacity: 3
+			connectivity: [true, false, true, false],
+			fuelCapacity: 5
 		}
 	},
 	thruster: {
@@ -28,6 +33,7 @@ export const modules = {
 			type: 'thruster',
 			id: 'light',
 			mass: 2,
+			connectivity: [true, false, false, false],
 			thrust: 10,
 			isp: 200
 		}

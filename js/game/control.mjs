@@ -51,7 +51,7 @@ function tickPlaying() {
 }
 
 function tickEditing() {
-	if (held[mapping.exitEdit]) {
+	if (pressed[mapping.exitEdit]) {
 		events.endEditing();
 	}
 }

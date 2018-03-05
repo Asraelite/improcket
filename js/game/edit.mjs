@@ -33,7 +33,47 @@ export function init() {
 }
 
 export function end() {
+	let result = validate();
 
+	return {
+		valid: result === false,
+		reason: result
+	}
+}
+
+function validate() {
+	let capsulesFound = 0;
+	let thrustersFound = 0;
+	let unvisited = new Set();
+
+	tiles.forEach(t => {
+		if (t.type !== null) unvisited.add(t)
+	});
+
+	if (unvisited.size == 0) {
+		return 'no capsule';
+	}
+
+	let visit = (tile) => {
+		unvisited.delete(tile);
+		if (tile.type == 'capsule') capsulesFound++;
+		if (tile.type == 'thruster') thrustersFound++;
+		tile.neighbours.forEach(n => {
+			if (unvisited.has(n)) visit(n);
+		});
+	};
+
+	visit(unvisited.values().next().value);
+
+	if (unvisited.size > 0) {
+		return 'not connected'
+	} else if (capsulesFound === 0) {
+		return 'no capsule'
+	} else if (thrustersFound === 0) {
+		return 'no thruster'
+	} else {
+		return false;
+	}
 }
 
 function positionAdjust(x, y) {
@@ -68,10 +108,13 @@ export function rightClickTile(x, y) {
 
 export function getTile(x, y) {
 	let [px, py] = position;
-	let [tx, ty] = [px + x, py + y];
-	let id = posId(tx, ty);
+	return getRawTile(px + x, py + y);
+}
+
+export function getRawTile(x, y) {
+	let id = posId(x, y);
 	if (!tiles.has(id))
-		tiles.set(id, new Tile(tx, ty, null));
+		tiles.set(id, new Tile(x, y, null));
 	return tiles.get(id);
 	// TODO: Get linked tiles.
 }
@@ -81,7 +124,7 @@ function posId(x, y) {
 }
 
 function getBoundaries() {
-	return [0, 0, 0, 2];
+	return [0, 0, 0, 3];
 }
 
 class Tile {
@@ -103,6 +146,12 @@ class Tile {
 
 	get valid() {
 		return true;
+	}
+
+	get neighbours() {
+		return [[0, -1], [1, 0], [0, 1], [-1, 0]].filter((_, i) => {
+			return this.module.connectivity[i];
+		}).map(([dx, dy]) => getRawTile(this.x + dx, this.y + dy));
 	}
 
 	get source() {

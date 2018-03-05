@@ -28,10 +28,15 @@ export function editShip() {
 }
 
 export function endEditing() {
-	graphics.changePerspective('universe');
-	game.state.editing = false;
-	game.state.inventory = false;
-	edit.end();
+	let {valid, reason} = edit.end();
+
+	if (valid) {
+		graphics.changePerspective('universe');
+		game.state.editing = false;
+		game.state.inventory = false;
+	} else {
+		console.log(reason);
+	}
 }
 
 export function invalidTilePlacement() {
