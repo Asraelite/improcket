@@ -14,6 +14,7 @@ function renderElement(element) {
 		if (element.type == 'button') renderButton(element);
 		if (element.type == 'edit') renderEdit(element);
 		if (element.type == 'itemButton') renderItemButton(element);
+		if (element.type == 'inventory') renderInventory(element);
 	}
 
 	if (element.options.drawChildren)
@@ -56,30 +57,32 @@ function renderItemButton(element) {
 	}
 
 	context.fillRect(...element.shape);
-	context.strokeStyle = '#333';
-	context.strokeWidth = 4;
+	if (element.selected) {
+		context.strokeStyle = '#fff';
+		context.lineWidth = 2;
+	} else {
+		context.strokeStyle = '#333';
+		context.lineWidth = 1;
+	}
 	context.strokeRect(...element.shape);
 	context.globalAlpha = 1;
 
 	if (element.image) {
-		context.drawImage(element.image, ...element.shape);
+		let p = element.padding;
+		let ox = element.x + (p / 2 * element.w);
+		let oy = element.y + (p / 2 * element.h);
+		let [dw, dh] = [element.w * (1 - p), element.h * (1 - p)];
+		context.drawImage(element.image, ox, oy, dw, dh);
 	}
 }
 
 function renderEdit(element) {
-	/*
-	element.tiles.forEach(t => {
-		let tile = edit.getTile(x, y);
-		let [dx, dy] = tile.drawPos;
-		context.globalAlpha = 0.5;
-		context.fillStyle = '#000';
-		context.fillRect(dx, dy, 1, 1);
-		context.globalAlpha = 1;
 
-		let module = tile.module;
-		if (module !== null) {
-			context.drawImage(module.currentImage, dx, dy, 1, 1);
-		}
-	});
-	*/
+}
+
+function renderInventory(element) {
+	context.globalAlpha = 0.1;
+	context.fillStyle = '#541';
+	context.fillRect(...element.shape);
+	context.globalAlpha = 1;
 }

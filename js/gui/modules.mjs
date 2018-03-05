@@ -5,6 +5,7 @@ import GuiFrame from './frame.mjs';
 import GuiImage from './image.mjs';
 import GuiButton from './button.mjs';
 import GuiEdit from './edit.mjs';
+import GuiInventory from './inventory.mjs';
 import * as events from '../game/events.mjs';
 import {state} from '../game/index.mjs';
 
@@ -52,6 +53,12 @@ export function game() {
 	edit.posRelative({x: 0.45, y: 0, w: 0.55, h: 0.6});
 	edit.x -= 10;
 	edit.y += 10;
+
+	let inventory = new GuiInventory(0, 0, 0, 0);
+	shadow.append(inventory);
+	inventory.posRelative({x: 0, y: 0, w: 0.4, h: 0.6});
+	inventory.x += 10;
+	inventory.y += 10;
 
 	return shadow;
 }

@@ -2,13 +2,15 @@ import * as input from '../input.mjs';
 import * as events from './events.mjs';
 import * as player from './player.mjs';
 import * as graphics from '../graphics/index.mjs';
+import * as inventory from './inventory.mjs';
 import {state} from './index.mjs';
 
 export const mapping = {
 	thrust: 'KeyW',
 	left: 'KeyA',
 	right: 'KeyD',
-	exitEdit: 'Escape'
+	exitEdit: 'Escape',
+	inventory: 'KeyE',
 };
 
 let held, pressed;
@@ -41,6 +43,10 @@ function tickPlaying() {
 
 	if (held[mapping.right]) {
 		player.ship.applyThrust({ turnRight: 1 });
+	}
+
+	if (pressed[mapping.inventory]) {
+		state.inventory = !state.inventory;
 	}
 }
 

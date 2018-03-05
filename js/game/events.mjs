@@ -23,12 +23,14 @@ export function launchShip() {
 
 export function editShip() {
 	game.state.editing = true;
+	game.state.inventory = true;
 	edit.init();
 }
 
 export function endEditing() {
 	graphics.changePerspective('universe');
 	game.state.editing = false;
+	game.state.inventory = false;
 	edit.end();
 }
 

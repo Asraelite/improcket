@@ -2,6 +2,7 @@ import * as graphics from '../graphics/index.mjs';
 import * as gui from '../gui/index.mjs';
 import * as assets from '../assets.mjs';
 import * as input from '../input.mjs';
+import * as inventory from './inventory.mjs';
 import * as world from '../world/index.mjs';
 import * as events from './events.mjs';
 import * as control from './control.mjs';
@@ -15,7 +16,8 @@ export async function init() {
 		view: 'menu',
 		playing: false,
 		editing: false,
-		paused: false
+		paused: false,
+		inventory: false
 	};
 
 	graphics.init();
@@ -29,7 +31,7 @@ export async function init() {
 
 	// Recursive `requestAnimationFrame` can cause problems with Parcel.
 	while(true) {
-		await tick();
+		tick();
 		await new Promise(res => requestAnimationFrame(res));
 	}
 }
@@ -44,10 +46,11 @@ export function changeView(view) {
 		state.paused = false;
 		world.init();
 		player.init();
+		inventory.init();
 	}
 }
 
-async function tick() {
+function tick() {
 	if (state.view == 'game') {
 		world.tick();
 		control.tick();
