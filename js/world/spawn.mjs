@@ -5,6 +5,79 @@ import Entity from './entity.mjs';
 import Tracer from './tracer.mjs';
 import {modules} from '../data.mjs';
 import * as world from './index.mjs';
+import * as consts from '../consts.mjs';
+import {SECTOR_SIZE as SS} from '../consts.mjs';
+
+let spawnedSectors = new Set();
+
+const visibleRadius = (400 / consts.MIN_ZOOM) + SS;
+
+export function tick() {
+	let [px, py] = world.playerShip.com;
+
+	for (let x = px - visibleRadius; x < px + visibleRadius; x += SS)
+	for (let y = py - visibleRadius; y < py + visibleRadius; y += SS) {
+		let [sx, sy] = [x / SS | 0, y / SS | 0];
+		let id = `${sx}.${sy}`;
+		if (!spawnedSectors.has(id)) spawnSector(sx, sy);
+	}
+}
+
+function nearest(x, y, set) {
+	let closest = null;
+	let closestDis = 0;
+
+	set.forEach(e => {
+		let dis = e.distanceTo({ com: [x, y] });
+		if (closest === null || dis < closestDis) {
+			closest = e;
+			closestDis = dis;
+		}
+	});
+
+	return [closest, closestDis];
+}
+
+function spawnSector(x, y) {
+	let area = SS ** 2;
+
+	for (let i = 0; i < area / 10000; i++) {
+		let [px, py] = [(x + Math.random()) * SS, (y + Math.random()) * SS];
+		if (Math.random() > consts.PLANET_SPAWN_RATE) {
+			randomPlanet(px, py);
+		} else if (Math.random() > 0.01 ){
+			randomEntity(px, py);
+		}
+	}
+
+	spawnedSectors.add(`${x}.${y}`);
+}
+
+function randomPlanet(x, y) {
+	let rad = Math.random() * 60 + 30;
+	let [cel, dis] = nearest(x, y, world.celestials);
+	let mcs = consts.MIN_CELESTIAL_SPACING;
+
+	if (dis < Math.max(rad, cel.radius) * mcs) return;
+
+	let planet = celestial(x, y, rad, {
+		density: 3,
+		type: 'green'
+	});
+
+	for (let i = 1.5; i < 8; i += 1) {
+		if (Math.random() > consts.ENTITY_SPAWN_RATE) {
+			let e = randomEntity();
+			e.orbit(planet, i * rad);
+		}
+	}
+}
+
+function randomEntity(x, y) {
+	let entity = new Entity(x, y);
+	world.entities.add(entity);
+	return entity;
+}
 
 export function player() {
 	let ship = new Ship(0, -45);

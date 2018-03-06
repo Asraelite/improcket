@@ -27,7 +27,8 @@ export const images = {
 	},
 	celestials: {
 		green: {
-			"0": 'celestials/green_0.svg'
+			'0': 'celestials/green_0.svg',
+			'1': 'celestials/green_1.svg'
 		}
 	}
 };

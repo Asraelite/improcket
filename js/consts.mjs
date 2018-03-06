@@ -10,7 +10,7 @@
 export const EPSILON = 1e-8;
 // Don't change these.
 export const TAU = Math.PI * 2;
-// Unit length of sector. Only for internal representation.
+// Unit length of sector. May affect spawning a bit.
 export const SECTOR_SIZE = 512;
 // G, G-boy, The big G, Mr. G, g's big brother, G-dog
 export const GRAVITATIONAL_CONSTANT = 0.002;
@@ -32,3 +32,7 @@ export const MAX_PARENT_CELESTIAL_DISTANCE = 120;
 export const EDIT_MARGIN = 2;
 // Floating items.
 export const ENTITY_ROTATION_RATE = 0.01;
+// World generation.
+export const PLANET_SPAWN_RATE = 0.00002;
+export const ENTITY_SPAWN_RATE = 0.3;
+export const MIN_CELESTIAL_SPACING = 15;

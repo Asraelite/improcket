@@ -1,8 +1,5 @@
-import * as sector from './sector.mjs';
 import * as spawn from './spawn.mjs';
 import * as graphics from '../graphics/index.mjs';
-
-export {getSectorFromWorld, getContainedSectors} from './sector.mjs';
 
 export const entities = new Set();
 export const celestials = new Set();
@@ -25,6 +22,7 @@ export function init() {
 	spawn.player();
 	let p = spawn.startPlanet();
 	spawn.testEntity(p);
+	spawn.tick();
 }
 
 export function tick() {
@@ -33,4 +31,5 @@ export function tick() {
 	entities.forEach(e => e.tick());
 	ships.forEach(s => s.tick());
 	if (graphics.trace) tracers.forEach(t => t.tick());
+	spawn.tick();
 }

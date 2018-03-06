@@ -15,6 +15,7 @@ export default class Ship extends Body {
 		this.modules = new Set();
 		this.maxRadius = 0;
 		this.landed = false;
+		this.lastContactModule = null;
 	}
 
 	get com() {
@@ -110,22 +111,28 @@ export default class Ship extends Body {
 				});
 			}
 		})
-
-
-		window.q.push([...this.com, 'green']);
 	}
 
-	resolveCelestialCollision(pos, cel) {
+	checkModuleCollision(module, body) {
+		let p = this.getWorldPoint(...module.localCom);
+		let dis = body.distanceTo({ com: p });
+		if (dis < body.radius + 0.5 + consts.EPSILON) {
+			this.approach(body, dis - (body.radius + 0.5));
+			this.halt();
+			this.resolveCelestialCollision(p, body, module);
+			this.lastContactModule = module;
+		}
+	}
+
+	resolveCelestialCollision(pos, cel, module) {
 		let celToCom = this.angleTo(...this.com, ...cel.com);
 		let celToPoc = this.angleTo(...pos, ...cel.com);
 		let pocToCom = this.angleTo(...this.com, ...pos);
-		let shipAngle = this.r + Math.PI / 2;
-
-		window.q.push([...pos, 'blue']);
+		let shipAngle = this.normalizeAngle(this.r + Math.PI / 2);
 
 		let turnAngle = this.angleDifference(celToPoc, pocToCom);
 		let checkAngle = this.angleDifference(celToPoc, shipAngle);
-		let correctionAngle = this.angleDifference(shipAngle, pocToCom);
+		let correctionAngle = this.angleDifference(shipAngle, celToCom);
 
 		let [force] = this.rotateVector(0, 1, turnAngle);
 
@@ -144,16 +151,6 @@ export default class Ship extends Body {
 		}
 
 		this.rvel += force * consts.TIP_SPEED;
-	}
-
-	checkModuleCollision(module, body) {
-		let p = this.getWorldPoint(...module.localCom);
-		let dis = body.distanceTo({ com: p });
-		if (dis < body.radius + 0.5 + consts.EPSILON) {
-			this.approach(body, dis - (body.radius + 0.5));
-			this.halt();
-			this.resolveCelestialCollision(p, body);
-		}
 	}
 
 	applyThrust({ forward = 0, left = 0, right = 0, back = 0,
