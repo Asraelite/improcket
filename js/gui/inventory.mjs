@@ -11,6 +11,7 @@ export default class GuiInventory extends GuiElement {
 		this.tileWidth = 4;
 		this.tileHeight = 5;
 		this.currentPage = 0;
+		inventory.setOnupdate(this.updateTiles.bind(this));
 	}
 
 	updateTiles() {

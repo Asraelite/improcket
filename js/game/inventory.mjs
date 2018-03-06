@@ -1,9 +1,12 @@
+import {state} from './index.mjs';
 import {modules} from '../data.mjs';
 import {images as assets} from '../assets.mjs';
 import * as events from './events.mjs';
 
 export const items = new Map();
 export let currentItem = null;
+
+let onupdate = () => {};
 
 export function init() {
 	items.clear();
@@ -20,6 +23,7 @@ export function addItem(type, id) {
 	if (!items.has(mapId)) items.set(mapId, new Tile(type, id));
 	let tile = items.get(mapId);
 	tile.increase();
+	update();
 }
 
 export function removeItem(type, id) {
@@ -31,11 +35,22 @@ export function removeItem(type, id) {
 		items.delete(mapId);
 		currentItem = null;
 	}
-	events.tossItem();
+	if (!state.editing)
+		events.tossItem();
+	update();
 }
 
 export function selectItem(type, id) {
 	currentItem = items.get(toId(type, id));
+	update();
+}
+
+export function setOnupdate(func) {
+	onupdate = func;
+}
+
+function update() {
+	onupdate();
 }
 
 function toId(type, id) {

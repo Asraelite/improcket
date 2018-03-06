@@ -48,6 +48,8 @@ function tickPlaying() {
 	if (pressed[mapping.inventory]) {
 		state.inventory = !state.inventory;
 	}
+
+	if (pressed['KeyR']) events.startGame();
 }
 
 function tickEditing() {
