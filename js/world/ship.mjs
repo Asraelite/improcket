@@ -112,24 +112,27 @@ export default class Ship extends Body {
 	}
 
 	resolveCelestialCollision(pos, cel) {
-		// I don't even know why this works, don't touch it.
-		let theta = this.angleTo(...this.com, ...cel.com);
-		let angleToCom = this.angleTo(...this.com, ...pos);
-		let turnAngle = angleToCom - theta;
-		let checkAngle = theta - this.r - Math.PI / 2;
+		let celToCom = this.angleTo(...this.com, ...cel.com);
+		let celToPoc = this.angleTo(...pos, ...cel.com);
+		let pocToCom = this.angleTo(...this.com, ...pos);
+
+		let turnAngle = this.angleDifference(celToPoc, pocToCom);
+		let checkAngle = this.angleDifference(celToPoc, this.r + Math.PI / 2);
+
 		let [force] = this.rotateVector(0, 1, turnAngle);
-		if (Math.abs(checkAngle) < consts.TIP_ANGLE) {
-			force *= -1;
-		}
+
+		if (Math.abs(checkAngle) < consts.TIP_ANGLE) force *= -1;
+
 		let canLand = Math.abs(checkAngle) < 0.03
 			&& Math.abs(this.rvel) < 0.001;
 
 		if (canLand) {
 			this.landed = true;
 			this.rvel = 0;
-			this.r = theta - Math.PI / 2;
+			this.r = celToCom - Math.PI / 2;
 		}
-		this.rvel -= force * consts.TIP_SPEED;
+		
+		this.rvel += force * consts.TIP_SPEED;
 	}
 
 	checkModuleCollision(module, body) {

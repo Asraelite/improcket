@@ -6,6 +6,8 @@ import {render as renderBackground} from './background.mjs';
 import * as world from '../world/index.mjs';
 import * as consts from '../consts.mjs';
 
+const TAU = consts.TAU;
+
 export let canvas, context, tempCanvas, tempContext;
 export let perspective;
 export let trace = false;
@@ -29,6 +31,10 @@ export function render() {
 	context.clearRect(0, 0, canvas.width, canvas.height);
 	context.fillStyle = '#000';
 	context.fillRect(0, 0, canvas.width, canvas.height);
+
+	context.beginPath();
+	context.rect(0, 0, canvas.width, canvas.height);
+	context.clip();
 
 	context.save();
 	perspective.tick();
@@ -118,7 +124,7 @@ class Perspective {
 	}
 
 	get currentRotation() {
-		return this.interpolate(this.targetRotation, this.oldTarget);
+		return this.interpolateAngles(this.targetRotation, this.oldTarget);
 	}
 
 	get currentZoom() {
@@ -131,15 +137,11 @@ class Perspective {
 	}
 
 	interpolateAngles(cur, old, x = this.transition) {
-		let a = cur % (Math.PI * 2);
-		let b = old % (Math.PI * 2);
+		return old + this.angleDifference(old, cur) * (1 - x);
+	}
 
-		let sum = a + b;
-
-		if (sum > (Math.PI * 2) && sum < (Math.PI * 3))
-			sum %= Math.PI;
-
-		return sum / 2;
+	angleDifference(a, b) {
+		return Math.atan2(Math.sin(b - a), Math.cos(b - a));
 	}
 
 	tick() {
@@ -195,7 +197,7 @@ class Perspective {
 	normalize() {
 		this.targetZoom = Math.max(consts.MIN_ZOOM,
 			Math.min(consts.MAX_ZOOM, this.targetZoom));
-		this.targetRotation %= (Math.PI * 2);
+		this.targetRotation %= TAU;
 	}
 
 	transformRotate() {
@@ -217,5 +219,9 @@ class Perspective {
 		let ty = -(this.y + sy) * this.zoom;
 		context.translate(tx + bw / 2, ty + bh / 2);
 		context.scale(this.zoom, this.zoom);
+	}
+
+	normalizeAngle(a = this.r) {
+		return ((a % TAU) + TAU) % TAU;
 	}
 }

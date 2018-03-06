@@ -1,4 +1,4 @@
-import {GRAVITATIONAL_CONSTANT as G} from '../consts.mjs';
+import {GRAVITATIONAL_CONSTANT as G, TAU} from '../consts.mjs';
 
 export default class Body {
 	constructor(x, y, mass) {
@@ -22,6 +22,14 @@ export default class Body {
 
 	get speed() {
 		return Math.sqrt(this.xvel ** 2 + this.yvel ** 2);
+	}
+
+	angleDifference(a, b) {
+		return Math.atan2(Math.sin(a - b), Math.cos(a - b));
+	}
+
+	normalizeAngle(a = this.r) {
+		return ((a % TAU) + TAU) % TAU;
 	}
 
 	getCelestialCollision(celestials) {
@@ -51,6 +59,7 @@ export default class Body {
 			(y * Math.cos(r) - x * Math.sin(r))];
 	}
 
+	// TODO: Remove and replace uses with `rotateVector`.
 	relativeVector(x, y) {
 		return this.rotateVector(x, y, this.r);
 	}

@@ -8,15 +8,17 @@ import * as edit from './edit.mjs';
 
 export let shipLanded = false;
 
-let notification;
+let notification = null;
 let notLife = 0;
 
 function notify(message) {
+	if (notification === null) return;
 	notification.text = message;
 	notLife = 60;
 }
 
 export function tick() {
+	if (notification === null) return;
 	if (notLife-- <= 0)
 		notification.text = '';
 }

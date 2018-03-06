@@ -8,6 +8,8 @@
 
 // For fixing floating point rounding errors.
 export const EPSILON = 1e-8;
+// Don't change these.
+export const TAU = Math.PI * 2;
 // Unit length of sector. Only for internal representation.
 export const SECTOR_SIZE = 512;
 // G, G-boy, The big G, Mr. G, g's big brother, G-dog
