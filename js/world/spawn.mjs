@@ -2,6 +2,7 @@ import Ship from './ship.mjs';
 import Module from './module.mjs';
 import Celestial from './celestial.mjs';
 import Entity from './entity.mjs';
+import Tracer from './tracer.mjs';
 import {modules} from '../data.mjs';
 import * as world from './index.mjs';
 
@@ -12,6 +13,10 @@ export function player() {
 	ship.addModule(0, 2, modules.thruster.light);
 	world.ships.add(ship);
 	world.setPlayerShip(ship);
+	
+	let tracer = new Tracer(ship);
+	world.tracers.add(tracer);
+
 	return ship;
 }
 
@@ -22,9 +27,10 @@ export function startPlanet() {
 	});
 }
 
-export function testEntity() {
+export function testEntity(parent) {
 	let entity = new Entity(0, -50);
 	world.entities.add(entity);
+	entity.orbit(parent, 10);
 	return entity;
 }
 

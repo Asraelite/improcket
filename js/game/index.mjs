@@ -51,6 +51,8 @@ export function changeView(view) {
 }
 
 function tick() {
+	events.tick();
+
 	if (state.view == 'game') {
 		world.tick();
 		control.tick();

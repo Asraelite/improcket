@@ -8,6 +8,23 @@ import * as edit from './edit.mjs';
 
 export let shipLanded = false;
 
+let notification;
+let notLife = 0;
+
+function notify(message) {
+	notification.text = message;
+	notLife = 60;
+}
+
+export function tick() {
+	if (notLife-- <= 0)
+		notification.text = '';
+}
+
+export function setNotificationElement(el) {
+	notification = el;
+}
+
 export function startGame() {
 	game.changeView('game');
 	graphics.perspective.focusPlayer();
@@ -31,6 +48,21 @@ export function toggleEdit() {
 	game.state.editing = true;
 	game.state.inventory = true;
 	edit.init();
+}
+
+export function toggleTrace() {
+	let trace = graphics.toggleTrace();
+	notify('Path prediction: ' + (trace ? 'on' : 'off'));
+}
+
+export function cycleRotationMode() {
+	let message = {
+		parent: 'planet',
+		local: 'ship',
+		universe: 'universe'
+	}[graphics.cycleRotationMode()];
+
+	notify('Rotation view: ' + message);
 }
 
 export function endEditing() {

@@ -7,6 +7,7 @@ export const entities = new Set();
 export const celestials = new Set();
 export const ships = new Set();
 export const particles = new Set();
+export const tracers = new Set();
 
 export let playerShip = null;
 
@@ -19,9 +20,10 @@ export function init() {
 	celestials.clear();
 	ships.clear();
 	particles.clear();
+	tracers.clear();
 	spawn.player();
-	spawn.startPlanet();
-	spawn.testEntity();
+	let p = spawn.startPlanet();
+	spawn.testEntity(p);
 }
 
 export function tick() {
@@ -29,4 +31,5 @@ export function tick() {
 	celestials.forEach(c => c.tick());
 	entities.forEach(e => e.tick());
 	ships.forEach(s => s.tick());
+	tracers.forEach(t => t.tick());
 }

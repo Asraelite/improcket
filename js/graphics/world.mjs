@@ -1,4 +1,5 @@
 import {canvas, context} from './index.mjs';
+import * as graphics from './index.mjs';
 import {images as assets} from '../assets.mjs';
 import * as world from '../world/index.mjs';
 import {state} from '../game/index.mjs';
@@ -6,6 +7,7 @@ import {state} from '../game/index.mjs';
 export function render() {
 	world.particles.forEach(renderParticle);
 	world.celestials.forEach(renderCelestial);
+	if (graphics.trace) world.tracers.forEach(renderTracer);
 	world.ships.forEach(renderShip);
 	world.entities.forEach(renderEntity);
 }
@@ -46,4 +48,22 @@ const celestialImages = {
 function renderCelestial(cel) {
 	context.drawImage(cel.image, cel.x, cel.y,
 		cel.diameter, cel.diameter);
+}
+
+function renderTracer(tracer) {
+	context.lineWidth = 0.1;
+	context.strokeStyle = '#fff';
+	context.beginPath();
+	context.moveTo(...tracer.pos);
+	let path = tracer.path;
+
+	for (let i = 0; i < path.length; i++) {
+		context.lineTo(...path[i]);
+		if (i % 5 === 0 || i == path.length - 1) {
+			context.stroke();
+			context.globalAlpha = (1 - (i / path.length)) * 0.5;
+		}
+	}
+
+	context.globalAlpha = 1;
 }

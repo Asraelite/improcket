@@ -8,6 +8,7 @@ import * as consts from '../consts.mjs';
 
 export let canvas, context, tempCanvas, tempContext;
 export let perspective;
+export let trace = false;
 
 export function init() {
 	canvas = document.querySelector('#main');
@@ -50,6 +51,23 @@ export function changePerspective(rotationMode, shiftX = 0, shiftY = 0) {
 	perspective.transition = 1;
 }
 
+export function cycleRotationMode() {
+	if (perspective.rotationMode === 'parent') {
+		perspective.changeRotationMode('local');
+	} else if (perspective.rotationMode === 'local') {
+		perspective.changeRotationMode('universe');
+	} else {
+		perspective.changeRotationMode('parent');
+	}
+	perspective.transition = 1;
+	return perspective.rotationMode;
+}
+
+export function toggleTrace() {
+	trace = !trace;
+	return trace;
+}
+
 export function changeZoom(delta) {
 	perspective.zoomDelta(delta);
 }
@@ -77,6 +95,7 @@ class Perspective {
 	}
 
 	changeRotationMode(mode) {
+		this.oldShift = this.currentShift;
 		this.oldTarget = this.currentRotation;
 		this.rotationMode = mode;
 	}
@@ -111,6 +130,18 @@ class Perspective {
 		return (old * x + cur * (1 - x));
 	}
 
+	interpolateAngles(cur, old, x = this.transition) {
+		let a = cur % (Math.PI * 2);
+		let b = old % (Math.PI * 2);
+
+		let sum = a + b;
+
+		if (sum > (Math.PI * 2) && sum < (Math.PI * 3))
+			sum %= Math.PI;
+
+		return sum / 2;
+	}
+
 	tick() {
 		if (this.focus !== null)
 			[this.x, this.y] = this.focus.com;
@@ -129,6 +160,8 @@ class Perspective {
 			this.targetRotation = this.focus.r;
 		}
 
+		this.normalize();
+
 		let dif = Math.abs(this.targetRotation - this.rotation);
 		this.rotationMet = dif < (this.rotationMet ? 0.3 : 0.05);
 
@@ -137,8 +170,6 @@ class Perspective {
 
 		this.transition *= 0.9;
 		this.zoomTransition *= 0.9;
-
-		this.normalize();
 	}
 
 	reset() {

@@ -55,20 +55,20 @@ export default class Body {
 		return this.rotateVector(x, y, this.r);
 	}
 
-	tickMotion() {
-		this.x += this.xvel;
-		this.y += this.yvel;
-		this.r += this.rvel;
-		this.rvel *= this.rfriction;
+	tickMotion(speed = 1) {
+		this.x += this.xvel * speed;
+		this.y += this.yvel * speed;
+		this.r += this.rvel * speed;
+		this.rvel *= this.rfriction * speed;
 	}
 
-	tickGravity(bodies) {
+	tickGravity(bodies, speed = 1) {
 		bodies.forEach(b => {
 			let force = b.mass / (this.distanceTo(b) ** 2) * G;
 			let [[ax, ay], [bx, by]] = [this.com, b.com];
 			let angle = Math.atan2(by - ay, bx - ax);
-			this.xvel += Math.cos(angle) * force;
-			this.yvel += Math.sin(angle) * force;
+			this.xvel += Math.cos(angle) * force * speed;
+			this.yvel += Math.sin(angle) * force * speed;
 		});
 	}
 
@@ -99,5 +99,15 @@ export default class Body {
 		this.xvel += vx;
 		this.yvel += vy;
 		this.rvel += r / this.mass;
+	}
+
+	orbit(cel, altitude) {
+		this.gravity = true;
+		let speed = Math.sqrt(G * cel.mass / (altitude + cel.radius));
+		let [cx, cy] = cel.com;
+		this.x = cx;
+		this.y = cy - (altitude + cel.radius);
+		this.yvel = 0;
+		this.xvel = speed;
 	}
 }

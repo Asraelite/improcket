@@ -56,7 +56,6 @@ export function game() {
 		}
 	}
 
-
 	let editShadow = root();
 	shadow.append(editShadow);
 	editShadow.posRelative({x: 0.45, y: 0, w: 0.55, h: 0.6});
@@ -96,6 +95,17 @@ export function game() {
 	inventory.y += 10;
 
 	edit.guiInventory = inventory;
+
+
+	let notification = new GuiText('', 0, 0, 0, 0, {
+		size: 12,
+		align: 'center',
+		valign: 'top'
+	});
+	shadow.append(notification);
+	notification.posRelative({x: 0.5});
+	notification.y += 10;
+	events.setNotificationElement(notification);
 
 	return shadow;
 }

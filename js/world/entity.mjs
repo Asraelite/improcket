@@ -13,7 +13,7 @@ export default class Entity extends Body {
 		yvel = 0,
 		gravity = false
 	} = {}) {
-		super(x, y, 100);
+		super(x, y, 0.1);
 
 		this.xvel = xvel;
 		this.yvel = yvel;
@@ -31,10 +31,6 @@ export default class Entity extends Body {
 		return [this.x + this.width / 2, this.y + this.height / 2];
 	}
 
-	orbit(celestial, radius) {
-		this.gravity = true;
-	}
-
 	remove() {
 		entities.delete(this);
 	}
@@ -50,10 +46,13 @@ export default class Entity extends Body {
 		}
 
 		if (playerShip.colliding(this.com, this.radius)) {
+			if (this.touched) return;
 			let success = events.collectItem(this.type, this.id);
 			if (!success) return;
 			particle.createPickupBurst(playerShip, this.com);
 			this.remove();
+		} else {
+			this.touched = false;
 		}
 	}
 }

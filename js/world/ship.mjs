@@ -4,6 +4,7 @@ import * as world from './index.mjs';
 import * as consts from '../consts.mjs';
 import * as particle from './particle.mjs';
 import * as events from '../game/events.mjs';
+import Tracer from './tracer.mjs';
 import {state} from '../game/index.mjs';
 
 export default class Ship extends Body {

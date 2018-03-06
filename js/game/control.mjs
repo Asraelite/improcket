@@ -11,6 +11,8 @@ export const mapping = {
 	right: 'KeyD',
 	exitEdit: 'Escape',
 	inventory: 'KeyE',
+	cycleRotation: 'KeyC',
+	toggleTrace: 'KeyT'
 };
 
 let held, pressed;
@@ -49,6 +51,15 @@ function tickPlaying() {
 		state.inventory = !state.inventory;
 	}
 
+	if (pressed[mapping.cycleRotation]) {
+		events.cycleRotationMode();
+	}
+
+	if (pressed[mapping.toggleTrace]) {
+		events.toggleTrace();
+	}
+
+	// For debugging.
 	if (pressed['KeyR']) events.startGame();
 }
 
