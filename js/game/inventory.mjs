@@ -10,6 +10,7 @@ let onupdate = () => {};
 
 export function init() {
 	items.clear();
+	addItem('connector', 'xheavy');
 }
 
 export function getTiles() {

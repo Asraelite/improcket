@@ -87,7 +87,9 @@ function validate() {
 		if (tile.type == 'thruster') thrustersFound++;
 		if (tile.type == 'fuel') fuelFound++;
 		tile.neighbours.forEach(n => {
-			if (unvisited.has(n)) visit(n);
+			if (unvisited.has(n) && n.neighbours.indexOf(tile) > -1) {
+				visit(n);
+			}
 		});
 	};
 
@@ -111,7 +113,7 @@ function validate() {
 	} else {
 		message = reason;
 	}
-	
+
 	return reason;
 }
 

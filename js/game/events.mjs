@@ -5,6 +5,7 @@ import * as player from './player.mjs';
 import * as inventory from './inventory.mjs';
 import * as particle from '../world/particle.mjs';
 import * as edit from './edit.mjs';
+import * as audio from './audio.mjs';
 
 export let shipLanded = false;
 
@@ -71,6 +72,7 @@ export function endEditing() {
 	let {valid, reason} = edit.end();
 
 	if (valid) {
+		audio.play('endEdit');
 		graphics.changePerspective('universe');
 		game.state.editing = false;
 		game.state.inventory = false;
@@ -91,5 +93,6 @@ export function tossItem() {
 
 export function collectItem(type, id) {
 	inventory.addItem(type, id);
+	audio.play('itemPickup');
 	return true;
 }

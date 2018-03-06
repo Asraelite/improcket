@@ -88,11 +88,17 @@ export function game() {
 	};
 
 
+	let invShadow = root();
+	shadow.append(invShadow);
+	invShadow.posRelative({x: 0, w: 0.4, h: 0.6});
+	invShadow.x += 10;
+	invShadow.y += 10;
+	invShadow.h += 60;
+
 	let inventory = new GuiInventory(0, 0, 0, 0);
-	shadow.append(inventory);
-	inventory.posRelative({x: 0, y: 0, w: 0.4, h: 0.6});
-	inventory.x += 10;
-	inventory.y += 10;
+	invShadow.append(inventory);
+	inventory.posRelative({w: 1, h: 1});
+	inventory.h -= 60;
 
 	edit.guiInventory = inventory;
 

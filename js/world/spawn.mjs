@@ -11,9 +11,11 @@ export function player() {
 	ship.addModule(0, 0, modules.capsule.small);
 	ship.addModule(0, 1, modules.fuel.small);
 	ship.addModule(0, 2, modules.thruster.light);
+	//ship.addModule(1, 2, modules.thruster.light);
+	//ship.addModule(-1, 2, modules.thruster.light);
 	world.ships.add(ship);
 	world.setPlayerShip(ship);
-	
+
 	let tracer = new Tracer(ship);
 	world.tracers.add(tracer);
 

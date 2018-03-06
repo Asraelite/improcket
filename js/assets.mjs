@@ -20,6 +20,9 @@ export const images = {
 				off: 'modules/light_thruster.svg',
 				on: 'modules/light_thruster_on.svg',
 			}
+		},
+		connector: {
+			xheavy: 'modules/xheavy_connector.svg'
 		}
 	},
 	celestials: {
@@ -29,7 +32,10 @@ export const images = {
 	}
 };
 
-export const audio = {};
+export const audio = {
+	itemPickup: 'up1.mp3',
+	endEdit: 'release1.mp3'
+};
 
 export async function init() {
 	let parse = (obj, convert) => Object.entries(obj).forEach(([k, v]) => {
@@ -46,7 +52,11 @@ export async function init() {
 		return img;
 	});
 	parse(audio, str => {
-		// TODO: Load audio.
+		let audio = new Audio('audio/' + str);
+		promises.push(new Promise((res, rej) => {
+			audio.addEventListener('canplaythrough', res);
+		}));
+		return audio;
 	});
 
 	await Promise.all(promises);

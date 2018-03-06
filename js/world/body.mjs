@@ -41,7 +41,7 @@ export default class Body {
 		return result;
 	}
 
-	getWorldPoint(lx, ly) {
+	getWorldPoint(lx, ly, test) {
 		let [cx, cy] = this.localCom;
 		let [nx, ny] = this.rotateVector(lx - cx, ly - cy, this.r);
 		return [nx + this.x + cx, ny + this.y + cy];
@@ -55,8 +55,8 @@ export default class Body {
 	}
 
 	rotateVector(x, y, r = this.r) {
-		return [(x * Math.cos(r) - y * Math.sin(r)),
-			(y * Math.cos(r) - x * Math.sin(r))];
+		return [(x * Math.cos(-r) + y * Math.sin(-r)),
+			-(-y * Math.cos(-r) + x * Math.sin(-r))];
 	}
 
 	// TODO: Remove and replace uses with `rotateVector`.

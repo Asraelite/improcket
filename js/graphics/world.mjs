@@ -10,6 +10,14 @@ export function render() {
 	if (graphics.trace) world.tracers.forEach(renderTracer);
 	world.ships.forEach(renderShip);
 	world.entities.forEach(renderEntity);
+
+	/*
+	if (typeof window.q === 'undefined') window.q = [];
+	q.forEach(p => {
+		context.fillStyle = p[2];
+		context.fillRect(p[0] - 0.05, p[1] - 0.05, 0.1, 0.1);
+	});
+	*/
 }
 
 function renderParticle(particle) {

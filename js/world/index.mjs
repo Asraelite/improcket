@@ -1,5 +1,6 @@
 import * as sector from './sector.mjs';
 import * as spawn from './spawn.mjs';
+import * as graphics from '../graphics/index.mjs';
 
 export {getSectorFromWorld, getContainedSectors} from './sector.mjs';
 
@@ -31,5 +32,5 @@ export function tick() {
 	celestials.forEach(c => c.tick());
 	entities.forEach(e => e.tick());
 	ships.forEach(s => s.tick());
-	tracers.forEach(t => t.tick());
+	if (graphics.trace) tracers.forEach(t => t.tick());
 }

@@ -41,6 +41,7 @@ export default class Ship extends Body {
 	}
 
 	tick() {
+		window.q = [];
 		if (!state.editing) this.tickMotion();
 		if (!this.landed) this.tickGravity(world.celestials);
 		if (!state.editing) this.resolveCollisions();
@@ -109,19 +110,29 @@ export default class Ship extends Body {
 				});
 			}
 		})
+
+
+		window.q.push([...this.com, 'green']);
 	}
 
 	resolveCelestialCollision(pos, cel) {
 		let celToCom = this.angleTo(...this.com, ...cel.com);
 		let celToPoc = this.angleTo(...pos, ...cel.com);
 		let pocToCom = this.angleTo(...this.com, ...pos);
+		let shipAngle = this.r + Math.PI / 2;
+
+		window.q.push([...pos, 'blue']);
 
 		let turnAngle = this.angleDifference(celToPoc, pocToCom);
-		let checkAngle = this.angleDifference(celToPoc, this.r + Math.PI / 2);
+		let checkAngle = this.angleDifference(celToPoc, shipAngle);
+		let correctionAngle = this.angleDifference(shipAngle, pocToCom);
 
 		let [force] = this.rotateVector(0, 1, turnAngle);
 
-		if (Math.abs(checkAngle) < consts.TIP_ANGLE) force *= -1;
+		if (Math.abs(checkAngle) < consts.TIP_ANGLE) {
+			[force] = this.rotateVector(0, 1, correctionAngle);
+			force *= 0.2;
+		}
 
 		let canLand = Math.abs(checkAngle) < 0.03
 			&& Math.abs(this.rvel) < 0.001;
@@ -131,7 +142,7 @@ export default class Ship extends Body {
 			this.rvel = 0;
 			this.r = celToCom - Math.PI / 2;
 		}
-		
+
 		this.rvel += force * consts.TIP_SPEED;
 	}
 

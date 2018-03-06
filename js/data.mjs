@@ -5,12 +5,13 @@ export const modules = {
 		small: {
 			name: 'Small Capsule',
 			tooltip: 'A small, simple capsule. Provides just enough ' +
-				'rotational power for a small rocket.',
+				'rotational power for a small rocket and has a small ' +
+				'amount of storage space.',
 			type: 'capsule',
 			id: 'small',
 			mass: 2,
 			connectivity: [false, false, true, false],
-			capacity: 3,
+			capacity: 2,
 			rotation: 0.1
 		}
 	},
@@ -36,6 +37,17 @@ export const modules = {
 			connectivity: [true, false, false, false],
 			thrust: 10,
 			isp: 200
+		}
+	},
+	connector: {
+		xheavy: {
+			name: 'Heavy 4-way Connector',
+			tooltip: 'Can connect ship parts in any direction, but is quite ' +
+				'heavy',
+			type: 'connector',
+			id: 'xheavy',
+			mass: 5,
+			connectivity: [true, true, true, true]
 		}
 	}
 }
