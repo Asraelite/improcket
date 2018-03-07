@@ -14,7 +14,6 @@ export default class Entity extends Body {
 		gravity = false
 	} = {}) {
 		super(x, y, 0.1);
-
 		this.xvel = xvel;
 		this.yvel = yvel;
 		this.width = 1;
@@ -22,7 +21,13 @@ export default class Entity extends Body {
 		this.radius = (this.width + this.height) / 2;
 		this.type = type;
 		this.id = id;
-		this.image = assets.modules[type][id];
+		if (this.type === 'fuelcan') {
+			this.image = assets.modules.fuelcan;
+		} else {
+			this.image = assets.modules[type][id];
+			if (this.type === 'thruster')
+				this.image = this.image.off;
+		}
 		this.gravity = gravity;
 		this.touched = false;
 	}
@@ -36,6 +41,8 @@ export default class Entity extends Body {
 	}
 
 	tick() {
+		if (Math.abs(playerShip.x - this.x) > 500 ||
+			Math.abs(playerShip.y - this.y) > 500) return;
 		this.r += consts.ENTITY_ROTATION_RATE;
 		this.tickMotion();
 		if (this.gravity) this.tickGravity(celestials);
@@ -47,6 +54,7 @@ export default class Entity extends Body {
 
 		if (playerShip.colliding(this.com, this.radius)) {
 			if (this.touched) return;
+			this.touched = true;
 			let success = events.collectItem(this.type, this.id);
 			if (!success) return;
 			particle.createPickupBurst(playerShip, this.com);

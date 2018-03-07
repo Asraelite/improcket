@@ -23,7 +23,7 @@ export const ZOOM_SPEED = 0.01;
 export const TIP_ANGLE = 0.25;
 export const TIP_SPEED = 0.03;
 // Ship flight mechanics. Speed measured in units per tick.
-export const FUEL_BURN_RATE = 0.01;
+export const FUEL_BURN_RATE = 0.3;
 export const THRUST_POWER = 0.004;
 export const TURN_POWER = 0.07;
 // Distance at which an orbited planet will not be considered a parent body.
@@ -33,6 +33,7 @@ export const EDIT_MARGIN = 2;
 // Floating items.
 export const ENTITY_ROTATION_RATE = 0.01;
 // World generation.
-export const PLANET_SPAWN_RATE = 0.00002;
-export const ENTITY_SPAWN_RATE = 0.3;
+export const PLANET_SPAWN_RATE = 3;
+export const ENTITY_SPAWN_RATE = 8;
 export const MIN_CELESTIAL_SPACING = 15;
+export const FUEL_CAN_AMOUNT = 4;

@@ -74,6 +74,10 @@ export default class Ship extends Body {
 		this.modules.clear();
 	}
 
+	addFuel(amount) {
+		this.fuel = Math.min(this.fuel + amount, this.maxFuel);
+	}
+
 	addModule(x, y, properties, options) {
 		let module = new Module(x, y, this, {...properties, ...options});
 		this.modules.add(module);
@@ -188,6 +192,7 @@ export default class Ship extends Body {
 		let thrustForce = -forward * consts.THRUST_POWER * this.thrust;
 		let turnForce = (turnRight - turnLeft) * consts.TURN_POWER;
 		turnForce *= this.rotationPower;
+		this.fuel -= Math.abs(thrustForce) * consts.FUEL_BURN_RATE;
 
 		this.applyDirectionalForce(0, thrustForce, turnForce);
 

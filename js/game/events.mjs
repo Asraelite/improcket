@@ -5,6 +5,7 @@ import * as inventory from './inventory.mjs';
 import * as particle from '../world/particle.mjs';
 import * as edit from './edit.mjs';
 import * as audio from './audio.mjs';
+import * as consts from '../consts.mjs';
 
 export let shipLanded = false;
 export let score = 0;
@@ -105,9 +106,17 @@ export function tossItem() {
 }
 
 export function collectItem(type, id) {
-	inventory.addItem(type, id);
-	audio.play('itemPickup');
-	score += 20;
-	notify('Collected module: +20');
-	return true;
+	if (type === 'fuelcan') {
+		world.playerShip.addFuel(consts.FUEL_CAN_AMOUNT);
+		audio.play('fuelPickup');
+		score += 10;
+		notify('Collected fuel: +10');
+		return true;
+	} else {
+		inventory.addItem(type, id);
+		audio.play('itemPickup');
+		score += 20;
+		notify('Collected module: +20');
+		return true;
+	}
 }

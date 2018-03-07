@@ -110,13 +110,13 @@ export default class Body {
 		this.rvel += r / this.mass;
 	}
 
-	orbit(cel, altitude) {
+	orbit(cel, altitude, angle = 0) {
 		this.gravity = true;
 		let speed = Math.sqrt(G * cel.mass / (altitude + cel.radius));
 		let [cx, cy] = cel.com;
-		this.x = cx;
-		this.y = cy - (altitude + cel.radius);
-		this.yvel = 0;
-		this.xvel = speed;
+		let [dx, dy] = this.rotateVector(0, -(altitude + cel.radius), angle);
+		[this.xvel, this.yvel] = this.rotateVector(speed, 0, angle);
+		this.x = cx + dx;
+		this.y = cy + dy;
 	}
 }

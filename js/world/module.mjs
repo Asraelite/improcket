@@ -7,8 +7,6 @@ export default class Module {
 		type = 'block',
 		id = 'unknown',
 		mass = 1,
-		// Fuel
-		filled = false,
 		fuelCapacity = 0,
 		...properties
 	}) {
@@ -21,10 +19,8 @@ export default class Module {
 		this.id = id;
 		this.images = assets.modules[this.type][this.id];
 		this.data = modules[this.type][this.id];
-		// Fuel
-		if (this.type == 'fuel') {
-			this.fuel = filled ? fuelCapacity : 0;
-		} else if (this.type == 'thruster') {
+		
+		if (this.type == 'thruster') {
 			this.power = 0;
 		}
 	}

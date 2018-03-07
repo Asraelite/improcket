@@ -23,7 +23,8 @@ export const images = {
 		},
 		connector: {
 			xheavy: 'modules/xheavy_connector.svg'
-		}
+		},
+		fuelcan: 'modules/fuelcan.svg'
 	},
 	celestials: {
 		green: {
@@ -35,6 +36,7 @@ export const images = {
 
 export const audio = {
 	itemPickup: 'up1.mp3',
+	fuelPickup: 'blip2.mp3',
 	endEdit: 'release1.mp3'
 };
 

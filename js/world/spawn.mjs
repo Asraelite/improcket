@@ -41,11 +41,11 @@ function nearest(x, y, set) {
 function spawnSector(x, y) {
 	let area = SS ** 2;
 
-	for (let i = 0; i < area / 10000; i++) {
+	for (let i = 0; i < area / 1000; i++) {
 		let [px, py] = [(x + Math.random()) * SS, (y + Math.random()) * SS];
-		if (Math.random() > consts.PLANET_SPAWN_RATE) {
+		if (Math.random() < consts.PLANET_SPAWN_RATE / 1000) {
 			randomPlanet(px, py);
-		} else if (Math.random() > 0.01 ){
+		} else if (Math.random() < consts.ENTITY_SPAWN_RATE / 1000){
 			randomEntity(px, py);
 		}
 	}
@@ -68,13 +68,23 @@ function randomPlanet(x, y) {
 	for (let i = 1.5; i < 8; i += 1) {
 		if (Math.random() > consts.ENTITY_SPAWN_RATE) {
 			let e = randomEntity();
-			e.orbit(planet, i * rad);
+			e.orbit(planet, i * rad, Math.random() * Math.PI * 2);
 		}
 	}
 }
 
 function randomEntity(x, y) {
-	let entity = new Entity(x, y);
+	let entity, type, id;
+
+	if (Math.random() > 0.3) {
+		entity = new Entity(x, y, 'fuelcan');
+	} else {
+		let arr = Object.entries(modules);
+		[type, arr] = arr[Math.random() * arr.length | 0];
+		arr = Object.keys(arr);
+		entity = new Entity(x, y, type, arr[Math.random() * arr.length | 0]);
+	}
+
 	world.entities.add(entity);
 	return entity;
 }
@@ -88,6 +98,7 @@ export function player() {
 	//ship.addModule(-1, 2, modules.thruster.light);
 	world.ships.add(ship);
 	world.setPlayerShip(ship);
+	ship.addFuel(ship.maxFuel);
 
 	let tracer = new Tracer(ship);
 	world.tracers.add(tracer);
