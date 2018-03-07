@@ -6,7 +6,6 @@ import * as inventory from './inventory.mjs';
 import * as world from '../world/index.mjs';
 import * as events from './events.mjs';
 import * as control from './control.mjs';
-import * as player from './player.mjs';
 import * as edit from './edit.mjs';
 
 export let state;
@@ -45,7 +44,6 @@ export function changeView(view) {
 		state.editing = false;
 		state.paused = false;
 		world.init();
-		player.init();
 		inventory.init();
 	}
 }

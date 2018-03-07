@@ -11,7 +11,7 @@ export const modules = {
 			mass: 2,
 			connectivity: [false, false, true, false],
 			capacity: 2,
-			rotation: 0.1
+			rotation: 1
 		}
 	},
 	fuel: {
@@ -29,13 +29,12 @@ export const modules = {
 		light: {
 			name: 'Light Main Thruster',
 			tooltip: 'Powerful enough to lift a small ship, but not much ' +
-				'more. Not very efficient.',
+				'more.',
 			type: 'thruster',
 			id: 'light',
 			mass: 2,
 			connectivity: [true, false, false, false],
-			thrust: 10,
-			isp: 200
+			thrust: 10
 		}
 	},
 	connector: {

@@ -23,19 +23,17 @@ export function init() {
 	});
 
 	window.addEventListener('keyup', event => {
-		keyCode.pressed[event.code] = false;
 		keyCode.held[event.code] = false;
-		key.pressed[event.key] = false;
 		key.held[event.key] = false;
 	});
 	// Ṕ͕͖ẖ̨’̖̺͓̪̹n̼͇͔̯̝̖g̙̩̭͕ͅͅl̻̰͘u͎̥͍̗ͅi̼̞̪̩͚̜͖ ̫̝̻͚͟m͎̳̙̭̩̩̕g̟̤̬̮l̫̕w̶͚͈͚̟͔’͖n͏̝͖̞̺ͅa͏̹͓̬̺f̗̬̬̬̖̫͜h͙̘̝̱̬̗͜ ̼͎͖C̱͔̱͖ṭ̬̱͖h̵̰̼̘̩ùlh̙́u̪̫ ̪̺̹̙̯R̞͓̹̞’͍͎͉͎̦͙ͅl͇̠̮y̙̪̰̪͙̖e̢̩͉͙̼h̗͔̹̳ ̶w̨̼͍̝̭̣̣ͅg̶̳̦̳a̴͉̹͙̭̟ͅh͈͎̞̜͉́’̼̜̠͞n̲a̯g̮͚͓̝l̠ ̹̹̱͙̝f̧̝͖̱h̪̟̻͖̖t͎͘aͅg̤̘͜n̶͈̻̻̝̳
 	window.addEventListener('mousedown', event => {
 		mouse.pressed[event.button] = !mouse.held[event.button];
 		mouse.held[event.button] = true;
+		tickAfterMouse = false;
 	});
 
 	window.addEventListener('mouseup', event => {
-		mouse.pressed[event.button] = false;
 		mouse.held[event.button] = false;
 	});
 

@@ -13,6 +13,7 @@ export let height = 0;
 export let position = [0, 0];
 export let bounds = [0, 0, 0, 0];
 export let message = '';
+export let info = '';
 
 export function init() {
 	let ship = world.playerShip;
@@ -38,6 +39,7 @@ function adjustSize() {
 	let [sx, ex, sy, ey] = getBoundaries();
 	[width, height] = [ex - sx + margin * 2 + 1, ey - sy + margin * 2 + 1];
 	position = [sx - margin, sy - margin];
+	getAttributes();
 }
 
 export function end() {
@@ -63,6 +65,35 @@ export function end() {
 	}
 
 	return result;
+}
+
+function getAttributes() {
+	let cargo = 0;
+	let fuel = 0;
+	let rotation = 0;
+	let mass = 0;
+	let thrust = 0;
+
+	tiles.forEach(t => {
+		if (t.type === null) return;
+		if (t.type === 'fuel') {
+			fuel += t.module.fuelCapacity;
+		} else if (t.type === 'capsule') {
+			rotation += t.module.rotation;
+			cargo += t.module.capacity;
+		} else if (t.type === 'thruster') {
+			thrust += t.module.thrust;
+		} else if (t.type === 'gyroscope') {
+			rotation += t.module.rotation;
+		}
+		mass += t.module.mass;
+	});
+
+	info = 'Mass: ' + mass + '\n' +
+		'Fuel capacity: ' + fuel + '\n' +
+		'Thrust/mass ratio: ' + (thrust / mass).toFixed(1) + '\n' +
+		'Rotation speed: ' + (rotation / mass * 100).toFixed(1) + '\n' +
+		'Cargo capacity: ' + cargo;
 }
 
 function validate() {

@@ -10,6 +10,7 @@ import GuiText from './text.mjs';
 import GuiInventory from './inventory.mjs';
 import * as events from '../game/events.mjs';
 import {state} from '../game/index.mjs';
+import * as world from '../world/index.mjs';
 
 export function root() {
 	return new GuiFrame(0, 0, canvas.width, canvas.height, {
@@ -51,10 +52,40 @@ export function game() {
 		editButton.options.disabled = state.editing && editMessage !== '';
 		if (state.editing) {
 			editButton.text = 'Finish';
+			if (editMessage !== '') editButton.text = '(' + editMessage + ')';
 		} else {
 			editButton.text = 'Edit rocket';
 		}
 	}
+
+	let fuel = new GuiText('', 0, 0, 0, 0, {
+		size: 14,
+		align: 'right',
+		valign: 'bottom'
+	});
+	shadow.append(fuel);
+	fuel.posRelative({x: 1, y: 1});
+	fuel.y -= 10;
+	fuel.x -= 10;
+	fuel.tick = () => {
+		let ship = world.playerShip;
+		fuel.text = 'Fuel: ' + ship.fuel.toFixed(1) + '/' +
+			ship.maxFuel.toFixed(1);
+	};
+
+	let score = new GuiText('', 0, 0, 0, 0, {
+		size: 14,
+		align: 'left',
+		valign: 'bottom'
+	});
+	shadow.append(score);
+	score.posRelative({x: 0, y: 1});
+	score.y -= 10;
+	score.x += 10;
+	score.tick = () => {
+		score.text = 'Score: ' + events.score
+	};
+
 
 	let editShadow = root();
 	shadow.append(editShadow);
@@ -68,11 +99,12 @@ export function game() {
 
 	let editInfoText = new GuiText('', 0, 0, 0, 0, {
 		size: 12,
-		align: 'center'
+		align: 'right'
 	});
 	editShadow.append(editInfoText);
-	editInfoText.posRelative({x: 0.5, y: 1});
+	editInfoText.posRelative({x: 1, y: 1});
 	editInfoText.y += 5;
+	editInfoText.x -= 20;
 
 	let editWarnText = new GuiText('', 0, 0, 0, 0, {
 		size: 12,

@@ -17,6 +17,11 @@ export default class Ship extends Body {
 		this.landed = false;
 		this.lastContactModule = null;
 		this.poc = this.com;
+		this.maxFuel = 0;
+		this.fuel = 0;
+		this.rotationPower = 0;
+		this.cargoCapacity = 0;
+		this.thrust = 0;
 	}
 
 	get com() {
@@ -56,8 +61,13 @@ export default class Ship extends Body {
 
 		this.modules.forEach(m => m.reset());
 
-		if (events.shipLanded != this.landed)
-			this.landed ? events.landShip() : events.launchShip();
+		if (events.shipLanded != this.landed) {
+			if (this.landed) {
+				events.landShip(this.parentCelestial)
+			} else {
+				events.launchShip()
+			}
+		}
 	}
 
 	clearModules() {
@@ -85,6 +95,23 @@ export default class Ship extends Body {
 		let [lx, ly] = this.localCom;
 		this.maxRadius = points.reduce((a, [bx, by]) =>
 			Math.max(Math.sqrt((bx - lx) ** 2 + (by - ly) ** 2), a), 0) + 1;
+
+		this.maxFuel = 0;
+		this.rotationPower = 0;
+		this.cargoCapacity = 0;
+
+		this.modules.forEach(m => {
+			if (m.type === 'fuel') {
+				this.maxFuel += m.data.fuelCapacity;
+			} else if (m.type === 'capsule') {
+				this.rotationPower += m.data.rotation;
+				this.cargoCapacity += m.data.capacity;
+			} else if (m.type === 'thruster') {
+				this.thrust += m.data.thrust;
+			} else if (m.type === 'gyroscope') {
+				this.rotationPower += m.data.rotation;
+			}
+		});
 	}
 
 	colliding(point, radius) {
@@ -158,8 +185,9 @@ export default class Ship extends Body {
 	applyThrust({ forward = 0, left = 0, right = 0, back = 0,
 		turnLeft = 0, turnRight = 0}) {
 
-		let thrustForce = -forward * consts.THRUST_POWER;
+		let thrustForce = -forward * consts.THRUST_POWER * this.thrust;
 		let turnForce = (turnRight - turnLeft) * consts.TURN_POWER;
+		turnForce *= this.rotationPower;
 
 		this.applyDirectionalForce(0, thrustForce, turnForce);
 

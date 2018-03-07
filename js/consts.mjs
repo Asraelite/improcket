@@ -24,8 +24,8 @@ export const TIP_ANGLE = 0.25;
 export const TIP_SPEED = 0.03;
 // Ship flight mechanics. Speed measured in units per tick.
 export const FUEL_BURN_RATE = 0.01;
-export const THRUST_POWER = 0.007;
-export const TURN_POWER = 0.05;
+export const THRUST_POWER = 0.004;
+export const TURN_POWER = 0.07;
 // Distance at which an orbited planet will not be considered a parent body.
 export const MAX_PARENT_CELESTIAL_DISTANCE = 120;
 // Ship editing.

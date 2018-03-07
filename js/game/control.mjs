@@ -1,8 +1,8 @@
 import * as input from '../input.mjs';
 import * as events from './events.mjs';
-import * as player from './player.mjs';
 import * as graphics from '../graphics/index.mjs';
 import * as inventory from './inventory.mjs';
+import {playerShip} from '../world/index.mjs';
 import {state} from './index.mjs';
 
 export const mapping = {
@@ -36,15 +36,15 @@ export function tick() {
 
 function tickPlaying() {
 	if (held[mapping.thrust]) {
-		player.ship.applyThrust({ forward: 1 });
+		playerShip.applyThrust({ forward: 1 });
 	}
 
 	if (held[mapping.left]) {
-		player.ship.applyThrust({ turnLeft: 1 });
+		playerShip.applyThrust({ turnLeft: 1 });
 	}
 
 	if (held[mapping.right]) {
-		player.ship.applyThrust({ turnRight: 1 });
+		playerShip.applyThrust({ turnRight: 1 });
 	}
 
 	if (pressed[mapping.inventory]) {
@@ -67,4 +67,6 @@ function tickEditing() {
 	if (pressed[mapping.exitEdit]) {
 		events.endEditing();
 	}
+	
+	if (pressed['KeyX']) throw new Error();
 }

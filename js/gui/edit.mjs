@@ -57,7 +57,7 @@ export default class GuiEdit extends GuiElement {
 		this.parent.options.drawChildren = this.active;
 		if (!this.active) return;
 
-		this.textElements.info.text = edit.message;
+		this.textElements.info.text = edit.info;
 
 		[this.tileWidth, this.tileHeight] = [edit.width, edit.height];
 	}

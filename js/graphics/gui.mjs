@@ -7,7 +7,6 @@ export function render() {
 }
 
 function renderElement(element) {
-	//console.log(element.options);
 	if (element.options.draw) {
 		if (element.type === 'frame') renderFrame(element);
 		if (element.type === 'image') renderImage(element);
@@ -93,7 +92,7 @@ function renderItemButton(element) {
 		context.drawImage(element.image, ox, oy, dw, dh);
 	}
 
-	if (element.quantity > 1) { // CHANGE TO 1
+	if (element.quantity > 1) {
 		context.textAlign = 'right';
 		context.textBaseline = 'bottom';
 		context.fillStyle = '#fff';
@@ -110,6 +109,6 @@ function renderEdit(element) {
 function renderInventory(element) {
 	context.globalAlpha = 0.1;
 	context.fillStyle = '#541';
-	context.fillRect(...element.shape);
+	context.fillRect(...element.parent.shape);
 	context.globalAlpha = 1;
 }

@@ -1,21 +1,23 @@
 import * as game from './index.mjs';
 import * as graphics from '../graphics/index.mjs';
 import * as world from '../world/index.mjs';
-import * as player from './player.mjs';
 import * as inventory from './inventory.mjs';
 import * as particle from '../world/particle.mjs';
 import * as edit from './edit.mjs';
 import * as audio from './audio.mjs';
 
 export let shipLanded = false;
+export let score = 0;
 
 let notification = null;
 let notLife = 0;
 
+let landedPlanets = new Set();
+
 function notify(message) {
 	if (notification === null) return;
 	notification.text = message;
-	notLife = 60;
+	notLife = 80;
 }
 
 export function tick() {
@@ -33,9 +35,19 @@ export function startGame() {
 	graphics.perspective.focusPlayer();
 }
 
-export function landShip() {
+export function landShip(planet) {
 	shipLanded = true;
+	if (!landedPlanets.has(planet)) {
+		newPlanet(planet);
+	}
 	game.state.landed = true;
+}
+
+function newPlanet(planet) {
+	let value = (planet.radius + 30) | 0;
+	landedPlanets.add(planet);
+	score += value;
+	notify('Landed on new planet: +' + value);
 }
 
 export function launchShip() {
@@ -95,5 +107,7 @@ export function tossItem() {
 export function collectItem(type, id) {
 	inventory.addItem(type, id);
 	audio.play('itemPickup');
+	score += 20;
+	notify('Collected module: +20');
 	return true;
 }

@@ -105,8 +105,8 @@ export default class Body {
 
 	applyDirectionalForce(x, y, r) {
 		let [vx, vy] = this.rotateVector(x, y);
-		this.xvel += vx;
-		this.yvel += vy;
+		this.xvel += vx / this.mass;
+		this.yvel += vy / this.mass;
 		this.rvel += r / this.mass;
 	}
 
