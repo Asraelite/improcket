@@ -11,6 +11,7 @@ const TAU = consts.TAU;
 export let canvas, context, tempCanvas, tempContext;
 export let perspective;
 export let trace = false;
+export let markers = false;
 
 export function init() {
 	canvas = document.querySelector('#main');
@@ -72,6 +73,11 @@ export function cycleRotationMode() {
 export function toggleTrace() {
 	trace = !trace;
 	return trace;
+}
+
+export function toggleMarkers() {
+	markers = !markers;
+	return markers;
 }
 
 export function changeZoom(delta) {

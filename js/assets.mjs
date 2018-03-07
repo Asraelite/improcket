@@ -37,7 +37,8 @@ export const images = {
 export const audio = {
 	itemPickup: 'up1.mp3',
 	fuelPickup: 'blip2.mp3',
-	endEdit: 'release1.mp3'
+	endEdit: 'release1.mp3',
+	newPlanet: 'up2.mp3'
 };
 
 export async function init() {

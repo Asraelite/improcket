@@ -12,7 +12,8 @@ export const mapping = {
 	exitEdit: 'Escape',
 	inventory: 'KeyE',
 	cycleRotation: 'KeyC',
-	toggleTrace: 'KeyT'
+	toggleTrace: 'KeyT',
+	toggleMarkers: 'KeyR'
 };
 
 let held, pressed;
@@ -59,14 +60,16 @@ function tickPlaying() {
 		events.toggleTrace();
 	}
 
+	if (pressed[mapping.toggleMarkers]) {
+		events.toggleMarkers();
+	}
+
 	// For debugging.
-	if (pressed['KeyR']) events.startGame();
+	if (pressed['KeyZ']) events.startGame();
 }
 
 function tickEditing() {
 	if (pressed[mapping.exitEdit]) {
 		events.endEditing();
 	}
-	
-	if (pressed['KeyX']) throw new Error();
 }

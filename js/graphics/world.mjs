@@ -28,6 +28,17 @@ function renderParticle(particle) {
 function renderEntity(entity) {
 	context.save();
 	context.translate(...entity.com);
+	if (graphics.perspective.zoom < 2 && graphics.markers) {
+		context.globalAlpha = 0.7 / graphics.perspective.zoom;
+		context.beginPath();
+		context.arc(0, 0, 4, 0, 2 * Math.PI);
+		context.lineWidth = 1;
+		context.strokeStyle = '#31911b';
+		if (entity.type === 'fuelcan')
+			context.strokeStyle = '#af4021';
+		context.stroke();
+		context.globalAlpha = 1;
+	}
 	context.rotate(entity.r);
 	context.drawImage(entity.image, -0.5, -0.5, 1, 1);
 	context.restore();

@@ -15,10 +15,10 @@ let notLife = 0;
 
 let landedPlanets = new Set();
 
-function notify(message) {
+function notify(message, time = 80) {
 	if (notification === null) return;
 	notification.text = message;
-	notLife = 80;
+	notLife = time;
 }
 
 export function tick() {
@@ -47,6 +47,7 @@ export function landShip(planet) {
 function newPlanet(planet) {
 	let value = (planet.radius + 30) | 0;
 	landedPlanets.add(planet);
+	audio.play('newPlanet');
 	score += value;
 	notify('Landed on new planet: +' + value);
 }
@@ -69,6 +70,11 @@ export function toggleEdit() {
 export function toggleTrace() {
 	let trace = graphics.toggleTrace();
 	notify('Path prediction: ' + (trace ? 'on' : 'off'));
+}
+
+export function toggleMarkers() {
+	let markers = graphics.toggleMarkers();
+	notify('Item markers: ' + (markers ? 'on' : 'off'));
 }
 
 export function cycleRotationMode() {
@@ -105,7 +111,7 @@ export function tossItem() {
 	particle.createItemToss(world.playerShip);
 }
 
-export function collectItem(type, id) {
+export function collectItem(type, id, name) {
 	if (type === 'fuelcan') {
 		world.playerShip.addFuel(consts.FUEL_CAN_AMOUNT);
 		audio.play('fuelPickup');
@@ -116,7 +122,7 @@ export function collectItem(type, id) {
 		inventory.addItem(type, id);
 		audio.play('itemPickup');
 		score += 20;
-		notify('Collected module: +20');
+		notify(`Collected "${name}" module: +20`, 150);
 		return true;
 	}
 }

@@ -23,8 +23,10 @@ export default class Entity extends Body {
 		this.id = id;
 		if (this.type === 'fuelcan') {
 			this.image = assets.modules.fuelcan;
+			this.name = 'Fuel Can';
 		} else {
 			this.image = assets.modules[type][id];
+			this.name = modules[type][id].name;
 			if (this.type === 'thruster')
 				this.image = this.image.off;
 		}
@@ -55,7 +57,7 @@ export default class Entity extends Body {
 		if (playerShip.colliding(this.com, this.radius)) {
 			if (this.touched) return;
 			this.touched = true;
-			let success = events.collectItem(this.type, this.id);
+			let success = events.collectItem(this.type, this.id, this.name);
 			if (!success) return;
 			particle.createPickupBurst(playerShip, this.com);
 			this.remove();
