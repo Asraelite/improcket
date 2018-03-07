@@ -9,11 +9,18 @@ import * as consts from '../consts.mjs';
 
 export let shipLanded = false;
 export let score = 0;
+export let gameOverReason = '';
+export let scoreText = '';
 
 let notification = null;
 let notLife = 0;
 
 let landedPlanets = new Set();
+
+export function init() {
+	score = 0;
+	shipLanded = false;
+}
 
 export function playMusic() {
 	audio.start('music');
@@ -41,7 +48,10 @@ export function setNotificationElement(el) {
 }
 
 export function startGame() {
+	init();
+	game.state.gameOver = false;
 	game.changeView('game');
+	graphics.perspective.reset();
 	graphics.perspective.focusPlayer();
 }
 
@@ -84,9 +94,29 @@ export function launchShip() {
 }
 
 export function crash() {
+	gameOver('You crashed');
 	audio.play('crash');
-	particle.createCrash(world.playerShip)
+	particle.createCrash(world.playerShip);
+
+}
+
+export function gameOver(reason) {
+	gameOverReason = reason;
 	game.state.gameOver = true;
+	game.state.inventory = false;
+	game.state.editing = false;
+	graphics.perspective.changeZoom(consts.MIN_ZOOM, 0.99);
+	let massScore = world.playerShip.mass * 100;
+	let fuelScore = world.playerShip.fuel * 50 | 0;
+	let finalScore = massScore + fuelScore + score;
+	scoreText = 'Ship mass:       ' +
+		' '.repeat(5 - ('' + massScore).length) + massScore + '\n' +
+		'Remaining fuel:  ' +
+		' '.repeat(5 - ('' + fuelScore).length) + fuelScore + '\n' +
+		'Score:           ' +
+		' '.repeat(5 - ('' + score).length) + score + '\n\n' +
+		'Final score:     ' +
+		' '.repeat(5 - ('' + finalScore).length) + finalScore;
 }
 
 export function toggleEdit() {

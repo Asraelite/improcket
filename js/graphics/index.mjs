@@ -101,6 +101,10 @@ class Perspective {
 		this.shiftY = 0;
 		this.zoom = 0;
 		this.bounds = [0, 0, canvas.width, canvas.height];
+		this.reset();
+	}
+
+	reset() {
 		this.rotationMode = 'universe';
 		this.targetZoom = consts.DEFAULT_ZOOM;
 		this.oldTarget = 0;
@@ -109,7 +113,12 @@ class Perspective {
 		this.transition = 0;
 		this.zoomTransition = 0;
 		this.zoomTransitionSpeed = 0.9;
-		this.reset();
+		this.rotation = 0;
+		this.targetRotation = 0;
+		this.zoom = consts.DEFAULT_ZOOM;
+		this.targetZoom = this.zoom;
+		this.focus = null;
+		this.rotationFocus = null;
 	}
 
 	changeRotationMode(mode) {
@@ -185,15 +194,6 @@ class Perspective {
 
 		this.transition *= 0.9;
 		this.zoomTransition *= this.zoomTransitionSpeed;
-	}
-
-	reset() {
-		this.rotation = 0;
-		this.targetRotation = 0;
-		this.zoom = consts.DEFAULT_ZOOM;
-		this.targetZoom = this.zoom;
-		this.focus = null;
-		this.rotationFocus = null;
 	}
 
 	focusPlayer() {

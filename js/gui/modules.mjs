@@ -211,5 +211,51 @@ export function game() {
 	notification.y += 10;
 	events.setNotificationElement(notification);
 
+
+	let gameOver = root();
+	shadow.append(gameOver);
+	gameOver.posRelative({x: 0.2, y: 0.2, w: 0.6, h: 0.6});
+
+	let gameOverMain = new GuiText('Game over', 0, 0, 0, 0, {
+		size: 48,
+		align: 'center',
+		valign: 'top'
+	});
+	gameOver.append(gameOverMain);
+	gameOverMain.posRelative({x: 0.5});
+	gameOverMain.y += 10;
+	gameOver.tick = () => {
+		gameOver.options.drawChildren = state.gameOver;
+	};
+
+	let gameOverReason = new GuiText('', 0, 0, 0, 0, {
+		size: 14,
+		align: 'center',
+		valign: 'top'
+	});
+	gameOver.append(gameOverReason);
+	gameOverReason.posRelative({x: 0.5});
+	gameOverReason.y += 100;
+	gameOverReason.tick = () => {
+		gameOverReason.text = events.gameOverReason;
+	};
+
+	let gameOverScore = new GuiText('', 0, 0, 0, 0, {
+		size: 14,
+		align: 'center',
+		valign: 'top'
+	});
+	gameOver.append(gameOverScore);
+	gameOverScore.posRelative({x: 0.5});
+	gameOverScore.y += 200;
+	gameOverScore.tick = () => {
+		gameOverScore.text = events.scoreText;
+	};
+
+	let gameOverExit = new GuiButton('Main menu', events.toMenu, 0, 0, 200);
+	gameOver.append(gameOverExit);
+	gameOverExit.posRelative({ x: 0.5, xc: 0.5, y: 1 });
+	gameOverExit.y -= 10;
+
 	return shadow;
 }

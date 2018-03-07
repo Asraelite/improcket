@@ -52,6 +52,7 @@ export function changeView(view) {
 		gui.changeView('instructions');
 	} else if (view === 'menu') {
 		gui.changeView('menu');
+		world.clear();
 	}
 }
 

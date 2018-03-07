@@ -14,15 +14,19 @@ export function setPlayerShip(ship) {
 }
 
 export function init() {
+	clear();
+	spawn.player();
+	let p = spawn.startPlanet();
+	spawn.testEntity(p);
+	spawn.tick();
+}
+
+export function clear() {
 	entities.clear();
 	celestials.clear();
 	ships.clear();
 	particles.clear();
 	tracers.clear();
-	spawn.player();
-	let p = spawn.startPlanet();
-	spawn.testEntity(p);
-	spawn.tick();
 }
 
 export function remove(object) {
