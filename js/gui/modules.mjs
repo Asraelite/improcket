@@ -8,6 +8,7 @@ import GuiButton from './button.mjs';
 import GuiEdit from './edit.mjs';
 import GuiText from './text.mjs';
 import GuiInventory from './inventory.mjs';
+import * as inventory from '../game/inventory.mjs';
 import * as events from '../game/events.mjs';
 import {state} from '../game/index.mjs';
 import * as world from '../world/index.mjs';
@@ -183,9 +184,23 @@ export function game() {
 	invShadow.x += 10;
 	invShadow.y += 10;
 
-	let inventory = new GuiInventory(0, 0, 0, 0);
-	invShadow.append(inventory);
-	inventory.posRelative({w: 1, h: 1});
+	let invElement = new GuiInventory(0, 0, 0, 0);
+	invShadow.append(invElement);
+	invElement.posRelative({w: 1, h: 0.8});
+
+	let capacityInfo = new GuiText('', 0, 0, 0, 0, {
+		size: 12,
+		align: 'left',
+		valign: 'bottom'
+	});
+	invShadow.append(capacityInfo);
+	capacityInfo.posRelative({x: 0, y: 1});
+	capacityInfo.y -= 5;
+	capacityInfo.x += 5;
+	capacityInfo.tick = () => {
+		capacityInfo.text = 'Space used: ' + inventory.usedSpace + ' / ' +
+			inventory.capacity;
+	};
 
 	let moduleInfo = new GuiText('', 0, 0, 0, 0, {
 		size: 12,
@@ -196,9 +211,9 @@ export function game() {
 	moduleInfo.posRelative({x: 0, y: 1, w: 1});
 	moduleInfo.splitLines();
 	moduleInfo.y += 5;
-	inventory.guiInfo = moduleInfo;
+	invElement.guiInfo = moduleInfo;
 
-	edit.guiInventory = inventory;
+	edit.guiInventory = invElement;
 
 
 	let notification = new GuiText('', 0, 0, 0, 0, {

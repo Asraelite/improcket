@@ -182,6 +182,10 @@ export function collectItem(type, id, name) {
 		notify('Collected fuel: +10');
 		return true;
 	} else {
+		if (inventory.usedSpace > inventory.capacity) {
+			notify('No space left in inventory', 60);
+			return false;
+		}
 		inventory.addItem(type, id);
 		audio.play('itemPickup');
 		score += 20;

@@ -85,8 +85,10 @@ export default class GuiInventory extends GuiElement {
 	tileClicked(type, id, button) {
 		if (button == 'left') inventory.selectItem(type, id);
 
-		if (!state.editing && button == 'right') {
-			inventory.removeItem(type, id);
+		if (button == 'right') {
+			if (inventory.canToss()) {
+				inventory.removeItem(type, id);
+			}
 		}
 
 		this.updateTiles();

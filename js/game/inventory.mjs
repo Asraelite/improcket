@@ -1,10 +1,14 @@
 import {state} from './index.mjs';
 import {modules} from '../data.mjs';
+import {playerShip} from '../world/index.mjs';
 import {images as assets} from '../assets.mjs';
+import * as edit from '../game/edit.mjs';
 import * as events from './events.mjs';
 
 export const items = new Map();
 export let currentItem = null;
+export let capacity = 0;
+export let usedSpace = 0;
 
 let onupdate = () => {};
 
@@ -16,9 +20,15 @@ export function init() {
 	addItem('connector', 'xheavy');
 }
 
+export function canToss() {
+	return !state.editing || edit.message === 'inventory too full'
+		|| edit.message === '';
+}
+
 export function getTiles() {
 	let list = Array.from(items.values());
 	list.sort((a, b) => toId(...a.ident) < toId(...b.ident));
+	usedSpace = list.reduce((a, b) => a + b.quantity, 0);
 	return list;
 }
 
@@ -39,9 +49,10 @@ export function removeItem(type, id) {
 		items.delete(mapId);
 		currentItem = null;
 	}
-	if (!state.editing)
+	if (canToss())
 		events.tossItem();
 	update();
+	edit.validate();
 }
 
 export function selectItem(type, id) {
@@ -54,6 +65,7 @@ export function setOnupdate(func) {
 }
 
 function update() {
+	capacity = playerShip.cargoCapacity;
 	onupdate();
 }
 

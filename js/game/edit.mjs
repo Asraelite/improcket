@@ -97,7 +97,7 @@ function getAttributes() {
 		'Cargo capacity: ' + cargo;
 }
 
-function validate() {
+export function validate() {
 	let capsulesFound = 0;
 	let thrustersFound = 0;
 	let fuelFound = 0;
@@ -136,6 +136,8 @@ function validate() {
 		reason = 'no thruster'
 	} else if (fuelFound === 0) {
 		reason = 'no fuel tank'
+	} else if (inventory.usedSpace > inventory.capacity) {
+		reason = 'inventory too full';
 	} else {
 		reason = false;
 	}
