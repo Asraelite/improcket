@@ -32,7 +32,7 @@ function notify(message, time = 80) {
 
 export function tick() {
 	if (notification === null) return;
-	if (notLife-- <= 0)
+	if (notLife-- <= 0 || game.state.gameOver)
 		notification.text = '';
 }
 
@@ -68,6 +68,12 @@ function newPlanet(planet) {
 export function launchShip() {
 	shipLanded = false;
 	game.state.landed = false;
+}
+
+export function crash() {
+	audio.play('crash');
+	particle.createCrash(world.playerShip)
+	game.state.gameOver = true;
 }
 
 export function toggleEdit() {
@@ -122,6 +128,7 @@ export function tilePlacement() {
 
 export function tossItem() {
 	particle.createItemToss(world.playerShip);
+	audio.play('toss');
 }
 
 export function collectItem(type, id, name) {

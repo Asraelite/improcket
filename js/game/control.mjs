@@ -26,7 +26,7 @@ export function tick() {
 
 	if (state.editing) {
 		tickEditing();
-	} else if (state.playing) {
+	} else if (state.playing && !state.gameOver) {
 		tickPlaying();
 	}
 
@@ -34,6 +34,10 @@ export function tick() {
 		if (input.mouse.scroll !== 0) {
 			graphics.changeZoom(-input.mouse.scroll);
 		}
+	}
+
+	if (state.gameOver) {
+		audio.stop('engine');
 	}
 
 	if (pressed[mapping.toggleMusic]) {

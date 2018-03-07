@@ -16,7 +16,8 @@ export async function init() {
 		playing: false,
 		editing: false,
 		paused: false,
-		inventory: false
+		inventory: false,
+		gameOver: false
 	};
 
 	graphics.init();
@@ -24,8 +25,8 @@ export async function init() {
 	gui.init();
 	input.init();
 
-	//events.playMusic();
-	events.startGame();
+	events.playMusic();
+	//events.startGame();
 
 	//tick(); return;
 

@@ -40,7 +40,9 @@ export const audio = {
 	endEdit: 'release1.mp3',
 	newPlanet: 'up2.mp3',
 	engine: 'rocket2.ogg',
-	music: 'music2.mp3'
+	music: 'music2.mp3',
+	toss: 'thunk1.mp3',
+	crash: 'crash2.mp3'
 };
 
 export async function init() {
@@ -52,7 +54,7 @@ export async function init() {
 	parse(images, str => {
 		let img = new Image();
 		img.src = 'img/' + str;
-		promises.push(new Promise((res, rej) => {
+		promises.push(new Promise((res) => {
 			img.addEventListener('load', res);
 		}));
 		return img;
@@ -61,7 +63,7 @@ export async function init() {
 		let audio = new Howl({
 			src: ['audio/' + str]
 		});
-		promises.push(new Promise((res, rej) => {
+		promises.push(new Promise((res) => {
 			audio.once('load', res);
 		}));
 		return audio;

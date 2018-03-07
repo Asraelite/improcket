@@ -46,6 +46,7 @@ function renderEntity(entity) {
 }
 
 function renderShip(ship) {
+	if (ship.crashed) return;
 	context.save();
 	context.translate(...ship.com);
 	context.rotate(ship.r);

@@ -22,6 +22,7 @@ export const ZOOM_SPEED = 0.01;
 // Ship landing. Angle in radians.
 export const TIP_ANGLE = 0.25;
 export const TIP_SPEED = 0.03;
+export const CRASH_SPEED = 0.7;
 // Ship flight mechanics. Speed measured in units per tick.
 export const FUEL_BURN_RATE = 0.3;
 export const THRUST_POWER = 0.004;

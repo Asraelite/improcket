@@ -22,6 +22,7 @@ export default class Ship extends Body {
 		this.rotationPower = 0;
 		this.cargoCapacity = 0;
 		this.thrust = 0;
+		this.crashed = false;
 	}
 
 	get com() {
@@ -48,7 +49,7 @@ export default class Ship extends Body {
 	}
 
 	tick() {
-		window.q = [];
+		if (this.crashed) return;
 		if (!state.editing) this.tickMotion();
 		if (!this.landed) this.tickGravity(world.celestials);
 		if (!state.editing) this.resolveCollisions();
@@ -151,10 +152,19 @@ export default class Ship extends Body {
 		let dis = body.distanceTo({ com: p });
 		if (dis < body.radius + 0.5 + consts.EPSILON) {
 			this.approach(body, dis - (body.radius + 0.5));
+			this.moduleCollided(module);
 			this.halt();
 			this.resolveCelestialCollision(p, body, module);
-			this.lastContactModule = module;
 			this.poc = p;
+			this.lastContactModule = module;
+		}
+	}
+
+	moduleCollided(module) {
+		let speed = Math.sqrt(this.xvel ** 2 + this.yvel ** 2);
+		if (module.type !== 'thruster' || speed > consts.CRASH_SPEED) {
+			events.crash();
+			this.crashed = true;
 		}
 	}
 
