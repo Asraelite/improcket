@@ -7,7 +7,7 @@ export let root;
 export function init() {
 	elements.clear();
 	root = modules.root();
-	changeView('title');
+	changeView('menu');
 }
 
 export function tick() {
@@ -17,12 +17,16 @@ export function tick() {
 export function changeView(view) {
 	root.clear();
 
-	if (view == 'title') {
+	if (view === 'menu') {
 		root.append(modules.title());
 	}
 
-	if (view == 'game') {
+	if (view === 'game') {
 		root.append(modules.game());
+	}
+
+	if (view === 'instructions') {
+		root.append(modules.instructions());
 	}
 }
 

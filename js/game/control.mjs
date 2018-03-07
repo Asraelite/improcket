@@ -46,7 +46,7 @@ export function tick() {
 }
 
 function tickPlaying() {
-	if (held[mapping.thrust]) {
+	if (held[mapping.thrust] && playerShip.fuel !== 0) {
 		playerShip.applyThrust({ forward: 1 });
 		let vol = Math.min(0.7, graphics.perspective.zoom / 10);
 		audio.volume('engine', vol);
@@ -55,7 +55,11 @@ function tickPlaying() {
 	}
 
 	if (pressed[mapping.thrust]) {
-		audio.start('engine');
+		if (playerShip.fuel !== 0) {
+			audio.start('engine');
+		} else {
+			audio.stop('engine');
+		}
 	}
 
 	if (held[mapping.left]) {

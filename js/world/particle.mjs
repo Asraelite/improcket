@@ -29,7 +29,7 @@ export function createEndEditBurst(ship) {
 
 export function createCrash(ship) {
 	for (let i = 0; i < ship.mass + 3; i++) {
-		particles.add(new Particle(...ship.poc, {
+		particles.add(new Particle(...ship.com, {
 			color: '#f2e860',
 			lifetime: Math.random() * 50 + 40,
 			size: Math.random() * 0.2 + 0.2,
@@ -38,7 +38,7 @@ export function createCrash(ship) {
 		}));
 	}
 	for (let i = 0; i < ship.mass + 3; i++) {
-		particles.add(new Particle(...ship.poc, {
+		particles.add(new Particle(...ship.com, {
 			color: '#f75722',
 			lifetime: Math.random() * 50 + 40,
 			size: Math.random() * 0.2 + 0.2,
@@ -47,7 +47,7 @@ export function createCrash(ship) {
 		}));
 	}
 	for (let i = 0; i < ship.mass * 2 + 3; i++) {
-		particles.add(new Particle(...ship.poc, {
+		particles.add(new Particle(...ship.com, {
 			color: '#888',
 			lifetime: Math.random() * 30 + 55,
 			size: Math.random() * 0.5 + 0.4,

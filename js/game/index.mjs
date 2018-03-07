@@ -41,12 +41,17 @@ export function changeView(view) {
 	state.view = view;
 	gui.changeView(view);
 
-	if (view == 'game') {
+	if (view === 'game') {
 		state.playing = true;
 		state.editing = false;
 		state.paused = false;
 		world.init();
 		inventory.init();
+	} else if (view === 'instructions') {
+		state.playing = false;
+		gui.changeView('instructions');
+	} else if (view === 'menu') {
+		gui.changeView('menu');
 	}
 }
 

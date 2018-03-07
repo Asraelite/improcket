@@ -46,9 +46,8 @@ export default class GuiElement extends Rect {
 	//   - Albert Einstein
 
 	posRelative({x = null, xc = 0, y = null, yc = 0, w = null, h = null}) {
-		if (x !== null) {
+		if (x !== null)
 			this.x = (this.parent.w * x) - (this.w * xc) + this.parent.x;
-		}
 		if (y !== null)
 			this.y = (this.parent.h * y) - (this.h * yc) + this.parent.y;
 		if (w !== null)

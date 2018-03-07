@@ -161,6 +161,7 @@ export default class Ship extends Body {
 	}
 
 	moduleCollided(module) {
+		if (this.landed) return;
 		let speed = Math.sqrt(this.xvel ** 2 + this.yvel ** 2);
 		if (module.type !== 'thruster' || speed > consts.CRASH_SPEED) {
 			events.crash();
@@ -202,13 +203,18 @@ export default class Ship extends Body {
 
 		let thrustForce = -forward * consts.THRUST_POWER * this.thrust;
 		let turnForce = (turnRight - turnLeft) * consts.TURN_POWER;
+		if (this.fuel <= 0) {
+			this.fuel = 0;
+			thrustForce = 0;
+		} else {
+			this.fuel -= Math.abs(thrustForce) * consts.FUEL_BURN_RATE;
+		}
 		turnForce *= this.rotationPower;
-		this.fuel -= Math.abs(thrustForce) * consts.FUEL_BURN_RATE;
 
 		this.applyDirectionalForce(0, thrustForce, turnForce);
 
 		this.modules.forEach(m => {
-			if (m.type !== 'thruster') return;
+			if (m.type !== 'thruster' || thrustForce == 0) return;
 			m.power += forward;
 		});
 

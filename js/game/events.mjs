@@ -17,7 +17,7 @@ let landedPlanets = new Set();
 
 export function playMusic() {
 	audio.start('music');
-	audio.volume('music', 0.8);
+	audio.volume('music', 0.4);
 }
 
 export function stopMusic() {
@@ -45,6 +45,14 @@ export function startGame() {
 	graphics.perspective.focusPlayer();
 }
 
+export function toMenu() {
+	game.changeView('menu');
+}
+
+export function togglePause() {
+	game.state.paused = !game.state.paused;
+}
+
 export function landShip(planet) {
 	shipLanded = true;
 	if (!landedPlanets.has(planet)) {
@@ -54,7 +62,7 @@ export function landShip(planet) {
 }
 
 export function howToPlay() {
-	game.state.controls = true;
+	game.changeView('instructions');
 }
 
 function newPlanet(planet) {

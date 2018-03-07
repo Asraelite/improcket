@@ -42,7 +42,8 @@ export const audio = {
 	engine: 'rocket2.ogg',
 	music: 'music2.mp3',
 	toss: 'thunk1.mp3',
-	crash: 'crash2.mp3'
+	crash: 'crash2.mp3',
+	pause: 'swoosh1.mp3'
 };
 
 export async function init() {

@@ -47,6 +47,56 @@ export function title() {
 	return shadow;
 }
 
+const instructionText = `\
+Flight controls
+
+WAD: Movement
+Shift + WAD: Fine movement
+E: Open/close inventory
+R: Toggle item markers
+T: Toggle path prediction
+P: Pause/unpause
+M: Toggle music
+
+
+Ship editing and inventory controls
+
+Left click: Select module in inventory
+Right click: Toss away module in inventory
+Left click: Place module on ship
+Right click: Remove module from ship
+Escape: Exit ship editing screen
+
+
+Fly around collecting modules and fuel, and land to build your ship using \
+those collected modules. Get the highest score possible without crashing or \
+running out of fuel.
+`;
+
+export function instructions() {
+	let shadow = root();
+
+	let frame = new GuiFrame();
+	shadow.append(frame);
+	frame.posRelative({x: 0.1, y: 0.1, w: 0.8, h: 0.8});
+
+	let back = new GuiButton('Return to menu', events.toMenu, 0, 0, 200);
+	frame.append(back);
+	back.posRelative({ x: 0.5, xc: 0.5, y: 1 });
+	back.y -= 60;
+
+	let text = new GuiText(instructionText, 0, 0, 0, 0, {
+		size: 12,
+		align: 'left',
+		valign: 'top'
+	});
+	frame.append(text);
+	text.posRelative({x: 0.05, y: 0.05, w: 0.9, h: 0.9});
+	text.splitLines();
+
+	return shadow;
+}
+
 export function game() {
 	let shadow = root();
 
@@ -137,7 +187,7 @@ export function game() {
 	invShadow.append(inventory);
 	inventory.posRelative({w: 1, h: 1});
 
-	let moduleInfo = new GuiText('test\nline\n', 0, 0, 0, 0, {
+	let moduleInfo = new GuiText('', 0, 0, 0, 0, {
 		size: 12,
 		align: 'left',
 		valign: 'top'

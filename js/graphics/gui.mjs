@@ -22,8 +22,11 @@ function renderElement(element) {
 }
 
 function renderFrame(element) {
-	context.fillStyle = '#eb9';
+	context.fillStyle = '#a3977c';
 	context.fillRect(...element.shape);
+	context.lineWidth = 3;
+	context.strokeStyle = '#6d634b'
+	context.strokeRect(...element.shape);
 }
 
 function renderImage(element) {
@@ -53,15 +56,33 @@ function renderButton(element) {
 		context.globalAlpha = 0.5;
 	}
 
-	context.fillRect(...element.shape);
+	let [sx, sy, w, h] = element.shape;
+	let [ex, ey] = [sx + w, sy + h];
+	let rad = 5;
+
+	context.beginPath();
+	context.moveTo(sx + rad, sy);
+	context.lineTo(ex - rad, sy);
+	context.quadraticCurveTo(ex, sy, ex, sy + rad);
+	context.lineTo(ex, ey - rad);
+	context.quadraticCurveTo(ex, ey, ex - rad, ey);
+	context.lineTo(sx + rad, ey);
+	context.quadraticCurveTo(sx, ey, sx, ey - rad);
+	context.lineTo(sx, sy + rad);
+	context.quadraticCurveTo(sx, sy, sx + rad, sy);
+	context.closePath();
+
+	context.fill();
 	context.strokeStyle = '#541';
-	context.strokeWidth = 4;
-	context.strokeRect(...element.shape);
+	context.lineWidth = 2;
+	context.stroke();
+
 	context.textAlign = 'center';
 	context.textBaseline = 'middle';
 	context.fillStyle = '#fff';
 	context.font = '12pt Consolas';
 	context.fillText(element.text, ...element.center);
+
 	context.globalAlpha = 1;
 }
 
