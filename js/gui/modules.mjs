@@ -67,7 +67,7 @@ export function game() {
 	edit.posRelative({w: 1, h: 1});
 
 	let editInfoText = new GuiText('', 0, 0, 0, 0, {
-		size: 10,
+		size: 12,
 		align: 'center'
 	});
 	editShadow.append(editInfoText);
@@ -75,7 +75,7 @@ export function game() {
 	editInfoText.y += 5;
 
 	let editWarnText = new GuiText('', 0, 0, 0, 0, {
-		size: 10,
+		size: 12,
 		align: 'center'
 	});
 	editShadow.append(editWarnText);
@@ -93,18 +93,27 @@ export function game() {
 	invShadow.posRelative({x: 0, w: 0.4, h: 0.6});
 	invShadow.x += 10;
 	invShadow.y += 10;
-	invShadow.h += 60;
 
 	let inventory = new GuiInventory(0, 0, 0, 0);
 	invShadow.append(inventory);
 	inventory.posRelative({w: 1, h: 1});
-	inventory.h -= 60;
+
+	let moduleInfo = new GuiText('test\nline\n', 0, 0, 0, 0, {
+		size: 12,
+		align: 'left',
+		valign: 'top'
+	});
+	invShadow.append(moduleInfo);
+	moduleInfo.posRelative({x: 0, y: 1, w: 1});
+	moduleInfo.splitLines();
+	moduleInfo.y += 5;
+	inventory.guiInfo = moduleInfo;
 
 	edit.guiInventory = inventory;
 
 
 	let notification = new GuiText('', 0, 0, 0, 0, {
-		size: 12,
+		size: 14,
 		align: 'center',
 		valign: 'top'
 	});

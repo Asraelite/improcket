@@ -26,6 +26,12 @@ export default class GuiElement extends Rect {
 
 	}
 
+	get drawn() {
+		if (!this.options.drawChildren) return false;
+		if (!this.parent) return true;
+		return this.parent.drawn;
+	}
+
 	append(element) {
 		this.children.add(element);
 		element.parent = this;

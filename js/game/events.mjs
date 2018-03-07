@@ -73,6 +73,7 @@ export function endEditing() {
 
 	if (valid) {
 		audio.play('endEdit');
+		particle.createEndEditBurst(world.playerShip);
 		graphics.changePerspective('universe');
 		game.state.editing = false;
 		game.state.inventory = false;

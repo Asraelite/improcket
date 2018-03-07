@@ -16,6 +16,7 @@ export default class Ship extends Body {
 		this.maxRadius = 0;
 		this.landed = false;
 		this.lastContactModule = null;
+		this.poc = this.com;
 	}
 
 	get com() {
@@ -121,6 +122,7 @@ export default class Ship extends Body {
 			this.halt();
 			this.resolveCelestialCollision(p, body, module);
 			this.lastContactModule = module;
+			this.poc = p;
 		}
 	}
 

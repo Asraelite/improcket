@@ -12,6 +12,7 @@ export default class GuiInventory extends GuiElement {
 		this.tileHeight = 5;
 		this.currentPage = 0;
 		inventory.setOnupdate(this.updateTiles.bind(this));
+		this.guiInfo = null;
 	}
 
 	updateTiles() {
@@ -35,14 +36,15 @@ export default class GuiInventory extends GuiElement {
 		let offset = pageSize * this.currentPage;
 		let tiles = inventory.getTiles().slice(offset);
 		let tile;
+		let cur = inventory.currentItem;
 
 		for (let y = 0; y < this.tileHeight; y++)
 		for (let x = 0; x < this.tileWidth && tiles.length; x++) {
 			let i = y * this.tileWidth + (x % this.tileWidth) + offset;
 			tile = tiles.shift();
 
-			let ex = x * tileSize + spacing / 2 + ox + this.x;
-			let ey = y * tileSize + spacing / 2 + oy + this.y;
+			let ex = x * tileSize + spacing / 2 + ox;
+			let ey = y * tileSize + spacing / 2 + oy;
 			let [ew, eh] = [tileSize - spacing, tileSize - spacing];
 
 			let ident = tile.ident;
@@ -51,7 +53,6 @@ export default class GuiInventory extends GuiElement {
 				this.tileClicked(...ident, button);
 			};
 
-			let cur = inventory.currentItem;
 			let selected = cur !== null && tile.type === cur.type
 				&& tile.id === cur.id;
 
@@ -63,13 +64,18 @@ export default class GuiInventory extends GuiElement {
 
 			this.append(el);
 		}
+
+		this.guiInfo.text = cur === null ? '' : cur.textInfo;
+		this.guiInfo.splitLines();
 	}
 
 	tick() {
 		if (state.inventory && !this.active) this.updateTiles();
 		this.active = state.inventory;
-		this.options.draw = this.options.drawChildren = this.active;
+		this.parent.options.drawChildren = this.active;
 		if (!this.active) return;
+
+		this.children
 	}
 
 	getTile(x, y) {

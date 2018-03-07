@@ -65,7 +65,24 @@ class Tile {
 		this.mapId = toId(type, id);
 		this.quantity = q;
 		this.image = assets.modules[type][id];
+		this.data = modules[type][id];
 		if (type === 'thruster') this.image = this.image.off;
+	}
+
+	get textInfo() {
+		let text = this.data.name + '\n\n' + this.data.tooltip + '\n\n';
+		text += 'Mass: ' + this.data.mass + '\n';
+
+		if (this.type === 'thruster')
+			text += 'Power: ' + this.data.thrust + '\n';
+		if (this.type === 'fuel')
+			text += 'Fuel capacity: ' + this.data.fuelCapacity + '\n';
+		if (this.type === 'capsule') {
+			text += 'Rotational power: ' + this.data.rotation + '\n';
+			text += 'Cargo space: ' + this.data.capacity + '\n';
+		}
+
+		return text;
 	}
 
 	get ident() {

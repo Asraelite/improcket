@@ -36,7 +36,9 @@ function renderText(element) {
 	context.textAlign = element.align;
 	context.textBaseline = element.valign;
 	context.fillStyle = element.color;
-	context.fillText(element.text, element.x, element.y);
+	element.text.split('\n').forEach((line, i) =>
+		context.fillText(line, element.x, element.y + i * element.spacing)
+	);
 }
 
 function renderButton(element) {

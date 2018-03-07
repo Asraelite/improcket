@@ -4,9 +4,8 @@ export const modules = {
 	capsule: {
 		small: {
 			name: 'Small Capsule',
-			tooltip: 'A small, simple capsule. Provides just enough ' +
-				'rotational power for a small rocket and has a small ' +
-				'amount of storage space.',
+			tooltip: 'A small, simple capsule. Provides a small amount ' +
+				'of rotational power and storage space.',
 			type: 'capsule',
 			id: 'small',
 			mass: 2,

@@ -15,6 +15,18 @@ export function createThrustExhaust(thruster) {
 	}));
 }
 
+export function createEndEditBurst(ship) {
+	for (let i = 0; i < 20; i++) {
+		particles.add(new Particle(...ship.poc, {
+			color: '#ccc',
+			lifetime: Math.random() * 30 + 25,
+			size: Math.random() * 0.3 + 0.05,
+			spray: 0.3,
+			gravity: true
+		}));
+	}
+}
+
 export function createPickupBurst(ship, point) {
 	for (let i = 0; i < 20; i++) {
 		particles.add(new Particle(...point, {

@@ -17,10 +17,12 @@ export default class GuiItemButton extends GuiButton {
 	}
 
 	click() {
-		this.onclick('left');
+		if (this.drawn)
+			this.onclick('left');
 	}
 
 	rightClick() {
-		this.onclick('right');
+		if (this.drawn)
+			this.onclick('right');
 	}
 }
