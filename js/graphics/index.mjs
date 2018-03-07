@@ -24,8 +24,13 @@ export function init() {
 
 	perspective = new Perspective();
 
-	draw.text('Loading...', canvas.width / 2, canvas.height / 2,
-		{ align: 'center', valign: 'middle' });
+	context.fillStyle = '#000';
+	context.fillRect(0, 0, canvas.width, canvas.height);
+	context.font = '36px Consolas';
+	context.textAlign = 'center';
+	context.textBaseline = 'middle';
+	context.fillStyle = '#fff';
+	context.fillText('Loading...', canvas.width / 2, canvas.height / 2);
 }
 
 export function render() {

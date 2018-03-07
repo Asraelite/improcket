@@ -53,24 +53,39 @@ function spawnSector(x, y) {
 	spawnedSectors.add(`${x}.${y}`);
 }
 
-function randomPlanet(x, y) {
-	let rad = Math.random() * 60 + 30;
+function randomPlanet(x, y, {
+		radius = Math.random() * 60 + 30,
+		type = 'green',
+		density = 3
+	} = {}) {
+
 	let [cel, dis] = nearest(x, y, world.celestials);
 	let mcs = consts.MIN_CELESTIAL_SPACING;
 
-	if (dis < Math.max(rad, cel.radius) * mcs) return;
+	if (cel !== null && dis < Math.max(radius, cel.radius) * mcs) return;
 
-	let planet = celestial(x, y, rad, {
-		density: 3,
-		type: 'green'
+	let planet = celestial(x, y, radius, {
+		density: density,
+		type: type
 	});
 
-	for (let i = 1.5; i < 8; i += 1) {
+	for (let i = 0.1; i < 4; i += 1) {
 		if (Math.random() > consts.ENTITY_SPAWN_RATE) {
 			let e = randomEntity();
-			e.orbit(planet, i * rad, Math.random() * Math.PI * 2);
+			e.orbit(planet, i * radius, Math.random() * Math.PI * 2);
 		}
 	}
+
+	for (let i = 0; i < 5; i++) {
+		if (Math.random() > consts.ENTITY_SPAWN_RATE || true) {
+			let e = randomEntity();
+			e.orbit(planet, 1.5, Math.random() * Math.PI * 2);
+			e.gravity = false;
+			e.halt();
+		}
+	}
+
+	return planet;
 }
 
 function randomEntity(x, y) {
@@ -107,7 +122,8 @@ export function player() {
 }
 
 export function startPlanet() {
-	return celestial(0, 0, 40, {
+	return randomPlanet(0, 0, {
+		radius: 40,
 		density: 3,
 		type: 'green'
 	});

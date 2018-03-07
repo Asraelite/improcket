@@ -45,7 +45,7 @@ export function landShip(planet) {
 }
 
 function newPlanet(planet) {
-	let value = (planet.radius + 30) | 0;
+	let value = (planet.radius * 2 + 50) | 0;
 	landedPlanets.add(planet);
 	audio.play('newPlanet');
 	score += value;
@@ -70,6 +70,7 @@ export function toggleEdit() {
 export function toggleTrace() {
 	let trace = graphics.toggleTrace();
 	notify('Path prediction: ' + (trace ? 'on' : 'off'));
+	audio.start('engine');
 }
 
 export function toggleMarkers() {

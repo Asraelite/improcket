@@ -2,6 +2,7 @@ import * as input from '../input.mjs';
 import * as events from './events.mjs';
 import * as graphics from '../graphics/index.mjs';
 import * as inventory from './inventory.mjs';
+import * as audio from './audio.mjs';
 import {playerShip} from '../world/index.mjs';
 import {state} from './index.mjs';
 
@@ -38,6 +39,12 @@ export function tick() {
 function tickPlaying() {
 	if (held[mapping.thrust]) {
 		playerShip.applyThrust({ forward: 1 });
+	} else {
+		audio.stop('engine');
+	}
+
+	if (pressed[mapping.thrust]) {
+		audio.start('engine');
 	}
 
 	if (held[mapping.left]) {

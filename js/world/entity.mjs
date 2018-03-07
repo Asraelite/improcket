@@ -38,6 +38,10 @@ export default class Entity extends Body {
 		return [this.x + this.width / 2, this.y + this.height / 2];
 	}
 
+	get localCom() {
+		return [this.width / 2, this.height / 2];
+	}
+
 	remove() {
 		entities.delete(this);
 	}

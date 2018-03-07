@@ -38,7 +38,8 @@ export const audio = {
 	itemPickup: 'up1.mp3',
 	fuelPickup: 'blip2.mp3',
 	endEdit: 'release1.mp3',
-	newPlanet: 'up2.mp3'
+	newPlanet: 'up2.mp3',
+	engine: 'rocket2.ogg'
 };
 
 export async function init() {
@@ -56,9 +57,11 @@ export async function init() {
 		return img;
 	});
 	parse(audio, str => {
-		let audio = new Audio('audio/' + str);
+		let audio = new Howl({
+			src: ['audio/' + str]
+		});
 		promises.push(new Promise((res, rej) => {
-			audio.addEventListener('canplaythrough', res);
+			audio.once('load', res);
 		}));
 		return audio;
 	});
