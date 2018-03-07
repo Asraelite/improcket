@@ -28,13 +28,7 @@ export async function init() {
 	events.playMusic();
 	//events.startGame();
 
-	//tick(); return;
-
-	// Recursive `requestAnimationFrame` can cause problems with Parcel.
-	while(true) {
-		tick();
-		await new Promise(res => requestAnimationFrame(res));
-	}
+	loop(tick);
 }
 
 export function changeView(view) {
@@ -55,6 +49,24 @@ export function changeView(view) {
 		world.clear();
 	}
 }
+
+function loop(fn, fps = 60) {
+    let then = Date.now();
+    let interval = 1000 / fps;
+
+    (function loop(time) {
+        requestAnimationFrame(loop);
+
+        // again, Date.now() if it's available
+        let now = Date.now();
+        let delta = now - then;
+
+        if (delta > interval) {
+            then = now - (delta % interval);
+            fn();
+        }
+    })(0);
+};
 
 function tick() {
 	events.tick();

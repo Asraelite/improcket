@@ -139,18 +139,19 @@ export function player() {
 }
 
 export function startPlanet() {
-	return randomPlanet(0, 0, {
+	let planet = randomPlanet(0, 0, {
 		radius: 40,
 		density: 3,
 		type: 'green'
 	});
+		let fuel = new Entity(0, 0, 'fuelcan');
+		world.entities.add(fuel);
+		fuel.orbit(planet, 10, -0.5);
+	return planet;
 }
 
-export function testEntity(parent) {
-	let entity = new Entity(0, -50);
-	world.entities.add(entity);
-	entity.orbit(parent, 10);
-	return entity;
+export function startEntity(parent) {
+
 }
 
 export function celestial(x, y, radius, params) {

@@ -223,10 +223,13 @@ export default class Ship extends Body {
 
 		this.applyDirectionalForce(0, thrustForce, turnForce);
 
+		if (Math.abs(this.rvel) > 0.1) {
+			this.rvel *= 0.7;
+		}
+
 		this.modules.forEach(m => {
 			if (m.type !== 'thruster' || thrustForce == 0) return;
 			m.power += forward;
 		});
-
 	}
 }

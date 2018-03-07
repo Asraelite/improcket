@@ -106,8 +106,9 @@ export function game() {
 	editButton.posRelative({ x: 0.5, xc: 0.5, y: 1 });
 	editButton.y -= 45;
 	editButton.tick = () => {
-		editButton.options.draw = state.landed;
-		editButton.options.disabled = state.editing && editMessage !== '';
+		let usable = state.landed && !state.gameOver;
+		editButton.options.draw = usable;
+		editButton.options.disabled = usable && editMessage !== '';
 		if (state.editing) {
 			editButton.text = 'Finish';
 			if (editMessage !== '') editButton.text = '(' + editMessage + ')';

@@ -17,7 +17,6 @@ export function init() {
 	clear();
 	spawn.player();
 	let p = spawn.startPlanet();
-	spawn.testEntity(p);
 	spawn.tick();
 }
 

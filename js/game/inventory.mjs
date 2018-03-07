@@ -14,10 +14,6 @@ let onupdate = () => {};
 
 export function init() {
 	items.clear();
-	addItem('connector', 'xheavy');
-	addItem('connector', 'xheavy');
-	addItem('connector', 'xheavy');
-	addItem('connector', 'xheavy');
 }
 
 export function canToss() {

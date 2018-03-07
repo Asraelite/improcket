@@ -104,6 +104,8 @@ export function crash() {
 }
 
 export function gameOver(reason) {
+	if (game.state.editing)
+			endEditing();
 	gameOverReason = reason;
 	game.state.gameOver = true;
 	game.state.inventory = false;

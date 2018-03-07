@@ -49,7 +49,11 @@ export const images = {
 	celestials: {
 		green: {
 			'0': 'celestials/green_0.svg',
-			'1': 'celestials/green_1.svg'
+			'1': 'celestials/green_1.svg',
+			'2': 'celestials/green_2.svg',
+			'3': 'celestials/rock_0.svg',
+			'4': 'celestials/rock_1.svg',
+			'5': 'celestials/lava_0.svg'
 		}
 	}
 };
