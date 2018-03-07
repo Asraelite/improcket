@@ -108,6 +108,7 @@ class Perspective {
 		this.oldZoom = 0;
 		this.transition = 0;
 		this.zoomTransition = 0;
+		this.zoomTransitionSpeed = 0.9;
 		this.reset();
 	}
 
@@ -122,10 +123,11 @@ class Perspective {
 		[this.shiftX, this.shiftY] = [x, y];
 	}
 
-	changeZoom(zoom) {
+	changeZoom(zoom, speed = 0.9) {
 		this.oldZoom = this.currentZoom;
 		this.targetZoom = zoom;
 		this.zoomTransition = 1;
+		this.zoomTransitionSpeed = speed;
 	}
 
 	get currentShift() {
@@ -182,7 +184,7 @@ class Perspective {
 		this.zoom = this.currentZoom;
 
 		this.transition *= 0.9;
-		this.zoomTransition *= 0.9;
+		this.zoomTransition *= this.zoomTransitionSpeed;
 	}
 
 	reset() {
@@ -201,7 +203,8 @@ class Perspective {
 
 	zoomDelta(delta) {
 		let factor = 1 + (consts.ZOOM_SPEED * Math.abs(delta));
-		this.targetZoom *= delta > 0 ? factor : 1 / factor;
+		let target = this.targetZoom * (delta > 0 ? factor : 1 / factor);
+		this.changeZoom(target, 0.7);
 		this.normalize();
 	}
 

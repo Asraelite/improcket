@@ -28,8 +28,9 @@ function renderParticle(particle) {
 function renderEntity(entity) {
 	context.save();
 	context.translate(...entity.com);
-	if (graphics.perspective.zoom < 2 && graphics.markers) {
-		context.globalAlpha = 0.7 / graphics.perspective.zoom;
+	let alpha = Math.max(1 - ((graphics.perspective.zoom - 1) / 2), 0) ** 2;
+	if (alpha > 0 && graphics.markers) {
+		context.globalAlpha = alpha;
 		context.beginPath();
 		context.arc(0, 0, 4, 0, 2 * Math.PI);
 		context.lineWidth = 1;

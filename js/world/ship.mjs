@@ -103,6 +103,7 @@ export default class Ship extends Body {
 		this.maxFuel = 0;
 		this.rotationPower = 0;
 		this.cargoCapacity = 0;
+		this.thrust = 0;
 
 		this.modules.forEach(m => {
 			if (m.type === 'fuel') {

@@ -16,8 +16,20 @@ export function start(name) {
 }
 
 export function stop(name) {
-	if (!playing.has(name)) return;
+	if (!playing.has(name)) return false;
 	let howl = playing.get(name);
-	if (howl.playing())
+	if (howl.playing()) {
 		howl.stop();
+		return true;
+	}
+	return false;
+}
+
+export function toggle(name) {
+	if (!stop(name)) start(name);
+}
+
+export function volume(name, level) {
+	if (!playing.has(name)) return;
+	playing.get(name).volume(level);
 }

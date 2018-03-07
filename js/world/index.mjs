@@ -25,6 +25,11 @@ export function init() {
 	spawn.tick();
 }
 
+export function remove(object) {
+	entities.delete(object);
+	celestials.delete(object);
+}
+
 export function tick() {
 	particles.forEach(p => p.tick());
 	celestials.forEach(c => c.tick());

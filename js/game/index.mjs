@@ -24,7 +24,8 @@ export async function init() {
 	gui.init();
 	input.init();
 
-	//events.startGame();
+	//events.playMusic();
+	events.startGame();
 
 	//tick(); return;
 

@@ -29,13 +29,20 @@ export function title() {
 	let startFunction = events.startGame;
 	let start = new GuiButton('Start game', events.startGame, 0, 0, 200);
 	shadow.append(start);
-	start.posRelative({ x: 0.5, xc: 0.5, y: 0.7 });
+	start.posRelative({ x: 0.5, xc: 0.5, y: 1 });
+	start.y -= 160;
 
 	let secondFunction = () => {};
 	let second = new GuiButton('Don\'t start game', secondFunction, 0, 0, 200);
 	shadow.append(second);
-	second.posRelative({ x: 0.5, xc: 0.5, y: 0.7 });
-	second.y += 60;
+	second.posRelative({ x: 0.5, xc: 0.5, y: 1 });
+	second.y -= 110;
+
+	let thirdFunction = events.howToPlay;
+	let third = new GuiButton('How to play', thirdFunction, 0, 0, 200);
+	shadow.append(third);
+	third.posRelative({ x: 0.5, xc: 0.5, y: 1 });
+	third.y -= 60;
 
 	return shadow;
 }

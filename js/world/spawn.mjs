@@ -8,7 +8,7 @@ import * as world from './index.mjs';
 import * as consts from '../consts.mjs';
 import {SECTOR_SIZE as SS} from '../consts.mjs';
 
-let spawnedSectors = new Set();
+let spawnedSectors = new Map();
 
 const visibleRadius = (400 / consts.MIN_ZOOM) + SS;
 
@@ -21,6 +21,16 @@ export function tick() {
 		let id = `${sx}.${sy}`;
 		if (!spawnedSectors.has(id)) spawnSector(sx, sy);
 	}
+
+	spawnedSectors.forEach((objects, key) => {
+		let [sx, sy] = key.split('.');
+		let [wx, wy] = [sx * SS, sy * SS];
+		let dis = (wx - px) ** 2 + (wy - py) ** 2;
+		if (dis > (SS * 4) ** 2) {
+			spawnedSectors.delete(key);
+			objects.forEach(world.remove);
+		}
+	});
 }
 
 function nearest(x, y, set) {
@@ -40,17 +50,18 @@ function nearest(x, y, set) {
 
 function spawnSector(x, y) {
 	let area = SS ** 2;
+	let spawned = new Set();
 
 	for (let i = 0; i < area / 1000; i++) {
 		let [px, py] = [(x + Math.random()) * SS, (y + Math.random()) * SS];
 		if (Math.random() < consts.PLANET_SPAWN_RATE / 1000) {
-			randomPlanet(px, py);
+			spawned.add(randomPlanet(px, py));
 		} else if (Math.random() < consts.ENTITY_SPAWN_RATE / 1000){
-			randomEntity(px, py);
+			spawned.add(randomEntity(px, py));
 		}
 	}
 
-	spawnedSectors.add(`${x}.${y}`);
+	spawnedSectors.set(`${x}.${y}`, spawned);
 }
 
 function randomPlanet(x, y, {

@@ -39,7 +39,8 @@ export const audio = {
 	fuelPickup: 'blip2.mp3',
 	endEdit: 'release1.mp3',
 	newPlanet: 'up2.mp3',
-	engine: 'rocket2.ogg'
+	engine: 'rocket2.ogg',
+	music: 'music2.mp3'
 };
 
 export async function init() {

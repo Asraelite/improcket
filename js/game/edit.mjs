@@ -91,8 +91,9 @@ function getAttributes() {
 
 	info = 'Mass: ' + mass + '\n' +
 		'Fuel capacity: ' + fuel + '\n' +
-		'Thrust/mass ratio: ' + (thrust / mass).toFixed(1) + '\n' +
-		'Rotation speed: ' + (rotation / mass * 100).toFixed(1) + '\n' +
+		'Thrust/mass ratio: ' + (thrust / Math.max(mass, 1)).toFixed(1) + '\n' +
+		'Rotation speed: ' + (rotation / Math.max(mass, 1) * 100).toFixed(1)
+			+ '\n' +
 		'Cargo capacity: ' + cargo;
 }
 

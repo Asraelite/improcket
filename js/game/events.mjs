@@ -15,6 +15,15 @@ let notLife = 0;
 
 let landedPlanets = new Set();
 
+export function playMusic() {
+	audio.start('music');
+	audio.volume('music', 0.8);
+}
+
+export function stopMusic() {
+	audio.stop('music');
+}
+
 function notify(message, time = 80) {
 	if (notification === null) return;
 	notification.text = message;
@@ -44,6 +53,10 @@ export function landShip(planet) {
 	game.state.landed = true;
 }
 
+export function howToPlay() {
+	game.state.controls = true;
+}
+
 function newPlanet(planet) {
 	let value = (planet.radius * 2 + 50) | 0;
 	landedPlanets.add(planet);
@@ -70,7 +83,6 @@ export function toggleEdit() {
 export function toggleTrace() {
 	let trace = graphics.toggleTrace();
 	notify('Path prediction: ' + (trace ? 'on' : 'off'));
-	audio.start('engine');
 }
 
 export function toggleMarkers() {

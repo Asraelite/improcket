@@ -14,7 +14,8 @@ export const mapping = {
 	inventory: 'KeyE',
 	cycleRotation: 'KeyC',
 	toggleTrace: 'KeyT',
-	toggleMarkers: 'KeyR'
+	toggleMarkers: 'KeyR',
+	toggleMusic: 'KeyM'
 };
 
 let held, pressed;
@@ -34,11 +35,17 @@ export function tick() {
 			graphics.changeZoom(-input.mouse.scroll);
 		}
 	}
+
+	if (pressed[mapping.toggleMusic]) {
+		audio.toggle('music');
+	}
 }
 
 function tickPlaying() {
 	if (held[mapping.thrust]) {
 		playerShip.applyThrust({ forward: 1 });
+		let vol = Math.min(0.7, graphics.perspective.zoom / 10);
+		audio.volume('engine', vol);
 	} else {
 		audio.stop('engine');
 	}
