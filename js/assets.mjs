@@ -10,19 +10,39 @@ export const images = {
 	},
 	modules: {
 		capsule: {
-			small: 'modules/small_capsule.svg'
+			small: 'modules/small_capsule.svg',
+			large: 'modules/large_capsule.svg',
+			advanced: 'modules/advanced_capsule.svg'
 		},
 		fuel: {
-			small: 'modules/small_fuel_tank.svg'
+			small: 'modules/small_fuel_tank.svg',
+			large: 'modules/large_fuel_tank.svg',
+			advanced: 'modules/advanced_fuel_tank.svg'
 		},
 		thruster: {
 			light: {
 				off: 'modules/light_thruster.svg',
-				on: 'modules/light_thruster_on.svg',
+				on: 'modules/light_thruster_on.svg'
+			},
+			heavy: {
+				off: 'modules/light_thruster.svg',
+				on: 'modules/light_thruster_on.svg'
+			},
+			advanced: {
+				off: 'modules/light_thruster.svg',
+				on: 'modules/light_thruster_on.svg'
 			}
 		},
 		connector: {
-			xheavy: 'modules/xheavy_connector.svg'
+			xheavy: 'modules/xheavy_connector.svg',
+			advanced: 'modules/advanced_connector.svg',
+		},
+		cargo: {
+			small: 'modules/cargo_bay.svg'
+		},
+		gyroscope: {
+			small: 'modules/small_gyroscope.svg',
+			large: 'modules/large_gyroscope.svg'
 		},
 		fuelcan: 'modules/fuelcan.svg'
 	},

@@ -22,6 +22,10 @@ export function init() {
 	shipLanded = false;
 }
 
+export function outOfFuel() {
+	gameOver('You ran out of fuel');
+}
+
 export function playMusic() {
 	audio.start('music');
 	audio.volume('music', 0.4);
@@ -97,7 +101,6 @@ export function crash() {
 	gameOver('You crashed');
 	audio.play('crash');
 	particle.createCrash(world.playerShip);
-
 }
 
 export function gameOver(reason) {

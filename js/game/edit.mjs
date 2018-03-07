@@ -85,6 +85,8 @@ function getAttributes() {
 			thrust += t.module.thrust;
 		} else if (t.type === 'gyroscope') {
 			rotation += t.module.rotation;
+		} else if (t.type === 'cargo') {
+			cargo += t.module.capacity;
 		}
 		mass += t.module.mass;
 	});

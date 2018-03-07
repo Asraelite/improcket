@@ -23,6 +23,7 @@ export default class Ship extends Body {
 		this.cargoCapacity = 0;
 		this.thrust = 0;
 		this.crashed = false;
+		this.timeWithoutFuel = 0;
 	}
 
 	get com() {
@@ -68,6 +69,13 @@ export default class Ship extends Body {
 			} else {
 				events.launchShip()
 			}
+		}
+
+		if (this.fuel === 0 && !state.gameOver) {
+			if (this.timeWithoutFuel++ > 300)
+				events.outOfFuel();
+		} else {
+			this.timeWithoutFuel = 0;
 		}
 	}
 
@@ -116,6 +124,8 @@ export default class Ship extends Body {
 				this.thrust += m.data.thrust;
 			} else if (m.type === 'gyroscope') {
 				this.rotationPower += m.data.rotation;
+			} else if (m.type === 'cargo') {
+				this.cargoCapacity += m.data.capacity;
 			}
 		});
 	}

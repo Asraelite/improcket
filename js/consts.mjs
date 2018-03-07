@@ -34,7 +34,7 @@ export const EDIT_MARGIN = 2;
 // Floating items.
 export const ENTITY_ROTATION_RATE = 0.01;
 // World generation.
-export const PLANET_SPAWN_RATE = 50;
+export const PLANET_SPAWN_RATE = 100;
 export const ENTITY_SPAWN_RATE = 8;
 export const MIN_CELESTIAL_SPACING = 15;
 export const FUEL_CAN_AMOUNT = 4;

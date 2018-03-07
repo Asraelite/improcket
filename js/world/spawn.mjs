@@ -105,10 +105,16 @@ function randomEntity(x, y) {
 	if (Math.random() > 0.3) {
 		entity = new Entity(x, y, 'fuelcan');
 	} else {
-		let arr = Object.entries(modules);
-		[type, arr] = arr[Math.random() * arr.length | 0];
-		arr = Object.keys(arr);
-		entity = new Entity(x, y, type, arr[Math.random() * arr.length | 0]);
+		let type, id;
+		while (true) {
+			let arr = Object.entries(modules);
+			[type, arr] = arr[Math.random() * arr.length | 0];
+			arr = Object.keys(arr);
+			id = arr[Math.random() * arr.length | 0];
+			let value = modules[type][id].value;
+			if (Math.random() < (1 / value)) break;
+		}
+		entity = new Entity(x, y, type, id);
 	}
 
 	world.entities.add(entity);
