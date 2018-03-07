@@ -32,7 +32,7 @@ function notify(message, time = 80) {
 
 export function tick() {
 	if (notification === null) return;
-	if (notLife-- <= 0 || game.state.gameOver)
+	if ((notLife-- <= 0 || game.state.gameOver) && !game.state.paused)
 		notification.text = '';
 }
 
@@ -50,7 +50,12 @@ export function toMenu() {
 }
 
 export function togglePause() {
+	console.log(game.state.paused);
 	game.state.paused = !game.state.paused;
+	audio.play('pause');
+	if (game.state.paused) {
+		notify('Paused', 0);
+	}
 }
 
 export function landShip(planet) {

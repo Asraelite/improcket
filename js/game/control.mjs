@@ -10,12 +10,14 @@ export const mapping = {
 	thrust: 'KeyW',
 	left: 'KeyA',
 	right: 'KeyD',
+	reduce: 'ShiftLeft',
 	exitEdit: 'Escape',
 	inventory: 'KeyE',
 	cycleRotation: 'KeyC',
 	toggleTrace: 'KeyT',
 	toggleMarkers: 'KeyR',
-	toggleMusic: 'KeyM'
+	toggleMusic: 'KeyM',
+	togglePause: 'KeyP'
 };
 
 let held, pressed;
@@ -26,13 +28,17 @@ export function tick() {
 
 	if (state.editing) {
 		tickEditing();
-	} else if (state.playing && !state.gameOver) {
+	} else if (state.playing && !state.gameOver && !state.paused) {
 		tickPlaying();
 	}
 
 	if (!state.editing) {
 		if (input.mouse.scroll !== 0) {
 			graphics.changeZoom(-input.mouse.scroll);
+		}
+
+		if (pressed[mapping.togglePause] && !state.gameOver) {
+			events.togglePause();
 		}
 	}
 
@@ -46,8 +52,10 @@ export function tick() {
 }
 
 function tickPlaying() {
+	let power = held[mapping.reduce] ? 0.3 : 1;
+
 	if (held[mapping.thrust] && playerShip.fuel !== 0) {
-		playerShip.applyThrust({ forward: 1 });
+		playerShip.applyThrust({ forward: power });
 		let vol = Math.min(0.7, graphics.perspective.zoom / 10);
 		audio.volume('engine', vol);
 	} else {
@@ -63,11 +71,11 @@ function tickPlaying() {
 	}
 
 	if (held[mapping.left]) {
-		playerShip.applyThrust({ turnLeft: 1 });
+		playerShip.applyThrust({ turnLeft: power });
 	}
 
 	if (held[mapping.right]) {
-		playerShip.applyThrust({ turnRight: 1 });
+		playerShip.applyThrust({ turnRight: power });
 	}
 
 	if (pressed[mapping.inventory]) {
@@ -85,9 +93,6 @@ function tickPlaying() {
 	if (pressed[mapping.toggleMarkers]) {
 		events.toggleMarkers();
 	}
-
-	// For debugging.
-	if (pressed['KeyZ']) events.startGame();
 }
 
 function tickEditing() {

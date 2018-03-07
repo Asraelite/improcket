@@ -58,10 +58,11 @@ export function changeView(view) {
 function tick() {
 	events.tick();
 
-	if (state.view == 'game') {
+	if (state.view == 'game' && !state.paused) {
 		world.tick();
-		control.tick();
 	}
+
+	control.tick();
 
 	gui.tick();
 	graphics.render();
