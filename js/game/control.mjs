@@ -17,7 +17,9 @@ export const mapping = {
 	toggleTrace: 'KeyT',
 	toggleMarkers: 'KeyR',
 	toggleMusic: 'KeyM',
-	togglePause: 'KeyP'
+	togglePause: 'KeyP',
+	zoomIn: 'KeyZ',
+	zoomOut: 'KeyX'
 };
 
 let held, pressed;
@@ -34,7 +36,17 @@ export function tick() {
 
 	if (!state.editing) {
 		if (input.mouse.scroll !== 0) {
-			graphics.changeZoom(-input.mouse.scroll);
+			// Fix for Firefox.
+			let delta = input.mouse.scroll > 0 ? -50 : 50;
+			graphics.changeZoom(delta);
+		}
+
+		if (held[mapping.zoomIn]) {
+			graphics.changeZoom(-10);
+		}
+
+		if (held[mapping.zoomOut]) {
+			graphics.changeZoom(10);
 		}
 
 		if (pressed[mapping.togglePause] && !state.gameOver) {

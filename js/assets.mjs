@@ -25,12 +25,12 @@ export const images = {
 				on: 'modules/light_thruster_on.svg'
 			},
 			heavy: {
-				off: 'modules/light_thruster.svg',
-				on: 'modules/light_thruster_on.svg'
+				off: 'modules/heavy_thruster.svg',
+				on: 'modules/heavy_thruster_on.svg'
 			},
 			advanced: {
-				off: 'modules/light_thruster.svg',
-				on: 'modules/light_thruster_on.svg'
+				off: 'modules/advanced_thruster.svg',
+				on: 'modules/advanced_thruster_on.svg'
 			}
 		},
 		connector: {

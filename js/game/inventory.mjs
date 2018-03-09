@@ -14,6 +14,7 @@ let onupdate = () => {};
 
 export function init() {
 	items.clear();
+	update();
 }
 
 export function canToss() {

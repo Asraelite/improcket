@@ -10,8 +10,8 @@ const TAU = consts.TAU;
 
 export let canvas, context, tempCanvas, tempContext;
 export let perspective;
-export let trace = false;
-export let markers = false;
+export let trace = true;
+export let markers = true;
 
 export function init() {
 	canvas = document.querySelector('#main');
@@ -109,6 +109,8 @@ class Perspective {
 		this.targetZoom = consts.DEFAULT_ZOOM;
 		this.oldTarget = 0;
 		this.oldShift = [0, 0];
+		this.shiftX = 0;
+		this.shiftY = 0;
 		this.oldZoom = 0;
 		this.transition = 0;
 		this.zoomTransition = 0;

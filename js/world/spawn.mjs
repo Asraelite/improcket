@@ -80,15 +80,15 @@ function randomPlanet(x, y, {
 		type: type
 	});
 
-	for (let i = 0.1; i < 4; i += 1) {
-		if (Math.random() > consts.ENTITY_SPAWN_RATE) {
+	for (let i = 0.1; i < 10; i += 0.5) {
+		if (Math.random() > 0.95) {
 			let e = randomEntity();
 			e.orbit(planet, i * radius, Math.random() * Math.PI * 2);
 		}
 	}
 
-	for (let i = 0; i < 5; i++) {
-		if (Math.random() > consts.ENTITY_SPAWN_RATE || true) {
+	for (let i = 0; i < 10; i++) {
+		if (Math.random() > 0.7) {
 			let e = randomEntity();
 			e.orbit(planet, 1.5, Math.random() * Math.PI * 2);
 			e.gravity = false;
@@ -102,7 +102,7 @@ function randomPlanet(x, y, {
 function randomEntity(x, y) {
 	let entity, type, id;
 
-	if (Math.random() > 0.3) {
+	if (Math.random() > 0.5) {
 		entity = new Entity(x, y, 'fuelcan');
 	} else {
 		let type, id;

@@ -40,6 +40,8 @@ export function changeView(view) {
 		state.editing = false;
 		state.paused = false;
 		world.init();
+		edit.init();
+		graphics.perspective.reset();
 		inventory.init();
 	} else if (view === 'instructions') {
 		state.playing = false;

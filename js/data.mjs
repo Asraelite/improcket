@@ -89,7 +89,7 @@ export const modules = {
 			type: 'thruster',
 			id: 'heavy',
 			mass: 5,
-			value: 6,
+			value: 4,
 			connectivity: [true, false, false, false],
 			thrust: 40
 		},
@@ -99,7 +99,7 @@ export const modules = {
 			type: 'thruster',
 			id: 'advanced',
 			mass: 2,
-			value: 20,
+			value: 15,
 			connectivity: [true, false, false, false],
 			thrust: 30
 		}
