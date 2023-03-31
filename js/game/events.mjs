@@ -187,7 +187,7 @@ export function collectItem(type, id, name) {
 		notify('Collected fuel: +10');
 		return true;
 	} else {
-		if (inventory.usedSpace > inventory.capacity) {
+		if (inventory.usedSpace >= inventory.capacity) {
 			notify('No space left in inventory', 60);
 			return false;
 		}

@@ -16,7 +16,7 @@ export default class GuiText extends GuiElement {
 		this.color = color;
 		this.text = text;
 		this.spacing = size * 1.2;
-		this.font = size + 'px Consolas';
+		this.font = size + 'px Courier New';
 		this.align = align;
 		this.valign = valign;
 	}

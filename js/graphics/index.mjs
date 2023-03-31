@@ -19,14 +19,17 @@ export function init() {
 	tempCanvas = document.querySelector('#temp');
 	tempContext = tempCanvas.getContext('2d');
 
-	canvas.width = 600;
-	canvas.height = 600;
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+
+	canvas.style.width = canvas.width + 'px';
+	canvas.style.height = canvas.height + 'px';
 
 	perspective = new Perspective();
 
 	context.fillStyle = '#000';
 	context.fillRect(0, 0, canvas.width, canvas.height);
-	context.font = '36px Consolas';
+	context.font = '36px Courier New';
 	context.textAlign = 'center';
 	context.textBaseline = 'middle';
 	context.fillStyle = '#fff';
@@ -54,7 +57,7 @@ export function render() {
 }
 
 export function getVisibleSectors() {
-	return world.getContainedSectors(...perspective.bounds);
+	// return world.getContainedSectors(...perspective.bounds);
 }
 
 export function changePerspective(rotationMode, shiftX = 0, shiftY = 0) {

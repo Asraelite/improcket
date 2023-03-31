@@ -29,8 +29,12 @@ export function init() {
 	message = '';
 	adjustSize();
 
+	adjustGraphics();
+}
+
+function adjustGraphics() {
 	let neededZoom = graphics.canvas.width / (Math.max(width, height) + 10);
-	graphics.changePerspective('planet', 0, -5);
+	graphics.changePerspective('planet', 0, -3);
 	graphics.setZoom(neededZoom);
 }
 
@@ -62,6 +66,9 @@ export function end() {
 		let [dx, dy] = [nx - ox, ny - oy];
 		ship.x -= dx;
 		ship.y -= dy;
+		const [rdx, rdy] = ship.rotateVector(dx, dy);
+		ship.x -= rdx;
+		ship.y -= rdy;
 	}
 
 	return result;
@@ -73,6 +80,7 @@ function getAttributes() {
 	let rotation = 0;
 	let mass = 0;
 	let thrust = 0;
+	let computation = 0;
 
 	tiles.forEach(t => {
 		if (t.type === null) return;
@@ -81,12 +89,15 @@ function getAttributes() {
 		} else if (t.type === 'capsule') {
 			rotation += t.module.rotation;
 			cargo += t.module.capacity;
+			computation += t.module.computation;
 		} else if (t.type === 'thruster') {
 			thrust += t.module.thrust;
 		} else if (t.type === 'gyroscope') {
 			rotation += t.module.rotation;
 		} else if (t.type === 'cargo') {
 			cargo += t.module.capacity;
+		} else if (t.type === 'nafivation') {
+			computation += t.module.computation;
 		}
 		mass += t.module.mass;
 	});
@@ -96,7 +107,8 @@ function getAttributes() {
 		'Thrust/mass ratio: ' + (thrust / Math.max(mass, 1)).toFixed(1) + '\n' +
 		'Rotation speed: ' + (rotation / Math.max(mass, 1) * 100).toFixed(1)
 			+ '\n' +
-		'Cargo capacity: ' + cargo;
+		'Cargo capacity: ' + cargo + '\n' +
+		'Navigational computation: ' + computation;
 }
 
 export function validate() {
