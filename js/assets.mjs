@@ -4,7 +4,7 @@ export const images = {
 		logoSvg: 'logo2.svg'
 	},
 	background: {
-		back: 'background.png',
+		back: 'background_small.png',
 		middle: 'stars_back.png',
 		front: 'stars_front.png'
 	},
@@ -43,6 +43,9 @@ export const images = {
 		gyroscope: {
 			small: 'modules/small_gyroscope.svg',
 			large: 'modules/large_gyroscope.svg'
+		},
+		navigation: {
+			small: 'modules/small_navigation.svg',
 		},
 		fuelcan: 'modules/fuelcan.svg'
 	},

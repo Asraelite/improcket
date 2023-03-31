@@ -132,6 +132,20 @@ export function game() {
 			ship.maxFuel.toFixed(1);
 	};
 
+	let speed = new GuiText('', 0, 0, 0, 0, {
+		size: 14,
+		align: 'right',
+		valign: 'bottom',
+		
+	});
+	shadow.append(speed);
+	speed.posRelative({x: 1, y: 1});
+	speed.y -= 30;
+	speed.x -= 10;
+	speed.tick = () => {
+		speed.text = 'Speed: ' + world.speed.toFixed(1) + 'x';
+	};
+
 	let score = new GuiText('', 0, 0, 0, 0, {
 		size: 14,
 		align: 'left',

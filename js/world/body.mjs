@@ -72,19 +72,27 @@ export default class Body {
 	}
 
 	tickGravity(bodies, speed = 1) {
-		bodies.forEach(b => {
-			let force = b.mass / (this.distanceTo(b) ** 2) * G;
-			let [[ax, ay], [bx, by]] = [this.com, b.com];
+		for (let body of bodies) {
+			const distanceSquared = this.distanceToSquared(body);
+			if (distanceSquared > (1000 ** 2)) continue;
+			let force = body.mass / distanceSquared * G;
+			let [[ax, ay], [bx, by]] = [this.com, body.com];
 			let angle = Math.atan2(by - ay, bx - ax);
 			this.xvel += Math.cos(angle) * force * speed;
 			this.yvel += Math.sin(angle) * force * speed;
-		});
+		}
 	}
 
 	distanceTo(body) {
 		let [[ax, ay], [bx, by]] = [this.com, body.com];
 		return Math.max(Math.sqrt(((bx - ax) ** 2) +
 			((by - ay) ** 2)), 1);
+	}
+
+	distanceToSquared(body) {
+		let [[ax, ay], [bx, by]] = [this.com, body.com];
+		return Math.max(((bx - ax) ** 2) +
+			((by - ay) ** 2), 1);
 	}
 
 	angleTo(ax, ay, bx, by) {

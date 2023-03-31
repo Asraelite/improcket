@@ -40,7 +40,7 @@ export default class Tracer extends Body {
 	}
 
 	tick() {
-		this.run(100);
+		this.run(this.ship.computation);
 	}
 
 	tickPath(speed) {

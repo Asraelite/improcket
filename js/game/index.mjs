@@ -57,16 +57,9 @@ function loop(fn, fps = 60) {
     let interval = 1000 / fps;
 
     (function loop(time) {
+		fn();
+
         requestAnimationFrame(loop);
-
-        // again, Date.now() if it's available
-        let now = Date.now();
-        let delta = now - then;
-
-        if (delta > interval) {
-            then = now - (delta % interval);
-            fn();
-        }
     })(0);
 };
 

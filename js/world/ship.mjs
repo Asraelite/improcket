@@ -22,6 +22,7 @@ export default class Ship extends Body {
 		this.rotationPower = 0;
 		this.cargoCapacity = 0;
 		this.thrust = 0;
+		this.computation = 0;
 		this.crashed = false;
 		this.timeWithoutFuel = 0;
 	}
@@ -113,6 +114,7 @@ export default class Ship extends Body {
 		this.rotationPower = 0;
 		this.cargoCapacity = 0;
 		this.thrust = 0;
+		this.computation = 0;
 
 		this.modules.forEach(m => {
 			if (m.type === 'fuel') {
@@ -120,12 +122,15 @@ export default class Ship extends Body {
 			} else if (m.type === 'capsule') {
 				this.rotationPower += m.data.rotation;
 				this.cargoCapacity += m.data.capacity;
+				this.computation += m.data.computation;
 			} else if (m.type === 'thruster') {
 				this.thrust += m.data.thrust;
 			} else if (m.type === 'gyroscope') {
 				this.rotationPower += m.data.rotation;
 			} else if (m.type === 'cargo') {
 				this.cargoCapacity += m.data.capacity;
+			} else if (m.type === 'navigation') {
+				this.computation += m.data.computation;
 			}
 		});
 	}

@@ -1,5 +1,7 @@
+import {tempCanvas, tempContext} from '../graphics/index.mjs';
 import {images as assets} from '../assets.mjs';
 import Body from './body.mjs';
+import { PLANET_IMAGE_SIZE } from '../consts.mjs';
 
 export default class Celestial extends Body {
 	constructor(x, y, radius, {
@@ -11,8 +13,15 @@ export default class Celestial extends Body {
 		this.radius = radius;
 
 		this.type = type;
-		let imageArr = Object.values(assets.celestials[this.type]);
-		this.image = imageArr[Math.random() * imageArr.length | 0];
+		const imageArr = Object.values(assets.celestials[this.type]);
+		const svgImage = imageArr[Math.random() * imageArr.length | 0];
+		tempCanvas.width = PLANET_IMAGE_SIZE;
+		tempCanvas.height = PLANET_IMAGE_SIZE;
+		tempContext.clearRect(0, 0, PLANET_IMAGE_SIZE, PLANET_IMAGE_SIZE);
+		tempContext.drawImage(svgImage, 0, 0, PLANET_IMAGE_SIZE, PLANET_IMAGE_SIZE);
+		this.image = new Image();
+    	this.image.src = tempCanvas.toDataURL();
+		// this.image = tempContext.getImageData(0, 0, PLANET_IMAGE_SIZE, PLANET_IMAGE_SIZE);
 	}
 
 	get com() {

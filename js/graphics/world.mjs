@@ -1,15 +1,15 @@
-import {canvas, context} from './index.mjs';
+import { canvas, context } from './index.mjs';
 import * as graphics from './index.mjs';
-import {images as assets} from '../assets.mjs';
+import { images as assets } from '../assets.mjs';
 import * as world from '../world/index.mjs';
-import {state} from '../game/index.mjs';
+import { state } from '../game/index.mjs';
 
 export function render() {
-	world.particles.forEach(renderParticle);
-	world.celestials.forEach(renderCelestial);
-	if (graphics.trace) world.tracers.forEach(renderTracer);
-	world.ships.forEach(renderShip);
-	world.entities.forEach(renderEntity);
+	for (particle of world.particles) renderParticle(particle);
+	for (celestial of world.celestials) if (isVisible(celestial)) renderCelestial(celestial);
+	if (graphics.trace) for (tracer of world.tracers) renderTracer(tracer);
+	for (ship of world.ships) renderShip(ship);
+	for (entity of world.entities) if (isVisible(entity)) renderEntity(entity);
 
 	/*
 	if (typeof window.q === 'undefined') window.q = [];
@@ -18,6 +18,16 @@ export function render() {
 		context.fillRect(p[0] - 0.05, p[1] - 0.05, 0.1, 0.1);
 	});
 	*/
+}
+
+function isVisible(body) {
+	const [bx, by] = body.com;
+	const [px, py] = [graphics.perspective.x, graphics.perspective.y];
+	const [, , w, h] = graphics.perspective.bounds;
+	const [centerX, centerY] = [px, py];
+	const margin = 1000;
+	return bx > centerX - margin && bx < centerX + margin &&
+		by > centerY - margin && by < centerY + margin;
 }
 
 function renderParticle(particle) {
@@ -64,7 +74,7 @@ function renderShip(ship) {
 
 const celestialImages = {
 	green: Object.values(assets.celestials.green)
-}
+};
 
 function renderCelestial(cel) {
 	context.drawImage(cel.image, cel.x, cel.y,

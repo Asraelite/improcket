@@ -11,8 +11,9 @@ export const modules = {
 			mass: 2,
 			value: 5,
 			connectivity: [false, false, true, false],
-			capacity: 2,
-			rotation: 1
+			capacity: 3,
+			rotation: 1,
+			computation: 100,
 		},
 		large: {
 			name: 'Large Capsule',
@@ -24,7 +25,8 @@ export const modules = {
 			value: 10,
 			connectivity: [false, false, true, false],
 			capacity: 5,
-			rotation: 4
+			rotation: 4,
+			computation: 130,
 		},
 		advanced: {
 			name: 'Advanced Capsule',
@@ -36,7 +38,8 @@ export const modules = {
 			value: 30,
 			connectivity: [false, false, true, false],
 			capacity: 4,
-			rotation: 5
+			rotation: 5,
+			computation: 150,
 		}
 	},
 	fuel: {
@@ -111,7 +114,7 @@ export const modules = {
 				'heavy',
 			type: 'connector',
 			id: 'xheavy',
-			mass: 5,
+			mass: 2,
 			value: 3,
 			connectivity: [true, true, true, true]
 		},
@@ -127,7 +130,7 @@ export const modules = {
 	},
 	gyroscope: {
 		small: {
-			name: 'Small gyroscope',
+			name: 'Small Gyroscope',
 			tooltip: 'Provides a small amount of rotational power to the ship.',
 			type: 'gyroscope',
 			id: 'small',
@@ -137,7 +140,7 @@ export const modules = {
 			rotation: 2
 		},
 		large: {
-			name: 'Large gyroscope',
+			name: 'Large Gyroscope',
 			tooltip: 'Provides a lot of rotational force for large ships.',
 			type: 'gyroscope',
 			id: 'large',
@@ -146,6 +149,18 @@ export const modules = {
 			connectivity: [true, false, true, false],
 			rotation: 4
 		}
+	},
+	navigation: {
+		small: {
+			name: 'Navigational Computer',
+			tooltip: 'Increases the length of your predicted orbital path.',
+			type: 'navigation',
+			id: 'small',
+			mass: 1,
+			value: 10,
+			connectivity: [true, false, true, false],
+			computation: 150,
+		},
 	},
 	cargo: {
 		small: {

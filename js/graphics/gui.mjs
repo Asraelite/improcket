@@ -80,7 +80,7 @@ function renderButton(element) {
 	context.textAlign = 'center';
 	context.textBaseline = 'middle';
 	context.fillStyle = '#fff';
-	context.font = '12pt Consolas';
+	context.font = '12pt Courier New';
 	context.fillText(element.text, ...element.center);
 
 	context.globalAlpha = 1;
@@ -117,7 +117,7 @@ function renderItemButton(element) {
 		context.textAlign = 'right';
 		context.textBaseline = 'bottom';
 		context.fillStyle = '#fff';
-		context.font = 'bold 10pt Consolas';
+		context.font = 'bold 10pt Courier New';
 		let [ex, ey] = element.end;
 		context.fillText('x' + element.quantity, ex - 2, ey - 2);
 	}

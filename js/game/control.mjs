@@ -3,6 +3,7 @@ import * as events from './events.mjs';
 import * as graphics from '../graphics/index.mjs';
 import * as inventory from './inventory.mjs';
 import * as audio from './audio.mjs';
+import * as world from '../world/index.mjs';
 import {playerShip} from '../world/index.mjs';
 import {state} from './index.mjs';
 
@@ -19,7 +20,9 @@ export const mapping = {
 	toggleMusic: 'KeyM',
 	togglePause: 'KeyP',
 	zoomIn: 'KeyZ',
-	zoomOut: 'KeyX'
+	zoomOut: 'KeyX',
+	increaseSpeed: 'Period',
+	decreaseSpeed: 'Comma',
 };
 
 let held, pressed;
@@ -51,6 +54,14 @@ export function tick() {
 
 		if (pressed[mapping.togglePause] && !state.gameOver) {
 			events.togglePause();
+		}
+
+		if (pressed[mapping.increaseSpeed]) {
+			world.increaseSpeed();
+		}
+
+		if (pressed[mapping.decreaseSpeed]) {
+			world.decreaseSpeed();
 		}
 	}
 

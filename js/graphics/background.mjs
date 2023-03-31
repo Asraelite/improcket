@@ -13,10 +13,9 @@ function init() {
 
 export function render(angle) {
 	if (patterns === null) init();
-
-	renderLayer(patterns.back, 0.3, 1, angle);
-	renderLayer(patterns.middle, 0.5, 0.3, angle);
-	//renderLayer(patterns.front, 0.7, 0.3, angle);
+	// renderLayer(patterns.back, 0.3, 1, angle);
+	// renderLayer(patterns.middle, 0.5, 0.3, angle);
+	// renderLayer(patterns.front, 0.7, 0.3, angle);
 }
 
 function renderLayer(pattern, speed = 1, scale = 1, angle = 0) {
