@@ -1,13 +1,18 @@
 import * as spawn from './spawn';
 import * as graphics from '../graphics/index';
+import { Particle } from './particle';
+import Tracer from './tracer';
+import Ship from './ship';
+import Celestial from './celestial';
+import Entity from './entity';
 
-export const entities = new Set();
-export const celestials = new Set();
-export const ships = new Set();
-export const particles = new Set();
-export const tracers = new Set();
+export const entities: Set<Entity> = new Set();
+export const celestials: Set<Celestial> = new Set();
+export const ships: Set<Ship> = new Set();
+export const particles: Set<Particle> = new Set();
+export const tracers: Set<Tracer> = new Set();
 
-export let playerShip = null;
+export let playerShip: Ship = null;
 
 export let speed = 1;
 
@@ -43,14 +48,14 @@ export function decreaseSpeed() {
 	if (speed > 1) speed -= 1;
 }
 
-export function tick() {
+export function tick(delta: number) {
 	for (let i = 0; i < speed; i++) {
-		particles.forEach(p => p.tick());
-		celestials.forEach(c => c.tick());
-		entities.forEach(e => e.tick());
-		ships.forEach(s => s.tick());
+		particles.forEach(p => p.tick(delta));
+		celestials.forEach(c => c.tick(delta));
+		entities.forEach(e => e.tick(delta));
+		ships.forEach(s => s.tick(delta));
 	}
 
 	spawn.tick();
-	if (graphics.trace) tracers.forEach(t => t.tick());
+	if (graphics.trace) tracers.forEach(t => t.tick(delta));
 }

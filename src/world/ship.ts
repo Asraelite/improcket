@@ -5,7 +5,7 @@ import * as consts from '../consts';
 import * as particle from './particle';
 import * as events from '../game/events';
 import Tracer from './tracer';
-import {state} from '../game/index';
+import { state } from '../game/index';
 
 export default class Ship extends Body {
 	constructor(x, y) {
@@ -50,15 +50,18 @@ export default class Ship extends Body {
 		return closest;
 	}
 
-	tick() {
+	tick(delta: number) {
 		if (this.crashed) return;
-		if (!state.editing) this.tickMotion();
-		if (!this.landed) this.tickGravity(world.celestials);
+		if (!state.editing) this.tickMotion(delta);
+		if (!this.landed) this.tickGravity(delta, world.celestials);
 		if (!state.editing) this.resolveCollisions();
 
 		this.modules.forEach(m => {
 			if (m.type == 'thruster' && m.power !== 0) {
-				for (let i = 0; i < 2; i++) particle.createThrustExhaust(m);
+				for (let i = 0; i < 20; i++) {
+					if (Math.random() > (delta / 10)) continue;
+					particle.createThrustExhaust(m);
+				}
 			}
 		});
 
@@ -89,7 +92,7 @@ export default class Ship extends Body {
 	}
 
 	addModule(x, y, properties, options) {
-		let module = new Module(x, y, this, {...properties, ...options});
+		let module = new Module(x, y, this, { ...properties, ...options });
 		this.modules.add(module);
 		this.refreshShape();
 	}
@@ -102,7 +105,7 @@ export default class Ship extends Body {
 	refreshShape() {
 		let points = [];
 		this.modules.forEach(m => points.push([...m.localCom, m.mass]));
-		this.mass = points.reduce((a, [,,b]) => a + b, 0);
+		this.mass = points.reduce((a, [, , b]) => a + b, 0);
 		this.localCom = points.reduce(([ax, ay], [bx, by, bm]) =>
 			[ax + bx * bm, ay + by * bm], [0, 0])
 			.map(x => x / this.mass);
@@ -214,7 +217,7 @@ export default class Ship extends Body {
 	}
 
 	applyThrust({ forward = 0, left = 0, right = 0, back = 0,
-		turnLeft = 0, turnRight = 0}) {
+		turnLeft = 0, turnRight = 0 }) {
 
 		let thrustForce = -forward * consts.THRUST_POWER * this.thrust;
 		let turnForce = (turnRight - turnLeft) * consts.TURN_POWER;

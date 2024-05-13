@@ -9,7 +9,7 @@ import * as consts from '../consts';
 const TAU = consts.TAU;
 
 export let canvas, context, tempCanvas, tempContext;
-export let perspective;
+export let perspective: Perspective;
 export let trace = true;
 export let markers = true;
 
@@ -36,7 +36,7 @@ export function init() {
 	context.fillText('Loading...', canvas.width / 2, canvas.height / 2);
 }
 
-export function render() {
+export function render(delta: number) {
 	context.clearRect(0, 0, canvas.width, canvas.height);
 	context.fillStyle = '#000';
 	context.fillRect(0, 0, canvas.width, canvas.height);
@@ -46,7 +46,7 @@ export function render() {
 	context.clip();
 
 	context.save();
-	perspective.tick();
+	perspective.tick(delta);
 	perspective.transformRotate();
 	renderBackground(perspective.rotation);
 	perspective.transformCanvas();
@@ -171,7 +171,7 @@ class Perspective {
 		return Math.atan2(Math.sin(b - a), Math.cos(b - a));
 	}
 
-	tick() {
+	tick(delta: number) {
 		if (this.focus !== null)
 			[this.x, this.y] = this.focus.com;
 
@@ -192,12 +192,11 @@ class Perspective {
 		this.normalize();
 
 		let dif = Math.abs(this.targetRotation - this.rotation);
-		this.rotationMet = dif < (this.rotationMet ? 0.3 : 0.05);
 
 		this.rotation = this.currentRotation;
 		this.zoom = this.currentZoom;
 
-		this.transition *= 0.9;
+		this.transition *= 0.9 ** delta;
 		this.zoomTransition *= this.zoomTransitionSpeed;
 	}
 

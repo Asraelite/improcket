@@ -64,7 +64,6 @@ export function toMenu() {
 }
 
 export function togglePause() {
-	console.log(game.state.paused);
 	game.state.paused = !game.state.paused;
 	audio.play('pause');
 	if (game.state.paused) {

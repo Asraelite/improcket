@@ -6,8 +6,11 @@ import {celestials, particles, entities} from './index';
 import * as particle from './particle';
 import * as consts from '../consts';
 import * as events from '../game/events';
+import Ship from './ship';
 
 export default class Tracer extends Body {
+	ship: Ship;
+	
 	constructor(ship) {
 		super(...ship.pos, 0.1);
 
@@ -39,13 +42,13 @@ export default class Tracer extends Body {
 		[this.x, this.y] = this.ship.com;
 	}
 
-	tick() {
+	tick(delta: number) {
 		this.run(this.ship.computation);
 	}
 
 	tickPath(speed) {
 		this.tickMotion(speed);
-		this.tickGravity(celestials, speed);
+		this.tickGravity(speed, celestials);
 		return !!this.getCelestialCollision(celestials);
 	}
 }

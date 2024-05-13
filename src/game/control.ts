@@ -27,29 +27,29 @@ export const mapping = {
 
 let held, pressed;
 
-export function tick() {
+export function tick(delta: number) {
 	held = input.keyCode.held;
 	pressed = input.keyCode.pressed;
 
 	if (state.editing) {
 		tickEditing();
 	} else if (state.playing && !state.gameOver && !state.paused) {
-		tickPlaying();
+		tickPlaying(delta);
 	}
 
 	if (!state.editing) {
 		if (input.mouse.scroll !== 0) {
 			// Fix for Firefox.
-			let delta = input.mouse.scroll > 0 ? -50 : 50;
-			graphics.changeZoom(delta);
+			let scrollDelta = input.mouse.scroll > 0 ? -50 : 50;
+			graphics.changeZoom(scrollDelta);
 		}
 
 		if (held[mapping.zoomIn]) {
-			graphics.changeZoom(-10);
+			graphics.changeZoom(-10 * delta);
 		}
 
 		if (held[mapping.zoomOut]) {
-			graphics.changeZoom(10);
+			graphics.changeZoom(10 * delta);
 		}
 
 		if (pressed[mapping.togglePause] && !state.gameOver) {
@@ -74,8 +74,8 @@ export function tick() {
 	}
 }
 
-function tickPlaying() {
-	let power = held[mapping.reduce] ? 0.3 : 1;
+function tickPlaying(delta: number) {
+	let power = (held[mapping.reduce] ? 0.3 : 1) * delta;
 
 	if (held[mapping.thrust] && playerShip.fuel !== 0) {
 		playerShip.applyThrust({ forward: power });

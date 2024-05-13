@@ -32,7 +32,7 @@ export default class Celestial extends Body {
 		
 	}
 
-	tick() {
+	tick(delta: number) {
 
 	}
 

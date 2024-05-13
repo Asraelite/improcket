@@ -25,7 +25,7 @@ export async function init() {
 	gui.init();
 	input.init();
 
-	events.playMusic();
+	// events.playMusic();
 	//events.startGame();
 
 	loop(tick);
@@ -52,27 +52,36 @@ export function changeView(view) {
 	}
 }
 
-function loop(fn, fps = 60) {
-    let then = Date.now();
-    let interval = 1000 / fps;
+async function loop(fn) {
+	let then = Date.now();
 
-    (function loop(time) {
-		fn();
+	while (true) {
+		const delta = (Date.now() - then) * 60;
+		fn(delta / 1000);
+		then = Date.now();
 
-        requestAnimationFrame(loop);
-    })(0);
+		await new Promise(resolve => requestAnimationFrame(resolve));
+		// await new Promise(resolve => requestAnimationFrame(resolve));
+		// await new Promise(resolve => requestAnimationFrame(resolve));
+		// await new Promise(resolve => requestAnimationFrame(resolve));
+		// await new Promise(resolve => requestAnimationFrame(resolve));
+		// await new Promise(resolve => requestAnimationFrame(resolve));
+		// await new Promise(resolve => requestAnimationFrame(resolve));
+		// await new Promise(resolve => requestAnimationFrame(resolve));
+		// await new Promise(resolve => requestAnimationFrame(resolve));
+	}
 };
 
-function tick() {
+function tick(delta: number) {
 	events.tick();
 
 	if (state.view == 'game' && !state.paused) {
-		world.tick();
+		world.tick(delta);
 	}
 
-	control.tick();
+	control.tick(delta);
 
 	gui.tick();
-	graphics.render();
+	graphics.render(delta);
 	input.tick();
 }

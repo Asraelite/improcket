@@ -83,7 +83,7 @@ export function createItemToss(ship) {
 	}));
 }
 
-class Particle extends Body {
+export class Particle extends Body {
 	constructor(x, y, {
 		xvel = 0,
 		yvel = 0,
@@ -113,14 +113,14 @@ class Particle extends Body {
 		return [this.x - this.size / 2, this.y - this.size / 2];
 	}
 
-	tick() {
+	tick(delta: number) {
 		if (this.life-- <= 0) {
 			particles.delete(this);
 			return;
 		}
 
-		this.tickMotion();
-		if (this.gravity) this.tickGravity(celestials);
+		this.tickMotion(delta);
+		if (this.gravity) this.tickGravity(delta, celestials);
 
 		this.xvel *= this.friction;
 		this.yvel *= this.friction;

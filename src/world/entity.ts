@@ -46,12 +46,12 @@ export default class Entity extends Body {
 		entities.delete(this);
 	}
 
-	tick() {
+	tick(delta: number) {
 		if (Math.abs(playerShip.x - this.x) > 500 ||
 			Math.abs(playerShip.y - this.y) > 500) return;
 		this.r += consts.ENTITY_ROTATION_RATE;
-		this.tickMotion();
-		if (this.gravity) this.tickGravity(celestials);
+		this.tickMotion(delta);
+		if (this.gravity) this.tickGravity(delta, celestials);
 		let col = this.getCelestialCollision(celestials);
 
 		if (col !== false) {

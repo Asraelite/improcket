@@ -64,22 +64,22 @@ export default class Body {
 		return this.rotateVector(x, y, this.r);
 	}
 
-	tickMotion(speed = 1) {
-		this.x += this.xvel * speed;
-		this.y += this.yvel * speed;
-		this.r += this.rvel * speed;
-		this.rvel *= this.rfriction * speed;
+	tickMotion(delta: number) {
+		this.x += this.xvel * delta;
+		this.y += this.yvel * delta;
+		this.r += this.rvel * delta;
+		this.rvel *= this.rfriction ** delta;
 	}
 
-	tickGravity(bodies, speed = 1) {
+	tickGravity(delta: number, bodies) {
 		for (let body of bodies) {
 			const distanceSquared = this.distanceToSquared(body);
 			if (distanceSquared > (1000 ** 2)) continue;
 			let force = body.mass / distanceSquared * G;
 			let [[ax, ay], [bx, by]] = [this.com, body.com];
 			let angle = Math.atan2(by - ay, bx - ax);
-			this.xvel += Math.cos(angle) * force * speed;
-			this.yvel += Math.sin(angle) * force * speed;
+			this.xvel += Math.cos(angle) * force * delta;
+			this.yvel += Math.sin(angle) * force * delta;
 		}
 	}
 
@@ -111,11 +111,11 @@ export default class Body {
 		this.yvel = 0;
 	}
 
-	applyDirectionalForce(x, y, r) {
+	applyDirectionalForce(x, y, rotation: number) {
 		let [vx, vy] = this.rotateVector(x, y);
 		this.xvel += vx / this.mass;
 		this.yvel += vy / this.mass;
-		this.rvel += r / this.mass;
+		this.rvel += rotation / this.mass;
 	}
 
 	orbit(cel, altitude, angle = 0) {
