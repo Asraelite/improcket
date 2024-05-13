@@ -1,6 +1,15 @@
 import {GRAVITATIONAL_CONSTANT as G, TAU} from '../consts';
 
 export default class Body {
+	x: number;
+	y: number;
+	r: number;
+	xvel: number;
+	yvel: number;
+	rvel: number;
+	rfriction: number;
+	mass: number;
+	
 	constructor(x, y, mass) {
 		this.x = x;
 		this.y = y;

@@ -39,4 +39,5 @@ export const ENTITY_SPAWN_RATE = 8;
 export const MIN_CELESTIAL_SPACING = 15;
 export const FUEL_CAN_AMOUNT = 10000;
 
-export const PLANET_IMAGE_SIZE = 250;
+export const PLANET_IMAGE_SIZE_SMALL = 256;
+export const PLANET_IMAGE_SIZE_LARGE = 1024;

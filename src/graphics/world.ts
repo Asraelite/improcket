@@ -3,6 +3,7 @@ import * as graphics from './index';
 import { images as assets } from '../assets';
 import * as world from '../world/index';
 import { state } from '../game/index';
+import Celestial from '../world/celestial';
 
 export function render() {
 	for (const particle of world.particles) renderParticle(particle);
@@ -78,9 +79,11 @@ const celestialImages = {
 	green: Object.values(assets.celestials.green)
 };
 
-function renderCelestial(cel) {
-	context.drawImage(cel.image, cel.x, cel.y,
-		cel.diameter, cel.diameter);
+function renderCelestial(celestial: Celestial) {
+	const isClose = graphics.perspective.currentZoom > 5;
+	const image = isClose ? celestial.imageLarge : celestial.imageSmall;
+	context.drawImage(image, celestial.x, celestial.y,
+		celestial.diameter, celestial.diameter);
 }
 
 function renderTracer(tracer) {
