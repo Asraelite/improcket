@@ -8,6 +8,9 @@ import Tracer from './tracer';
 import { state } from '../game/index';
 
 export default class Ship extends Body {
+	fuel: number;
+	maxFuel: number;
+
 	constructor(x, y) {
 		super(x, y, 0);
 
@@ -89,6 +92,10 @@ export default class Ship extends Body {
 
 	addFuel(amount) {
 		this.fuel = Math.min(this.fuel + amount, this.maxFuel);
+	}
+
+	refillFuel() {
+		this.fuel = this.maxFuel;
 	}
 
 	addModule(x, y, properties, options) {

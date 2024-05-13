@@ -180,7 +180,8 @@ export function tossItem() {
 
 export function collectItem(type, id, name) {
 	if (type === 'fuelcan') {
-		world.playerShip.addFuel(consts.FUEL_CAN_AMOUNT);
+		// world.playerShip.addFuel(consts.FUEL_CAN_AMOUNT);
+		world.playerShip.refillFuel();
 		audio.play('fuelPickup');
 		score += 10;
 		notify('Collected fuel: +10');

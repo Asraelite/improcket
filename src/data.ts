@@ -51,7 +51,7 @@ export const modules = {
 			mass: 1,
 			value: 1,
 			connectivity: [true, false, true, false],
-			fuelCapacity: 5
+			fuelCapacity: 8
 		},
 		large: {
 			name: 'Large Fuel Tank',
@@ -61,7 +61,7 @@ export const modules = {
 			mass: 2,
 			value: 3,
 			connectivity: [true, false, true, false],
-			fuelCapacity: 15
+			fuelCapacity: 25
 		},
 		advanced: {
 			name: 'Advanced Fuel Tank',
@@ -71,7 +71,7 @@ export const modules = {
 			mass: 1,
 			value: 15,
 			connectivity: [true, false, true, false],
-			fuelCapacity: 12
+			fuelCapacity: 15
 		}
 	},
 	thruster: {
