@@ -1,2 +1,0 @@
-#!/bin/bash
-npx rollup js/index.mjs --o dist/improcket.min.js -m --f es --watch
