@@ -14,8 +14,9 @@ import {state} from '../game/index';
 import * as world from '../world/index';
 
 export function root() {
-	return new GuiFrame(0, 0, canvas.width, canvas.height, {
-		draw: false
+	return new GuiFrame(0, 0, () => canvas.width, () => canvas.height, {
+		draw: false,
+		name: 'root',
 	});
 }
 

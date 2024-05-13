@@ -1,4 +1,4 @@
-import {Rect} from './misc';
+import { Rect } from './misc';
 
 const defaultOptions = {
 	draw: true, // Whether the element itself will be rendered.
@@ -6,14 +6,17 @@ const defaultOptions = {
 }
 
 export default class GuiElement extends Rect {
-	constructor(x, y, w, h, options = {}) {
-		super(x, y, w, h);
+	children: Set<GuiElement>;
+	parent: GuiElement;
+
+	constructor(x, y, width, height, options = {}) {
+		super(x, y, width, height);
 		this.children = new Set();
 		this.parent = null;
 
 		this.type = 'element';
 
-		this.options = Object.assign({}, defaultOptions, options);
+		this.options = { ...defaultOptions, ...options };
 	}
 
 	tickElement() {
@@ -45,14 +48,14 @@ export default class GuiElement extends Rect {
 	// Code should be self-describing, comments are for fucking about.
 	//   - Albert Einstein
 
-	posRelative({x = null, xc = 0, y = null, yc = 0, w = null, h = null}) {
+	posRelative({ x = null, xc = 0, y = null, yc = 0, w = null, h = null }) {
 		if (x !== null)
-			this.x = (this.parent.w * x) - (this.w * xc) + this.parent.x;
+			this.sourceX = () => (this.parent.w * x) - (this.w * xc) + this.parent.x;
 		if (y !== null)
-			this.y = (this.parent.h * y) - (this.h * yc) + this.parent.y;
+			this.sourceY = () => (this.parent.h * y) - (this.h * yc) + this.parent.y;
 		if (w !== null)
-			this.w = this.parent.w * w;
+			this.sourceWidth = () => this.parent.w * w;
 		if (h !== null)
-			this.h = this.parent.h * h;
+			this.sourceHeight = () => this.parent.h * h;
 	}
 }

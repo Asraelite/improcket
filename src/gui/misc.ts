@@ -1,11 +1,16 @@
 import * as input from '../input';
 
 export class Rect {
-	constructor(x = 0, y = 0, w = 0, h = 0) {
+	sourceWidth: number | (() => number);
+	sourceHeight: number | (() => number);
+	sourceX: number | (() => number);
+	sourceY: number | (() => number);
+
+	constructor(x = 0, y = 0, width = 0, height = 0) {
 		this.x = x;
 		this.y = y;
-		this.w = w;
-		this.h = h;
+		this.sourceWidth = width;
+		this.sourceHeight = height;
 
 		this.onclick = null;
 		this.mouseHeld = false;
@@ -53,6 +58,54 @@ export class Rect {
 
 	get mouseClicked() {
 		return this.mouseOver() && input.mouse.pressed[0];
+	}
+
+	get w() {
+		if (typeof this.sourceWidth == 'function') {
+			return this.sourceWidth();
+		} else {
+			return this.sourceWidth;
+		}
+	}
+
+	get h() {
+		if (typeof this.sourceHeight == 'function') {
+			return this.sourceHeight();
+		} else {
+			return this.sourceHeight;
+		}
+	}
+	
+	set w(w) {
+		this.sourceWidth = w;
+	}
+
+	set h(h) {
+		this.sourceHeight = h;
+	}
+
+	get x() {
+		if (typeof this.sourceX == 'function') {
+			return this.sourceX();
+		} else {
+			return this.sourceX;
+		}
+	}
+
+	get y() {
+		if (typeof this.sourceY == 'function') {
+			return this.sourceY();
+		} else {
+			return this.sourceY;
+		}
+	}
+	
+	set x(x) {
+		this.sourceX = x;
+	}
+
+	set y(y) {
+		this.sourceY = y;
 	}
 
 	containsPoint(x, y) {

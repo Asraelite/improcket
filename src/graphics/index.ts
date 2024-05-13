@@ -1,14 +1,17 @@
 import * as gui from './gui';
 import * as draw from './draw';
 import * as input from '../input';
-import {render as renderWorld} from './world';
-import {render as renderBackground} from './background';
+import { render as renderWorld } from './world';
+import { render as renderBackground } from './background';
 import * as world from '../world/index';
 import * as consts from '../consts';
 
 const TAU = consts.TAU;
 
-export let canvas, context, tempCanvas, tempContext;
+export let canvas: HTMLCanvasElement;
+export let tempCanvas: HTMLCanvasElement;
+export let context: CanvasRenderingContext2D;
+export let tempContext: CanvasRenderingContext2D;
 export let perspective: Perspective;
 export let trace = true;
 export let markers = true;
@@ -19,11 +22,17 @@ export function init() {
 	tempCanvas = document.querySelector('#temp');
 	tempContext = tempCanvas.getContext('2d');
 
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
+	function resizeCanvas() {
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
 
-	canvas.style.width = canvas.width + 'px';
-	canvas.style.height = canvas.height + 'px';
+		canvas.style.width = window.innerWidth + 'px';
+		canvas.style.height = window.innerHeight + 'px';
+	}
+
+	resizeCanvas();
+
+	window.addEventListener('resize', resizeCanvas);
 
 	perspective = new Perspective();
 
@@ -147,7 +156,7 @@ class Perspective {
 	get currentShift() {
 		let [ox, oy] = this.oldShift;
 		return [this.interpolate(this.shiftX, ox),
-			this.interpolate(this.shiftY, oy)];
+		this.interpolate(this.shiftY, oy)];
 	}
 
 	get currentRotation() {
@@ -172,6 +181,8 @@ class Perspective {
 	}
 
 	tick(delta: number) {
+		this.bounds = [0, 0, canvas.width, canvas.height];
+
 		if (this.focus !== null)
 			[this.x, this.y] = this.focus.com;
 
@@ -219,7 +230,7 @@ class Perspective {
 	}
 
 	transformRotate() {
-		let [,,bw, bh] = this.bounds;
+		let [, , bw, bh] = this.bounds;
 		context.translate(bw / 2, bh / 2);
 		context.rotate(-this.rotation);
 		context.translate(-bw / 2, -bh / 2);
@@ -227,11 +238,11 @@ class Perspective {
 
 	rotateVector(x, y, r = this.rotation) {
 		return [(x * Math.cos(r) - y * Math.sin(r)),
-			(y * Math.cos(r) - x * Math.sin(r))];
+		(y * Math.cos(r) - x * Math.sin(r))];
 	}
 
 	transformCanvas() {
-		let [,,bw, bh] = this.bounds;
+		let [, , bw, bh] = this.bounds;
 		let [sx, sy] = this.rotateVector(...this.currentShift, this.rotation);
 		let tx = -(this.x + sx) * this.zoom;
 		let ty = -(this.y + sy) * this.zoom;

@@ -1,8 +1,9 @@
 import {context} from '../graphics/index';
+import GuiElement from './element';
 import * as modules from './modules';
 
 export const elements = new Set();
-export let root;
+export let root: GuiElement;
 
 export function init() {
 	elements.clear();
